@@ -30,7 +30,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [], // It feel like tewsri jfififi wi nce ibnfes=Le
   /*
    ** Nuxt.js dev-modules
    */
