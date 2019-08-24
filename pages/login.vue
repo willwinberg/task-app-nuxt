@@ -14,10 +14,12 @@
                   <v-text-field
                     label="Login"
                     name="login"
-                    prepend-icon="person"
+                    prepend-icon="mdi-person"
                     type="text"
                   ></v-text-field>
-
+                  <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+                    <v-icon>mdi-menu</v-icon>
+                  </v-btn>
                   <v-text-field
                     id="password"
                     label="Password"
@@ -38,17 +40,6 @@
     </v-content>
   </v-app>
 </template>
-
-<!--<script>-->
-<!--export default {-->
-<!--  props: {-->
-<!--    source: String-->
-<!--  },-->
-<!--  data: () => ({-->
-<!--    drawer: null-->
-<!--  })-->
-<!--}-->
-<!--</script>-->
 
 <!--<template>-->
 <!--  <div>-->
@@ -102,28 +93,16 @@
 <!--  </div>-->
 <!--</template>-->
 
-<!--<style scoped>-->
-<!--.login-button {-->
-<!--  border: 0;-->
-<!--}-->
-<!--</style>-->
-
 <script>
-// import busyOverlay from '~/components/busy-overlay'
 export default {
-  props: {
-    source: String
-  },
   middleware: ['auth'],
   components: {},
-  data() {
-    return {
-      drawer: null,
-      username: '',
-      password: '123',
-      error: null
-    }
-  },
+  data: () => ({
+    drawer: null,
+    username: '',
+    password: '123',
+    error: null
+  }),
   computed: {
     strategies: () => [
       { key: 'auth0', name: 'Auth0', color: '#ec5425' },
