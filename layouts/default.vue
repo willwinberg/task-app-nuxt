@@ -1,10 +1,10 @@
 <template>
-  <v-app id="inspire">
+  <v-app>
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
         <v-list-item @click="null">
           <v-list-item-action>
-            <v-icon>dashboard</v-icon>
+            <v-icon>mdi-dashboard</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Dashboard</v-list-item-title>
@@ -12,7 +12,7 @@
         </v-list-item>
         <v-list-item @click="null">
           <v-list-item-action>
-            <v-icon>settings</v-icon>
+            <v-icon>mdi-settings</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Settings</v-list-item-title>
@@ -29,7 +29,7 @@
     <v-content>
       <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
-          <v-col class="shrink"> </v-col>
+          <v-col></v-col>
         </v-row>
       </v-container>
     </v-content>
@@ -43,8 +43,8 @@
 <script>
 export default {
   data: () => ({
-    clipped: false,
     drawer: null,
+    clipped: false,
     fixed: false,
     items: [
       {
