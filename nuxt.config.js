@@ -44,8 +44,36 @@ module.exports = {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/api/auth/login',
+            method: 'post',
+            propertyName: 'token'
+          },
+          logout: {
+            url: '/api/auth/logout',
+            method: 'post'
+          },
+          user: {
+            url: '/api/auth/user',
+            method: 'get',
+            propertyName: 'user'
+          }
+        }
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+      }
+    }
+  },
+  router: {
+    middleware: ['auth']
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

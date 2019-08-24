@@ -7,6 +7,23 @@
   </div>
 </template>
 
+<script>
+export default {
+  // auth: false // will not need to be authed here
+  auth: 'guest',
+  method: {
+    logIn() {
+      this.$auth.loginWith('local', {
+        data: {
+          username: 'your_username',
+          password: 'your_password'
+        }
+      })
+    }
+  }
+}
+</script>
+
 <style>
 .VueToNuxtLogo {
   display: inline-block;
