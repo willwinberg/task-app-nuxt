@@ -2,7 +2,7 @@
   <v-app>
     <v-navigation-drawer v-model="drawer" app clipped>
       <v-list dense>
-        <v-list-item @click="null">
+        <v-list-item>
           <v-list-item-action>
             <v-icon>mdi-dashboard</v-icon>
           </v-list-item-action>
@@ -10,7 +10,7 @@
             <v-list-item-title>Dashboard</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item @click="null">
+        <v-list-item>
           <v-list-item-action>
             <v-icon>mdi-settings</v-icon>
           </v-list-item-action>
