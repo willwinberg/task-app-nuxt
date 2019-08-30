@@ -11,7 +11,10 @@ export const mutations = {
   }
 }
 // actions: {
-//   async nuxtServerInit({ dispatch }) {
-//     await dispatch('core/load')
+// When we have date in the store we want to give directly to the client
+// nuxtServerInit ({ commit }, { req }) {
+//   if (req.session.user) {
+//     commit('user', req.session.user)
 //   }
+// }
 // },

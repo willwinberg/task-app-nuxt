@@ -1,47 +1,38 @@
 <template>
-  <v-app id="inspire">
-    <v-content>
-      <v-container class="fill-height" fluid>
-        <v-row align="center" justify="center">
-          <v-col cols="12" sm="8" md="4">
-            <v-card class="elevation-12">
-              <v-toolbar color="primary" dark flat>
-                <v-toolbar-title>Login form</v-toolbar-title>
-                <div class="flex-grow-1"></div>
-              </v-toolbar>
-              <v-card-text>
-                <v-form>
-                  <v-text-field
-                    label="Login"
-                    name="login"
-                    prepend-icon="mdi-person"
-                    type="text"
-                  ></v-text-field>
-                  <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-                    <v-icon>mdi-menu</v-icon>
-                  </v-btn>
-                  <v-text-field
-                    id="password"
-                    label="Password"
-                    name="password"
-                    prepend-icon="lock"
-                    type="password"
-                  ></v-text-field>
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <div class="flex-grow-1"></div>
-                <v-btn color="primary">Login</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-content>
-  </v-app>
+  <v-card class="elevation-12">
+    <v-toolbar color="primary" dark flat>
+      <v-toolbar-title>Login</v-toolbar-title>
+      <div class="flex-grow-1"></div>
+    </v-toolbar>
+    <v-card-text>
+      <v-form @keydown.enter="login">
+        <v-text-field
+          label="Username"
+          name="username"
+          prepend-icon="mdi-person"
+          type="text"
+          ref="username"
+          v-model="username"
+        ></v-text-field>
+
+        <v-text-field
+          id="password"
+          label="Password"
+          name="password"
+          prepend-icon="mdi-lock"
+          type="password"
+          ref="username"
+          v-model="username"
+        ></v-text-field>
+      </v-form>
+    </v-card-text>
+    <v-card-actions>
+      <div class="flex-grow-1"></div>
+      <v-btn color="primary" @click="login">Login</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
-<!--<template>-->
 <!--  <div>-->
 <!--    <h2 class="text-center">Login</h2>-->
 <!--    <hr />-->
@@ -91,11 +82,11 @@
 <!--      </b-col>-->
 <!--    </b-row>-->
 <!--  </div>-->
-<!--</template>-->
 
 <script>
 export default {
-  middleware: ['auth'],
+  layout: 'unauthenticated',
+  // middleware: ['auth'],
   components: {},
   data: () => ({
     drawer: null,
@@ -104,20 +95,11 @@ export default {
     error: null
   }),
   computed: {
-    strategies: () => [
-      { key: 'auth0', name: 'Auth0', color: '#ec5425' },
-      { key: 'google', name: 'Google', color: '#4284f4' },
-      { key: 'facebook', name: 'Facebook', color: '#3c65c4' },
-      { key: 'github', name: 'GitHub', color: '#202326' }
-    ],
     redirect() {
       return (
         this.$route.query.redirect &&
         decodeURIComponent(this.$route.query.redirect)
       )
-    },
-    isCallback() {
-      return Boolean(this.$route.query.callback)
     }
   },
   methods: {
