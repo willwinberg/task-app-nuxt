@@ -7,8 +7,7 @@
     <v-card-text>
       <v-form @keydown.enter="login" @submit.prevent="test">
         <v-text-field
-          ref="email"
-          v-model.trim="$v.email.$model"
+          v-model.trim="email"
           :status="$v.email.$error ? 'error' : null"
           label="Email"
           name="email"
@@ -44,13 +43,10 @@
 </template>
 
 <script>
-import { required, minLength, email } from 'vuelidate/lib/validators'
 import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
-  name: 'LoginForm',
   layout: 'unauthenticated',
-
   // middleware: ['auth'],
   components: {},
   mixins: [formValidatorMixin],
@@ -58,18 +54,10 @@ export default {
     drawer: null,
     email: '',
     password: '',
-    error: null
+    error: null,
+    submitStatus: null
   }),
-  validations: {
-    email: {
-      required,
-      email
-    },
-    password: {
-      required,
-      minLength: minLength(6)
-    }
-  },
+  // validations: formValidatorMixin.validations,
   computed: {
     redirect() {
       return (
@@ -82,18 +70,25 @@ export default {
     // needs to be async?
     login() {
       this.error = null
+      formValidatorMixin.validate()
       this.$v.$touch()
 
-      return this.$auth
-        .loginWith('local', {
-          data: {
-            email: this.email,
-            password: this.password
-          }
-        })
-        .catch((e) => {
-          this.error = e + ''
-        })
+      if (this.$v.invalid) {
+        this.submitStatus = 'ERROR'
+      } else {
+        this.submitStatus = 'PENDING'
+        return this.$auth
+          .loginWith('local', {
+            data: {
+              email: this.email,
+              password: this.password
+            }
+          })
+          .catch((e) => {
+            this.error = e + ''
+          })
+      }
+      this.submitStatus = 'OK'
     }
   }
 }
