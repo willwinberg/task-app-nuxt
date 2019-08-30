@@ -1,6 +1,6 @@
 <template>
   <ul>
-    <li v-for="todo in todos" v-bind:key="todo">
+    <li v-for="todo in todos" :key="todo">
       <input type="checkbox" :checked="todo.done" @change="toggle(todo)" />
       <span :class="{ done: todo.done }">{{ todo.text }}</span>
     </li>

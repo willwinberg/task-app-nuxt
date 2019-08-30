@@ -9,13 +9,21 @@
         <v-text-field
           ref="email"
           v-model.trim="$v.email.$model"
+          :status="$v.email.$error ? 'error' : null"
           label="Email"
           name="email"
           prepend-icon="mdi-login"
           type="email"
+          @blur="$v.email.$touch()"
         ></v-text-field>
-        <p v-if="!$v.email.required">The email field is required!</p>
-        <p v-if="!$v.email.email">The input must be a proper email!</p>
+        <ul v-if="$v.email.$error">
+          <li v-if="!$v.email.required">
+            This field is required.
+          </li>
+          <li v-if="!$v.email.email">
+            Must be valid email.
+          </li>
+        </ul>
 
         <v-text-field
           id="password"
@@ -37,12 +45,15 @@
 
 <script>
 import { required, minLength, email } from 'vuelidate/lib/validators'
+import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
   name: 'LoginForm',
   layout: 'unauthenticated',
+
   // middleware: ['auth'],
   components: {},
+  mixins: [formValidatorMixin],
   data: () => ({
     drawer: null,
     email: '',

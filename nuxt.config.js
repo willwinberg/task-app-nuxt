@@ -30,7 +30,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@plugins/vuetify', '@plugins/vuelidate.js'],
+  plugins: ['@plugins/vuetify'],
   /*
    ** Nuxt.js dev-modules
    */
