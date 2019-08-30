@@ -5,15 +5,17 @@
       <div class="flex-grow-1"></div>
     </v-toolbar>
     <v-card-text>
-      <v-form @keydown.enter="login">
+      <v-form @keydown.enter="login" @submit.prevent="test">
         <v-text-field
-          ref="username"
-          v-model="username"
-          label="Username"
-          name="username"
+          ref="email"
+          v-model.trim="$v.email.$model"
+          label="Email"
+          name="email"
           prepend-icon="mdi-login"
-          type="text"
+          type="email"
         ></v-text-field>
+        <p v-if="!$v.email.required">The email field is required!</p>
+        <p v-if="!$v.email.email">The input must be a proper email!</p>
 
         <v-text-field
           id="password"
@@ -28,22 +30,35 @@
     </v-card-text>
     <v-card-actions>
       <div class="flex-grow-1"></div>
-      <v-btn color="primary" @click="login">Login</v-btn>
+      <v-btn color="primary" type="submit" @click="login">Login</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import { required, minLength, email } from 'vuelidate/lib/validators'
+
 export default {
+  name: 'LoginForm',
   layout: 'unauthenticated',
   // middleware: ['auth'],
   components: {},
   data: () => ({
     drawer: null,
-    username: '',
+    email: '',
     password: '',
     error: null
   }),
+  validations: {
+    email: {
+      required,
+      email
+    },
+    password: {
+      required,
+      minLength: minLength(6)
+    }
+  },
   computed: {
     redirect() {
       return (
@@ -56,10 +71,12 @@ export default {
     // needs to be async?
     login() {
       this.error = null
+      this.$v.$touch()
+
       return this.$auth
         .loginWith('local', {
           data: {
-            username: this.username,
+            email: this.email,
             password: this.password
           }
         })
