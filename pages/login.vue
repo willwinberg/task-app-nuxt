@@ -2,36 +2,33 @@
   <v-card class="elevation-12">
     <v-toolbar color="primary" dark flat>
       <v-toolbar-title>Login</v-toolbar-title>
-      <div class="flex-grow-1"></div>
     </v-toolbar>
     <v-card-text>
       <v-form @keydown.enter="login" @submit.prevent="test">
         <v-text-field
           v-model.trim="email"
-          :status="$v.email.$error ? 'error' : null"
+          :error-messages="emailErrors"
+          :counter="16"
           label="Email"
+          required
           name="email"
           prepend-icon="mdi-login"
-          type="email"
+          autocomplete="off"
+          @input="$v.email.$touch()"
           @blur="$v.email.$touch()"
         ></v-text-field>
-        <ul v-if="$v.email.$error">
-          <li v-if="!$v.email.required">
-            This field is required.
-          </li>
-          <li v-if="!$v.email.email">
-            Must be valid email.
-          </li>
-        </ul>
 
         <v-text-field
-          id="password"
-          ref="password"
-          v-model="password"
+          v-model.trim="password"
+          :error-messages="passwordErrors"
           label="Password"
+          required
           name="password"
           prepend-icon="mdi-lock"
           type="password"
+          autocomplete="off"
+          @input="$v.password.$touch()"
+          @blur="$v.password.$touch()"
         ></v-text-field>
       </v-form>
     </v-card-text>
@@ -43,6 +40,7 @@
 </template>
 
 <script>
+// :status="$v.email.$error ? 'error' : null"
 import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {

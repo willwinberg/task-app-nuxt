@@ -41,6 +41,42 @@ export default {
     // loginForm: ['name', 'email'],
     // registerForm: ['users', 'tags']
   },
+  computed: {
+    checkboxErrors() {
+      const errors = []
+      if (!this.$v.checkbox.$dirty) return errors
+      !this.$v.checkbox.checked && errors.push('You must agree to continue!')
+      return errors
+    },
+    selectErrors() {
+      const errors = []
+      if (!this.$v.select.$dirty) return errors
+      !this.$v.select.required && errors.push('Item is required')
+      return errors
+    },
+    nameErrors() {
+      const errors = []
+      if (!this.$v.name.$dirty) return errors
+      !this.$v.name.maxLength &&
+        errors.push('Name must be at most 10 characters long')
+      !this.$v.name.required && errors.push('Name is required.')
+      return errors
+    },
+    emailErrors() {
+      const errors = []
+      if (!this.$v.email.$error) return errors
+      !this.$v.email.email && errors.push('Must be valid e-mail')
+      !this.$v.email.required && errors.push('E-mail is required')
+      return errors
+    },
+    passwordErrors() {
+      const errors = []
+      if (!this.$v.password.$error) return errors
+      !this.$v.password.match && errors.push('Must be valid password')
+      !this.$v.password.required && errors.push('Password is required')
+      return errors
+    }
+  },
   methods: {
     focusFirstStatus(component = this) {
       if (component.status) {
