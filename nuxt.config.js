@@ -30,7 +30,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@plugins/vuetify'],
+  plugins: ['@plugins/vuetify', '@plugins/vuelidate.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -65,8 +65,10 @@ module.exports = {
             propertyName: 'user'
           }
         }
+        // These are the defaults
         // tokenRequired: true,
         // tokenType: 'bearer'
+        // tokenName: 'authorization'
       }
     }
   },
