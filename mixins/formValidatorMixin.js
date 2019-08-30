@@ -72,7 +72,8 @@ export default {
     passwordErrors() {
       const errors = []
       if (!this.$v.password.$error) return errors
-      !this.$v.password.match && errors.push('Must be valid password')
+      !this.$v.password.minLength &&
+        errors.push('Must be at least 6 characters')
       !this.$v.password.required && errors.push('Password is required')
       return errors
     }

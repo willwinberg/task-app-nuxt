@@ -8,7 +8,6 @@
         <v-text-field
           v-model.trim="email"
           :error-messages="emailErrors"
-          :counter="16"
           label="Email"
           required
           name="email"
@@ -35,12 +34,12 @@
     <v-card-actions>
       <div class="flex-grow-1"></div>
       <v-btn color="primary" type="submit" @click="login">Login</v-btn>
+      <v-btn @click="clear">Clear</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-// :status="$v.email.$error ? 'error' : null"
 import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
@@ -66,9 +65,10 @@ export default {
   },
   methods: {
     // needs to be async?
-    login() {
+    // eslint-disable-next-line require-await
+    async login() {
       this.error = null
-      formValidatorMixin.validate()
+      // formValidatorMixin.validate()
       this.$v.$touch()
 
       if (this.$v.invalid) {
@@ -86,7 +86,13 @@ export default {
             this.error = e + ''
           })
       }
-      this.submitStatus = 'OK'
+    },
+    clear() {
+      this.$v.$reset()
+      this.name = ''
+      this.email = ''
+      this.select = null
+      this.checkbox = false
     }
   }
 }
