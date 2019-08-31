@@ -4,9 +4,17 @@ const { Nuxt, Builder } = require('nuxt')
 
 const app = express()
 
-// Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
+const taskRouter = require('./routers/taskRouter.js')
+const userRouter = require('./routers/userRouter.js')
+const birds = require('./routers/birds')
+
+// Import and Set Nuxt.js options
 config.dev = process.env.NODE_ENV !== 'production'
+
+app.use('/api/users', userRouter)
+app.use('/api/tasks', taskRouter)
+app.use('/birds', birds)
 
 async function start() {
   // Init Nuxt.js

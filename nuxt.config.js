@@ -1,6 +1,6 @@
 // const colors = require('vuetify/es5/util/colors').default
-import path from 'path'
-import fs from 'fs'
+// import path from 'path'
+// import fs from 'fs'
 
 module.exports = {
   mode: 'universal',
@@ -81,20 +81,20 @@ module.exports = {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
-  /*
-   ** vuetify module configuration
-   ** https://github.com/nuxt-community/vuetify-module
-   */
-  server: {
-    port: 8000, // default: 3000
-    host: '0.0.0.0', // default: localhost,
-    timing: false,
-    https: {
-      key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
-      cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))
-    }
+  axios: {
+    baseURL: 'mongodb://localhost:27017/gogrellodb'
+    // process.env.AXIOS_SERVER
   },
+  // mongodb://localhost:27017/gogrellodb
+  // server: {
+  //   port: 8000, // default: 3000
+  //   host: 'localhost', // default: localhost,
+  //   timing: false,
+  //   https: {
+  //     key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
+  //     cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))
+  //   }
+  // },
   /*
    ** Build configuration
    */

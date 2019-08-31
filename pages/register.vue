@@ -80,6 +80,15 @@ export default {
     error: null,
     submitStatus: null
   }),
+  asyncData: async (context) => {
+    try {
+      return await context.$axios.get('http://localhost:8000/foo').data
+    } catch {
+      context.error({
+        message: 'ajax problem...'
+      })
+    }
+  },
   methods: {
     register() {
       this.error = null
