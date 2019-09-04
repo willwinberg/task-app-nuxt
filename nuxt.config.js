@@ -82,10 +82,11 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'mongodb://localhost:27017/gogrellodb'
+    baseURL: 'mongodb://localhost:27017/gogrellodb',
+    debug: true
+
     // process.env.AXIOS_SERVER
   },
-  // mongodb://localhost:27017/gogrellodb
   // server: {
   //   port: 8000, // default: 3000
   //   host: 'localhost', // default: localhost,
