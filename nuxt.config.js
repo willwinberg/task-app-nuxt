@@ -1,18 +1,20 @@
 // const colors = require('vuetify/es5/util/colors').default
 // import path from 'path'
 // import fs from 'fs'
-import serveStatic from 'serve-static'
+
+// const serveStatic = require('serve-static')
 
 module.exports = {
   serverMiddleware: [
+    '~/api/index.js'
     // Will register redirect-ssl npm package
-    'redirect-ssl',
+    // 'redirect-ssl',
 
     // Will register file from project api directory to handle /api/* requires
-    { path: '/api', handler: '~/api/index.js' },
+    // { path: '/api', handler: '~/server/index.js' },
 
     // We can create custom instances too
-    { path: '/static2', handler: serveStatic(__dirname + '/static2') }
+    // { path: '/static2', handler: serveStatic(__dirname + '/static2') }
   ],
   mode: 'universal',
   /*
@@ -64,7 +66,7 @@ module.exports = {
       local: {
         endpoints: {
           login: {
-            url: '/api/auth/login',
+            url: '/api/users',
             method: 'post',
             propertyName: 'token'
           },
@@ -93,7 +95,7 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:3001',
     debug: true
 
     // process.env.AXIOS_SERVER
