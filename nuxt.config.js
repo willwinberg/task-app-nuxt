@@ -1,8 +1,19 @@
 // const colors = require('vuetify/es5/util/colors').default
 // import path from 'path'
 // import fs from 'fs'
+import serveStatic from 'serve-static'
 
 module.exports = {
+  serverMiddleware: [
+    // Will register redirect-ssl npm package
+    'redirect-ssl',
+
+    // Will register file from project api directory to handle /api/* requires
+    { path: '/api', handler: '~/api/index.js' },
+
+    // We can create custom instances too
+    { path: '/static2', handler: serveStatic(__dirname + '/static2') }
+  ],
   mode: 'universal',
   /*
    ** Headers of the page
@@ -87,15 +98,16 @@ module.exports = {
 
     // process.env.AXIOS_SERVER
   },
-  server: {
-    port: 3000, // default: 3000
-    host: 'localhost' // default: localhost,
-    // timing: false,
-    // https: {
-    //   key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
-    //   cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))
-    // }
-  },
+  // serverMiddleware: ['~/server/index.js'],
+  // server: {
+  //   port: 3000, // default: 3000
+  //   host: 'localhost' // default: localhost,
+  //   // timing: false,
+  //   // https: {
+  //   //   key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
+  //   //   cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))
+  //   // }
+  // },
   /*
    ** Build configuration
    */
