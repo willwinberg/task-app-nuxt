@@ -5,17 +5,17 @@
 // const serveStatic = require('serve-static')
 
 module.exports = {
-  serverMiddleware: [
-    '~/api/index.js'
-    // Will register redirect-ssl npm package
-    // 'redirect-ssl',
+  // serverMiddleware: [
+  //   '~/api/index.js'
+  // Will register redirect-ssl npm package
+  // 'redirect-ssl',
 
-    // Will register file from project api directory to handle /api/* requires
-    // { path: '/api', handler: '~/server/index.js' },
+  // Will register file from project api directory to handle /api/* requires
+  // { path: '/api', handler: '~/server/index.js' },
 
-    // We can create custom instances too
-    // { path: '/static2', handler: serveStatic(__dirname + '/static2') }
-  ],
+  // We can create custom instances too
+  // { path: '/static2', handler: serveStatic(__dirname + '/static2') }
+  // ],
   mode: 'universal',
   /*
    ** Headers of the page
@@ -66,7 +66,7 @@ module.exports = {
       local: {
         endpoints: {
           login: {
-            url: '/api/users',
+            url: '/api/auth/login',
             method: 'post',
             propertyName: 'token'
           },
@@ -95,7 +95,7 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:3001',
+    baseURL: 'http://localhost:3000',
     debug: true
 
     // process.env.AXIOS_SERVER
