@@ -7,5 +7,6 @@ export default (ctx, inject) => {
     posts: repositoryWithAxios('posts'),
     users: repositoryWithAxios('users')
   }
-  console.log(repositories)
+
+  inject('repositories', repositories)
 }
