@@ -1,11 +1,21 @@
-export default {
-  create(payload) {},
+export default ($axios) => ({
+  index() {
+    return $axios.$get('/posts')
+  },
 
-  show(id) {},
+  create(payload) {
+    return $axios.$post(`/posts`, payload)
+  },
 
-  index() {},
+  show(id) {
+    return $axios.$get(`/posts/${id}`)
+  },
 
-  update(payload) {},
+  update(payload) {
+    return $axios.$put(`/posts`, payload)
+  },
 
-  delete(id) {}
-}
+  delete(id) {
+    return $axios.$delete(`/posts/${id}`)
+  }
+})
