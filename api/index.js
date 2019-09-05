@@ -1,16 +1,11 @@
-const express = require('express')
+export default {
+  create(payload) {},
 
-// Create express instnace
-const app = express()
+  show(id) {},
 
-// Require API routes
-const users = require('./routes/users')
+  index() {},
 
-// Import API Routes
-app.use(users)
+  update(payload) {},
 
-// Export the server middleware
-module.exports = {
-  path: '/api',
-  handler: app
+  delete(id) {}
 }
