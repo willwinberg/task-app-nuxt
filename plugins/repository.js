@@ -1,12 +1,12 @@
 import createRepository from '~/api/Repository.js'
 
 export default (ctx, inject) => {
-  const repositoryWithAxios = createRepository(ctx.$axios)
+    const repositoryWithAxios = createRepository(ctx.$axios)
 
-  const repositories = {
-    posts: repositoryWithAxios('posts'),
-    users: repositoryWithAxios('users')
-  }
+    const repositories = {
+        posts: repositoryWithAxios('posts'),
+        users: repositoryWithAxios('users')
+    }
 
-  inject('repositories', repositories)
+    inject('repositories', repositories)
 }

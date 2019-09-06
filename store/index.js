@@ -2,13 +2,13 @@
 // export const plugins = [ myPlugin ]
 
 export const state = () => ({
-  counter: 0
+    task: ['do', 'get', 'git', 'dontbeanoob']
 })
 
 export const mutations = {
-  increment(state) {
-    state.counter++
-  }
+    increment(state) {
+        state.counter++
+    }
 }
 // actions: {
 // When we have date in the store we want to give directly to the client

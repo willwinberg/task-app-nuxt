@@ -3,14 +3,14 @@
 // const Board = require('../models/boardModel')
 // const Task = require('../models/taskModel')
 module.exports = function(router) {
-  router.get('/api/auth/user', (req, res) => {
-    res.json({ user: 'Will', id: 1 })
-    // User.find()
-    //   .then((users) => {
-    //     res.status(200).json(users)
-    //   })
-    //   .catch((err) => res.status(500).json({ message: err.message }))
-  })
+    router.get('/api/auth/user', (req, res) => {
+        res.json({ user: 'Will', id: 1 })
+        // User.find()
+        //   .then((users) => {
+        //     res.status(200).json(users)
+        //   })
+        //   .catch((err) => res.status(500).json({ message: err.message }))
+    })
 }
 // const router = express.Router()
 //
