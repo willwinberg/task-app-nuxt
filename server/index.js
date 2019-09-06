@@ -4,20 +4,11 @@ const { Nuxt, Builder } = require('nuxt')
 const app = express()
 const config = require('../nuxt.config.js')
 
-const { router } = require('./router')
-
-// const taskRouter = require('./routers/taskRouter.js')
-// const userRouter = require('./routers/userRouter.js')
-// const birds = require('./routers/birds')
-// const authRouter = require('./routers/authRouter')
-
 // Import and Set Nuxt.js options
 config.dev = process.env.NODE_ENV !== 'production'
 
-// app.use('/api/users', userRouter)
-// app.use('/api/tasks', taskRouter)
-app.use('/api', router)
-// app.use('/api/auth', authRouter)
+const { router } = require('./router')
+app.use('/', router)
 
 async function start() {
   // Init Nuxt.js

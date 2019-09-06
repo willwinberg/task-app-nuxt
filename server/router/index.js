@@ -1,14 +1,6 @@
 const router = require('express').Router()
 
-require('./authRouter')
-
-// router
-// .get('/your-route', function(req, res, next) {
-//   // todo this route
-//   res.send('in route')
-// })
-// .post('/other-route', function(req, res, next) {
-//   // todo this route
-// })
+require('./authRouter')(router)
+require('./userRouter')(router)
 
 module.exports.router = router

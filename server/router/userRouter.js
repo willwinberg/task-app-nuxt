@@ -1,27 +1,36 @@
-const express = require('express')
-const User = require('../models/userModel')
+// const express = require('express')
+// const User = require('../models/userModel')
 // const Board = require('../models/boardModel')
 // const Task = require('../models/taskModel')
-
-const router = express.Router()
-
-router
-  .get('/', (req, res) => {
-    User.find()
-      .then((users) => {
-        res.status(200).json(users)
-      })
-      .catch((err) => res.status(500).json({ message: err.message }))
+module.exports = function(router) {
+  router.get('/api/auth/user', (req, res) => {
+    res.json({ user: 'Will', id: 1 })
+    // User.find()
+    //   .then((users) => {
+    //     res.status(200).json(users)
+    //   })
+    //   .catch((err) => res.status(500).json({ message: err.message }))
   })
-  .get('/:id', (req, res) => {
-    const { id } = req.params
-
-    User.findById(id)
-      .then((user) => {
-        res.status(200).json(user)
-      })
-      .catch((err) => res.status(500).json({ message: err.message }))
-  })
+}
+// const router = express.Router()
+//
+// router
+//   .get('/', (req, res) => {
+//     User.find()
+//       .then((users) => {
+//         res.status(200).json(users)
+//       })
+//       .catch((err) => res.status(500).json({ message: err.message }))
+//   })
+//   .get('/:id', (req, res) => {
+//     const { id } = req.params
+//
+//     User.findById(id)
+//       .then((user) => {
+//         res.status(200).json(user)
+//       })
+//       .catch((err) => res.status(500).json({ message: err.message }))
+//   })
 // .get('/', passport.authenticate('bearer', { session: false }),
 //   (req, res) => {
 //     console.log('inside')
@@ -249,4 +258,4 @@ router
 //     })
 // })
 
-module.exports = router
+// module.exports = router

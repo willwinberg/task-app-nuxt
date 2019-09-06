@@ -59,7 +59,8 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    '@nuxtjs/proxy'
   ],
   auth: {
     strategies: {
@@ -79,11 +80,11 @@ module.exports = {
             method: 'get',
             propertyName: 'user'
           }
-        }
+        },
         // These are the defaults
-        // tokenRequired: true,
-        // tokenType: 'bearer'
-        // tokenName: 'authorization'
+        tokenRequired: true,
+        tokenType: 'bearer',
+        tokenName: 'authorization'
       }
     }
   },
@@ -95,21 +96,24 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'http://localhost:3000',
-    debug: true
-
+    // baseURL: 'http://localhost:3000',
+    debug: true,
+    proxy: true
     // process.env.AXIOS_SERVER
   },
+  proxy: {
+    '/api/': 'http://localhost:3001'
+  },
   // serverMiddleware: ['~/server/index.js'],
-  // server: {
-  //   port: 3000, // default: 3000
-  //   host: 'localhost' // default: localhost,
-  //   // timing: false,
-  //   // https: {
-  //   //   key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
-  //   //   cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))
-  //   // }
-  // },
+  server: {
+    port: 3000, // default: 3000
+    host: 'localhost' // default: localhost,
+    // timing: false,
+    // https: {
+    //   key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
+    //   cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))
+    // }
+  },
   /*
    ** Build configuration
    */
