@@ -1,61 +1,40 @@
-// const express = require('express')
-// const User = require('../models/userModel')
-const User = require('../models/User')
-
-// const router = require('express').Router()
-//
-// router
-// .get('/user', (req, res) => {
-//   User.find()
-//     .then((users) => {
-//       res.status(200).json(users)
-//     })
-//     .catch((err) => res.status(500).json({ message: err.message }))
-// })
-// .post('/login', (req, res, next) => {
-//     // user: { url: '/userinfo', method: 'get', propertyName: false }
-//     res.json({
-//         // Let everyone in:
-//         token: 'example-token'
-//     })
-//     // const { id } = req.body
-//     console.log(req)
-//     // next()
-//     // User.findById(id)
-//     //   .then((user) => {
-//     //     res.status(200).json(user)
-//     //   })
-//     //   .catch((err) => res.status(500).json({ message: err.message }))
-// })
-// .post('/logout', (req, res) => {
-//   User.find()
-//     .then((users) => {
-//       res.status(200).json(users)
-//     })
-//     .catch((err) => res.status(500).json({ message: err.message }))
-// })
+// const User = require('../models/User')
+const jsonwebtoken = require('jsonwebtoken')
 
 module.exports = function(path, router) {
-    router.use(path, router).post('/login', (req, res, next) => {
-        // user: { url: '/userinfo', method: 'get', propertyName: false }
-        res.json({
-            // Let everyone in:
-            token: 'example-token'
-        }).get('/user', (req, res) => {
-            // res.json({ user: 'Will', id: 1 })
-            User.find({ id: 1 })
-                .then((user) => {
-                    res.status(200).json(user)
-                })
-                .catch((err) => res.status(500).json({ message: err.message }))
+    router
+        .use(path, router)
+        .post('/login', (req, res, next) => {
+            const { email, password } = req.body
+            const valid = email.length && password === '123'
+
+            if (!valid) {
+                console.log('AAAAAAA')
+                throw new Error('Invalid credentials')
+            }
+
+            const token = jsonwebtoken.sign(
+                {
+                    email,
+                    name: 'User ' + email,
+                    scope: ['test', 'user']
+                },
+                'adumbsecret'
+            )
+            console.log(token)
+            res.json({ token })
         })
-        // const { id } = req.body
-        console.log(req)
-        // next()
-        // User.findById(id)
-        //   .then((user) => {
-        //     res.status(200).json(user)
-        //   })
-        //   .catch((err) => res.status(500).json({ message: err.message }))
-    })
+
+        .get('/user', (req, res, next) => {
+            res.json({ user: req.user })
+        })
+
+        .post('/logout', (req, res, next) => {
+            res.json({ status: 'OK' })
+        })
+
+        .use((err, req, res, next) => {
+            console.error(err)
+            res.status(401).send(err + '')
+        })
 }

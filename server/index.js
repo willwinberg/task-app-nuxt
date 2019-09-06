@@ -3,6 +3,8 @@ const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+// const jwt = require('express-jwt')
 const mongoose = require('mongoose')
 const config = require('../nuxt.config.js')
 const dbConfig = require('./config/index')
@@ -18,6 +20,7 @@ mongoose
     .then(() => console.log(`connection successful: ${dbConfig.connection}`))
     .catch((err) => console.error(err))
 
+app.use(cookieParser())
 app.use(bodyParser.json())
 
 // configure CORS settings
@@ -33,6 +36,19 @@ const corsConfig = function(req, res, next) {
 }
 
 app.use(corsConfig)
+
+// JWT middleware TODO: can this be moved to authRoutes.js?
+// app.use(
+//     jwt({
+//         secret: 'adumbsecret'
+//     }).unless({
+//         path: [
+//             '/api/auth/login',
+//             '/login',
+//             '/'
+//         ]
+//     })
+// )
 
 const { router } = require('./router')
 app.use('/api', router)

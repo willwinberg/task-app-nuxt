@@ -85,14 +85,16 @@ export default {
                     })
             }
         },
+        logout() {
+            return this.$auth.logout(/* .... */)
+        },
         clear() {
-            const response = this.$store.dispatch('user/fetchUsers')
-            console.log(response)
-            // this.$v.$reset()
-            // this.name = ''
-            // this.email = ''
-            // this.select = null
-            // this.checkbox = false
+            // const response = this.$store.dispatch('user/fetchUsers')
+            this.$v.$reset()
+            this.name = ''
+            this.email = ''
+            this.select = null
+            this.checkbox = false
         }
     }
 }

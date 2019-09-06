@@ -58,10 +58,6 @@ const UserSchema = mongoose.Schema(
                 ref: 'Task'
             }
         ],
-        createdOn: {
-            type: mongoose.Schema.Types.Date,
-            default: Date.now
-        },
         imgUrl: {
             type: String
         },

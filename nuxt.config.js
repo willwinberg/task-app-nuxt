@@ -104,7 +104,7 @@ module.exports = {
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        // baseURL: 'http://localhost:3000',
+        // baseURL: 'http://localhost:3001',
         debug: true,
         proxy: true
         // process.env.AXIOS_SERVER
