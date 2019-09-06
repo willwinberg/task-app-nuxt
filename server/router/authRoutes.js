@@ -1,5 +1,6 @@
 // const express = require('express')
 // const User = require('../models/userModel')
+const User = require('../models/User')
 
 // const router = require('express').Router()
 //
@@ -34,12 +35,19 @@
 //     .catch((err) => res.status(500).json({ message: err.message }))
 // })
 
-module.exports = function(router) {
-    router.post('/auth/login', (req, res, next) => {
+module.exports = function(path, router) {
+    router.use(path, router).post('/login', (req, res, next) => {
         // user: { url: '/userinfo', method: 'get', propertyName: false }
         res.json({
             // Let everyone in:
             token: 'example-token'
+        }).get('/user', (req, res) => {
+            // res.json({ user: 'Will', id: 1 })
+            User.find({ id: 1 })
+                .then((user) => {
+                    res.status(200).json(user)
+                })
+                .catch((err) => res.status(500).json({ message: err.message }))
         })
         // const { id } = req.body
         console.log(req)

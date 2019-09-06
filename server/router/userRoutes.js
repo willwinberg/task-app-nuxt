@@ -1,22 +1,49 @@
 // const express = require('express')
-const User = require('../models/user.model')
+const User = require('../models/User')
 // const Board = require('../models/boardModel')
 // const Task = require('../models/taskModel')
-const users = ['Will', 'Noob', 'Death']
 
-module.exports = function(router) {
-    router
-        .get('/auth/user', (req, res) => {
-            // res.json({ user: 'Will', id: 1 })
-            User.find({ id: 1 })
-                .then((user) => {
-                    res.status(200).json(user)
-                })
-                .catch((err) => res.status(500).json({ message: err.message }))
+module.exports = function(path, router) {
+    router.use(path, router)
+    /* GET ALL USERS */
+    router.get('/', function(req, res, next) {
+        User.find(function(err, products) {
+            if (err) return next(err)
+            res.json(products)
         })
-        .get('/api/users', (req, res) => {
-            res.json(users)
+    })
+
+    /* GET SINGLE USER BY ID */
+    router.get('/:id', function(req, res, next) {
+        User.findById(req.params.id, function(err, post) {
+            if (err) return next(err)
+            res.json(post)
         })
+    })
+
+    /* SAVE USER */
+    router.post('/', function(req, res, next) {
+        User.create(req.body, function(err, post) {
+            if (err) return next(err)
+            res.json(post)
+        })
+    })
+
+    /* UPDATE USER */
+    router.put('/:id', function(req, res, next) {
+        User.findByIdAndUpdate(req.params.id, req.body, function(err, post) {
+            if (err) return next(err)
+            res.json(post)
+        })
+    })
+
+    /* DELETE USER */
+    router.delete('/:id', function(req, res, next) {
+        User.findByIdAndRemove(req.params.id, req.body, function(err, post) {
+            if (err) return next(err)
+            res.json(post)
+        })
+    })
 }
 // const router = express.Router()
 //
