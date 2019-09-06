@@ -15,7 +15,7 @@ mongoose
     .catch((err) => console.error(err))
 
 const { router } = require('./router')
-app.use('/', router)
+app.use('/api', router)
 
 async function start() {
     // Init Nuxt.js

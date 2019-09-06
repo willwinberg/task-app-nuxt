@@ -1,12 +1,12 @@
 // const express = require('express')
-const User = require('../models/userModel')
+const User = require('../models/user.model')
 // const Board = require('../models/boardModel')
 // const Task = require('../models/taskModel')
 const users = ['Will', 'Noob', 'Death']
 
 module.exports = function(router) {
     router
-        .get('/api/auth/user', (req, res) => {
+        .get('/auth/user', (req, res) => {
             // res.json({ user: 'Will', id: 1 })
             User.find({ id: 1 })
                 .then((user) => {

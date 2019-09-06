@@ -88,4 +88,4 @@ const UserSchema = mongoose.Schema(
 //   return bcrypt.compare(passwordTry, this.password)
 // }
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = mongoose.model('User', UserSchema, 'users')
