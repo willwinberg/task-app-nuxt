@@ -1,7 +1,7 @@
-const express = require('express')
+// const express = require('express')
 // const User = require('../models/userModel')
 
-const router = express.Router()
+const router = require('express').Router()
 
 router
   // .get('/user', (req, res) => {
@@ -12,7 +12,7 @@ router
   //     .catch((err) => res.status(500).json({ message: err.message }))
   // })
   .post('/login', (req, res, next) => {
-    res.send('herer')
+    res.send('herersdcscs')
     // const { id } = req.body
     console.log(req)
     next()

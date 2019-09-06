@@ -93,6 +93,25 @@ export default {
       this.email = ''
       this.select = null
       this.checkbox = false
+    },
+    async send() {
+      console.log('send called')
+      await this.$axios({
+        method: 'get',
+        url: '/your-route'
+      })
+        .then((res) => {
+          console.log('in then')
+          console.log(res.data)
+          this.onReset()
+        })
+        .catch((e) => {
+          console.log('in err', e.response)
+
+          this.error = true
+          this.success = false
+        })
+      this.waiting = false
     }
   }
 }
