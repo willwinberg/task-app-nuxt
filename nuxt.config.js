@@ -66,6 +66,7 @@ module.exports = {
         '@nuxtjs/proxy'
     ],
     auth: {
+        plugins: ['~/plugins/auth.js'],
         strategies: {
             local: {
                 endpoints: {
