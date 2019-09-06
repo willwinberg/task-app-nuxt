@@ -89,6 +89,10 @@ module.exports = {
                 tokenType: 'bearer',
                 tokenName: 'authorization'
             }
+        },
+        redirect: {
+            login: '/',
+            logout: '/login'
         }
     },
     router: {

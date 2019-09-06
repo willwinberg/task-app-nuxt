@@ -2,17 +2,37 @@ const express = require('express')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const config = require('../nuxt.config.js')
+const dbConfig = require('./config/index')
 
 // Import and Set Nuxt.js options
 config.dev = process.env.NODE_ENV !== 'production'
 
 // connect to mongodb
 mongoose
-    .connect('mongodb://localhost:27017/gogrellodb')
-    .then(() => console.log('connection successful: gogrellodb'))
+    .connect(dbConfig.connection, {
+        useNewUrlParser: true
+    })
+    .then(() => console.log(`connection successful: ${dbConfig.connection}`))
     .catch((err) => console.error(err))
+
+app.use(bodyParser.json())
+
+// configure CORS settings
+const corsConfig = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+    res.header('Access-Control-Allow-Credentials', true)
+    res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    )
+    next()
+}
+
+app.use(corsConfig)
 
 const { router } = require('./router')
 app.use('/api', router)
@@ -41,4 +61,5 @@ async function start() {
         badge: true
     })
 }
+
 start()
