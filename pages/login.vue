@@ -64,9 +64,9 @@ export default {
         }
     },
     methods: {
-        async login() {
+        login() {
             this.error = null
-            await formValidatorMixin.validate()
+            // await formValidatorMixin.validate()
             this.$v.$touch()
 
             if (this.$v.invalid) {
@@ -86,30 +86,13 @@ export default {
             }
         },
         clear() {
-            this.$v.$reset()
-            this.name = ''
-            this.email = ''
-            this.select = null
-            this.checkbox = false
-        },
-        async send() {
-            console.log('send called')
-            await this.$axios({
-                method: 'get',
-                url: '/your-route'
-            })
-                .then((res) => {
-                    console.log('in then')
-                    console.log(res.data)
-                    this.onReset()
-                })
-                .catch((e) => {
-                    console.log('in err', e.response)
-
-                    this.error = true
-                    this.success = false
-                })
-            this.waiting = false
+            const response = this.$store.dispatch('user/fetchUsers')
+            console.log(response)
+            // this.$v.$reset()
+            // this.name = ''
+            // this.email = ''
+            // this.select = null
+            // this.checkbox = false
         }
     }
 }

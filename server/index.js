@@ -2,10 +2,17 @@ const express = require('express')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
+const mongoose = require('mongoose')
 const config = require('../nuxt.config.js')
 
 // Import and Set Nuxt.js options
 config.dev = process.env.NODE_ENV !== 'production'
+
+// connect to mongodb
+mongoose
+    .connect('mongodb://localhost:27017/gogrellodb')
+    .then(() => console.log('connection successful: gogrellodb'))
+    .catch((err) => console.error(err))
 
 const { router } = require('./router')
 app.use('/', router)

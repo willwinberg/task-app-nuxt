@@ -1,16 +1,22 @@
 // const express = require('express')
-// const User = require('../models/userModel')
+const User = require('../models/userModel')
 // const Board = require('../models/boardModel')
 // const Task = require('../models/taskModel')
+const users = ['Will', 'Noob', 'Death']
+
 module.exports = function(router) {
-    router.get('/api/auth/user', (req, res) => {
-        res.json({ user: 'Will', id: 1 })
-        // User.find()
-        //   .then((users) => {
-        //     res.status(200).json(users)
-        //   })
-        //   .catch((err) => res.status(500).json({ message: err.message }))
-    })
+    router
+        .get('/api/auth/user', (req, res) => {
+            // res.json({ user: 'Will', id: 1 })
+            User.find({ id: 1 })
+                .then((user) => {
+                    res.status(200).json(user)
+                })
+                .catch((err) => res.status(500).json({ message: err.message }))
+        })
+        .get('/api/users', (req, res) => {
+            res.json(users)
+        })
 }
 // const router = express.Router()
 //

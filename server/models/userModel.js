@@ -5,6 +5,9 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 const UserSchema = mongoose.Schema(
     {
+        id: {
+            type: Number
+        },
         type: {
             type: String,
             default: 'user'
