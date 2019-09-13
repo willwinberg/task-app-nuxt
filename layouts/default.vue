@@ -2,15 +2,15 @@
     <v-app>
         <v-navigation-drawer v-model="drawer" app clipped>
             <v-list dense>
-                <v-list-item>
+                <v-list-item @click="goHome">
                     <v-list-item-action>
-                        <v-icon>mdi-dashboard</v-icon>
+                        <v-icon>mdi-view-dashboard</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>Dashboard</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item>
+                <v-list-item @click="goSettings">
                     <v-list-item-action>
                         <v-icon>mdi-settings</v-icon>
                     </v-list-item-action>
@@ -27,9 +27,11 @@
             ></v-app-bar-nav-icon>
             <v-toolbar-title>{{ title }}</v-toolbar-title>
         </v-app-bar>
-
-        <nuxt />
-
+        <v-content>
+            <v-container fluid>
+                <nuxt />
+            </v-container>
+        </v-content>
         <v-footer app>
             <span>&copy; 2019</span>
         </v-footer>
@@ -40,24 +42,11 @@
 export default {
     data: () => ({
         drawer: null,
-        clipped: false,
-        fixed: false,
-        items: [
-            {
-                icon: 'mdi-apps',
-                title: 'Welcome',
-                to: '/'
-            },
-            {
-                icon: 'mdi-chart-bubble',
-                title: 'Inspire',
-                to: '/inspire'
-            }
-        ],
-        miniVariant: false,
-        right: true,
-        rightDrawer: false,
         title: 'Gogrello'
-    })
+    }),
+    methods: {
+        goHome() {},
+        goSettings() {}
+    }
 }
 </script>

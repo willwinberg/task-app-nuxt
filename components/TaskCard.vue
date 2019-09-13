@@ -18,8 +18,8 @@
         </v-list-item>
 
         <v-card-actions>
-            <v-btn text>Button</v-btn>
-            <v-btn text>Button</v-btn>
+            <v-btn outlined text>Edit</v-btn>
+            <v-btn outlined text>delete</v-btn>
         </v-card-actions>
     </v-card>
 </template>
