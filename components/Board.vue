@@ -1,15 +1,13 @@
 <template>
     <v-container fluid>
         <v-row>
-            <v-col cols="12">
-                <v-row
-                    v-for="(column, i) in columns"
-                    :key="i"
-                    :align="center"
-                    :justify="center"
-                >
-                    <Column :column="column" />
-                </v-row>
+            <v-col
+                v-for="(column, i) in columns"
+                :key="i"
+                :align="center"
+                :justify="center"
+            >
+                <Column :column="column" />
             </v-col>
         </v-row>
     </v-container>
