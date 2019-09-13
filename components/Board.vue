@@ -30,8 +30,8 @@
                     </v-card>
                 </v-col>
 
-                <v-col v-for="(item, i) in items" :key="i">
-                    <task :task="task" />
+                <v-col v-for="(task, i) in tasks" :key="i">
+                    <TaskCard :task="task" />
                 </v-col>
             </v-row>
         </v-container>
@@ -39,14 +39,14 @@
 </template>
 
 <script>
-import Task from './Task'
+import TaskCard from './TaskCard'
 
 export default {
     components: {
-        Task
+        TaskCard
     },
     data: () => ({
-        items: [
+        tasks: [
             {
                 color: '#1F7087',
                 src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
