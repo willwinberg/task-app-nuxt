@@ -1,8 +1,8 @@
 <template>
     <v-card max-width="400" class="mx-auto">
-        <v-system-bar color="blue darken-2"></v-system-bar>
+        <v-system-bar color="blue-grey darken-2"></v-system-bar>
 
-        <v-app-bar dark color="blue">
+        <v-app-bar dark color="blue-grey">
             <v-app-bar-nav-icon></v-app-bar-nav-icon>
 
             <v-toolbar-title
@@ -52,6 +52,12 @@ export default {
                 title: 'do frontend',
                 description:
                     'we need to complete the entire frontend of this app'
+            },
+            {
+                priority: 'low',
+                src: 'https://api.adorable.io/avatars/80/abott@adorable.png',
+                title: 'do nothing',
+                description: 'tale i minute to meditate from time to time'
             }
         ]
     })

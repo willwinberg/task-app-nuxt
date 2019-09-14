@@ -18,16 +18,21 @@
         </v-list-item>
 
         <v-card-actions>
-            <v-btn outlined text>Edit</v-btn>
+            <EditTaskForm />
             <v-btn outlined text>delete</v-btn>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
+import EditTaskForm from './EditTaskForm'
+
 export default {
     props: {
         task: Object
+    },
+    components: {
+        EditTaskForm
     }
 }
 </script>
