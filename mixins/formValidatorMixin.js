@@ -37,23 +37,26 @@ export default {
         },
         tags: {
             maxLength: maxLength(5)
+        },
+        select: {
+            required
         }
         // loginForm: ['name', 'email'],
         // registerForm: ['users', 'tags']
     },
     computed: {
         checkboxErrors() {
-            const errors = []
-            if (!this.$v.checkbox.$dirty) return errors
-            !this.$v.checkbox.checked &&
-                errors.push('You must agree to continue!')
-            return errors
+            // const errors = []
+            // if (!this.$v.checkbox.$dirty) return errors
+            // !this.$v.checkbox.checked &&
+            //     errors.push('You must agree to continue!')
+            // return errors
         },
         selectErrors() {
-            const errors = []
-            if (!this.$v.select.$dirty) return errors
-            !this.$v.select.required && errors.push('Item is required')
-            return errors
+            // const errors = []
+            // if (!this.$v.select.$dirty) return errors
+            // !this.$v.select.required && errors.push('Item is required')
+            // return errors
         },
         nameErrors() {
             const errors = []
@@ -76,6 +79,22 @@ export default {
             !this.$v.password.minLength &&
                 errors.push('Must be at least 6 characters')
             !this.$v.password.required && errors.push('Password is required')
+            return errors
+        },
+        titleErrors() {
+            const errors = []
+            if (!this.$v.name.$dirty) return errors
+            !this.$v.name.maxLength &&
+                errors.push('Name must be at most 10 characters long')
+            !this.$v.name.required && errors.push('Name is required.')
+            return errors
+        },
+        descriptionErrors() {
+            const errors = []
+            if (!this.$v.name.$dirty) return errors
+            !this.$v.name.maxLength &&
+                errors.push('Name must be at most 10 characters long')
+            !this.$v.name.required && errors.push('Name is required.')
             return errors
         }
     },
