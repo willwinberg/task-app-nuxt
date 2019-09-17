@@ -35,6 +35,13 @@ export default {
                 email
             }
         },
+        title: {
+            required,
+            maxLength: maxLength(20)
+        },
+        description: {
+            required
+        },
         tags: {
             maxLength: maxLength(5)
         },

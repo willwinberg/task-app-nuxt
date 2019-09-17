@@ -34,7 +34,7 @@
             @blur="$v.checkbox.$touch()"
         ></v-checkbox>
 
-        <v-btn class="mr-4" @click="submit">submit</v-btn>
+        <v-btn class="mr-4" @click="addTask">Add</v-btn>
         <v-btn @click="clear">clear</v-btn>
     </form>
 </template>
@@ -62,6 +62,20 @@ export default {
         }
     },
     methods: {
+        addTask() {
+            this.error = null
+            this.$v.$touch()
+
+            if (this.$v.invalid) {
+                this.submitStatus = 'ERROR'
+            } else {
+                this.submitStatus = 'PENDING'
+                const payload = 'stuff'
+                return this.$store.addTask(payload).catch((e) => {
+                    this.error = e + ''
+                })
+            }
+        },
         clear() {
             // const response = this.$store.dispatch('user/fetchUsers')
             this.$v.$reset()
