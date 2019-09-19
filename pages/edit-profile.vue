@@ -1,35 +1,28 @@
 <template>
-    <UserProvider>
-        <FormFactory :fields="fields" :id="id" />
-    </UserProvider>
+    <div>
+        <h2>Create User Form</h2>
+        <UserForm />
+
+        <h2>Edit User Form</h2>
+        <UserForm :id="1" />
+    </div>
 </template>
 
 <script>
 import { required } from 'vuelidate/lib/validators'
 
-import FormFactory from '@@/components/form/FormFactory.vue'
+import FormBuilder from '@@/builders/FormBuilder'
+
+import UserProvider from '@@/components/form/UserProvider.vue'
 import FormInput from '@@/components/form/FormInput.vue'
 import FormTextarea from '@@/components/form/FormTextarea.vue'
-import UserProvider from '@@/components/UserProvider.vue'
 
 export default {
-    name: 'UserForm',
+    name: 'EditProfilePage',
     components: {
-        FormFactory,
-        FormInput,
-        FormTextarea,
-        UserProvider
-    },
-    props: {
-        // Passing id makes the form load an existing user and switches the form into editing mode.
-        id: {
-            default: null,
-            type: [Number, String]
-        }
-    },
-    created() {
-        this.fields = [
-            {
+        UserForm: new FormBuilder()
+            .withProvider(UserProvider)
+            .addField({
                 component: FormInput,
                 label: 'Name',
                 name: 'name',
@@ -41,8 +34,8 @@ export default {
                 validation: {
                     required
                 }
-            },
-            {
+            })
+            .addField({
                 component: FormTextarea,
                 label: 'Bio',
                 name: 'bio',
@@ -51,8 +44,8 @@ export default {
                         placeholder: 'About you'
                     }
                 }
-            }
-        ]
+            })
+            .build()
     }
 }
 </script>
