@@ -17,8 +17,8 @@
             @blur="$v.description.$touch()"
         ></v-text-field>
         <v-select
-            v-model="select"
-            :items="items"
+            v-model="priority"
+            :levels="levels"
             :error-messages="selectErrors"
             label="Priority"
             required
@@ -47,9 +47,11 @@ export default {
     components: {},
     mixins: [formValidatorMixin],
     data: () => ({
-        drawer: null,
         title: '',
         description: '',
+        priority: '',
+        checkbox: '',
+
         error: null,
         submitStatus: null
     }),
