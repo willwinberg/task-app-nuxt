@@ -2,6 +2,8 @@
 
 > A task management app for teams
 
+####Vue, Nuxt, Vuetify,Vuelidate, MongoDB Stitch
+
 ## Build Setup
 
 ``` bash
