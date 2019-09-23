@@ -44,23 +44,39 @@ export default {
         tasks: [
             {
                 priority: 'highest',
-                src: 'https://api.adorable.io/avatars/80/abott@adorable.png',
                 title: 'do backend',
                 description:
-                    'we need to complete the entire backend of this app'
+                    'we need to complete the entire backend of this app',
+                assignee: 'Will',
+                reporter: 'Brad',
+                site: 'plumbersstock',
+                type: 'Task',
+                points: 100,
+                status: 'In Progress'
             },
             {
-                priority: 'medium',
-                src: 'https://api.adorable.io/avatars/80/abott@adorable.png',
-                title: 'do frontend',
+                priority: 'highest',
+                title: 'do backend',
                 description:
-                    'we need to complete the entire frontend of this app'
+                    'we need to complete the entire backend of this app',
+                assignee: 'Will',
+                reporter: 'Brad',
+                site: 'plumbersstock',
+                type: 'Task',
+                points: 100,
+                status: 'In Progress'
             },
             {
-                priority: 'low',
-                src: 'https://api.adorable.io/avatars/80/abott@adorable.png',
-                title: 'do nothing',
-                description: 'tale i minute to meditate from time to time'
+                priority: 'highest',
+                title: 'do backend',
+                description:
+                    'we need to complete the entire backend of this app',
+                assignee: 'Will',
+                reporter: 'Brad',
+                site: 'plumbersstock',
+                type: 'Task',
+                points: 100,
+                status: 'In Progress'
             }
         ]
     })

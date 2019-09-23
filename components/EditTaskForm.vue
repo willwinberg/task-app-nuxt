@@ -54,7 +54,7 @@
                         </v-col>
                         <v-col cols="12" sm="6">
                             <v-autocomplete
-                                :items="getUsersArray"
+                                :items="['bill', 'gill', 'will']"
                                 label="Assignee*"
                                 multiple
                             ></v-autocomplete>
@@ -87,7 +87,9 @@ export default {
         description: ''
     }),
     methods: {
-        getUsersArray() {}
+        getUsersArray() {
+            return ['bill', 'gill']
+        }
     }
 }
 </script>

@@ -57,10 +57,10 @@
             </v-card-text>
             <v-card-actions>
                 <div class="flex-grow-1"></div>
-                <v-btn color="blue darken-1" text @click="addTask">Close</v-btn>
                 <v-btn color="blue darken-1" text @click="dialog = false"
-                    >Save</v-btn
+                    >Close</v-btn
                 >
+                <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
