@@ -1,12 +1,7 @@
 <template>
     <v-container fluid>
         <v-row>
-            <v-col
-                v-for="(column, i) in columns"
-                :key="i"
-                :align="center"
-                :justify="center"
-            >
+            <v-col v-for="(column, i) in columns" :key="i">
                 <Column :column="column" />
             </v-col>
         </v-row>

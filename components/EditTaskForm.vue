@@ -82,7 +82,9 @@ import formValidatorMixin from '@@/mixins/formValidatorMixin'
 export default {
     mixins: [formValidatorMixin],
     data: () => ({
-        dialog: false
+        dialog: false,
+        title: '',
+        description: ''
     }),
     methods: {
         getUsersArray() {}
