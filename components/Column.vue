@@ -23,19 +23,22 @@
                     <TaskCard :task="task" />
                 </v-col>
             </v-row>
+            <AddTaskForm />
         </v-container>
     </v-card>
 </template>
 
 <script>
 import TaskCard from './TaskCard'
+import AddTaskForm from './AddTaskForm'
 
 export default {
+    components: {
+        AddTaskForm,
+        TaskCard
+    },
     props: {
         column: Object
-    },
-    components: {
-        TaskCard
     },
     data: () => ({
         tasks: [
