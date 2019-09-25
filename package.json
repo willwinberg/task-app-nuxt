@@ -33,7 +33,7 @@
     "mongoose": "^5.7.1",
     "nuxt": "^2.9.2",
     "serve-static": "^1.14.1",
-    "vuedraggable": "^2.23.1",
+    "vuedraggable": "willhoyle/Vue.Draggable",
     "vuelidate": "^0.7.4",
     "vuetify": "^2.0.18"
   },

@@ -19,8 +19,37 @@
 
         <v-container class="pa-2" fluid>
             <v-row>
-                <v-col v-for="(task, i) in tasks" :key="i">
-                    <TaskCard :task="task" />
+                <v-col>
+                    <draggable
+                        class="list-group"
+                        tag="ul"
+                        v-model="list"
+                        v-bind="dragOptions"
+                        @start="drag = true"
+                        @end="drag = false"
+                    >
+                        <transition-group
+                            type="transition"
+                            :name="!drag ? 'flip-list' : null"
+                        >
+                            <li
+                                class="list-group-item"
+                                v-for="task in list"
+                                :key="task.order"
+                            >
+                                <i
+                                    :class="
+                                        task.fixed
+                                            ? 'fa fa-anchor'
+                                            : 'glyphicon glyphicon-pushpin'
+                                    "
+                                    @click="task.fixed = !task.fixed"
+                                    aria-hidden="true"
+                                ></i>
+                                <TaskCard :task="task.task" />
+                            </li>
+                        </transition-group>
+                    </draggable>
                 </v-col>
             </v-row>
             <AddTaskForm />
@@ -29,11 +58,49 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 import TaskCard from './TaskCard'
 import AddTaskForm from './AddTaskForm'
 
+const tasks = [
+    {
+        priority: 'highest',
+        title: 'do backend',
+        description: 'we need to complete the entire backend of this app',
+        assignee: 'Will',
+        reporter: 'Brad',
+        site: 'plumbersstock',
+        type: 'Task',
+        points: 100,
+        status: 'In Progress'
+    },
+    {
+        priority: 'highest',
+        title: 'do backend',
+        description: 'we need to complete the entire backend of this app',
+        assignee: 'Will',
+        reporter: 'Brad',
+        site: 'plumbersstock',
+        type: 'Task',
+        points: 100,
+        status: 'In Progress'
+    },
+    {
+        priority: 'highest',
+        title: 'do backend',
+        description: 'we need to complete the entire backend of this app',
+        assignee: 'Will',
+        reporter: 'Brad',
+        site: 'plumbersstock',
+        type: 'Task',
+        points: 100,
+        status: 'In Progress'
+    }
+]
+
 export default {
     components: {
+        draggable,
         AddTaskForm,
         TaskCard
     },
@@ -41,44 +108,25 @@ export default {
         column: Object
     },
     data: () => ({
-        tasks: [
-            {
-                priority: 'highest',
-                title: 'do backend',
-                description:
-                    'we need to complete the entire backend of this app',
-                assignee: 'Will',
-                reporter: 'Brad',
-                site: 'plumbersstock',
-                type: 'Task',
-                points: 100,
-                status: 'In Progress'
-            },
-            {
-                priority: 'highest',
-                title: 'do backend',
-                description:
-                    'we need to complete the entire backend of this app',
-                assignee: 'Will',
-                reporter: 'Brad',
-                site: 'plumbersstock',
-                type: 'Task',
-                points: 100,
-                status: 'In Progress'
-            },
-            {
-                priority: 'highest',
-                title: 'do backend',
-                description:
-                    'we need to complete the entire backend of this app',
-                assignee: 'Will',
-                reporter: 'Brad',
-                site: 'plumbersstock',
-                type: 'Task',
-                points: 100,
-                status: 'In Progress'
+        list: tasks.map((task, i) => {
+            return { task, order: i + 1 }
+        }),
+        drag: false
+    }),
+    computed: {
+        dragOptions() {
+            return {
+                animation: 200,
+                group: 'description',
+                disabled: false,
+                ghostClass: 'ghost'
             }
-        ]
-    })
+        }
+    },
+    methods: {
+        sort() {
+            this.list = this.list.sort((a, b) => a.order - b.order)
+        }
+    }
 }
 </script>
