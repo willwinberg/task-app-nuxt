@@ -2,7 +2,7 @@
     <v-app>
         <v-navigation-drawer v-model="drawer" app clipped>
             <v-list dense>
-                <nuxt-link to="/settings">
+                <nuxt-link to="/">
                     <v-list-item @click="goHome">
                         <v-list-item-action>
                             <v-icon>mdi-view-dashboard</v-icon>

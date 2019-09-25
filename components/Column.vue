@@ -22,11 +22,14 @@
                 <v-col>
                     <draggable
                         class="list-group"
+                        :list="list"
+                        :group="todos"
                         tag="ul"
                         v-model="list"
                         v-bind="dragOptions"
                         @start="drag = true"
                         @end="drag = false"
+                        @change="log"
                     >
                         <transition-group
                             type="transition"
@@ -126,6 +129,9 @@ export default {
     methods: {
         sort() {
             this.list = this.list.sort((a, b) => a.order - b.order)
+        },
+        log(evt) {
+            window.console.log(evt)
         }
     }
 }
