@@ -12,6 +12,16 @@
                         </v-list-item-content>
                     </v-list-item>
                 </nuxt-link>
+                <nuxt-link to="/browse">
+                    <v-list-item @click="goBrowse">
+                        <v-list-item-action>
+                            <v-icon>mdi-magnify-plus</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Browse Tasks</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </nuxt-link>
                 <nuxt-link to="/settings">
                     <v-list-item @click="goSettings">
                         <v-list-item-action>
@@ -50,7 +60,8 @@ export default {
     }),
     methods: {
         goHome() {},
-        goSettings() {}
+        goSettings() {},
+        goBrowse() {}
     }
 }
 </script>

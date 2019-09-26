@@ -3,8 +3,9 @@
         <v-system-bar color="blue-grey darken-2"></v-system-bar>
 
         <v-app-bar dark color="blue-grey">
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
+            <v-btn icon>
+                <v-icon>mdi-settings</v-icon>
+            </v-btn>
             <v-toolbar-title
                 :column="column"
                 v-text="column.title"
@@ -23,7 +24,7 @@
                     <draggable
                         class="list-group"
                         :list="list"
-                        :group="todos"
+                        group="tasks"
                         tag="ul"
                         v-model="list"
                         v-bind="dragOptions"

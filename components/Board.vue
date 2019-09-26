@@ -27,6 +27,14 @@ export default {
                 title: 'Done'
             }
         ]
-    })
+    }),
+    computed: {
+        get() {
+            return this.$store.state.lists
+        },
+        set(value) {
+            return this.$store.commit('updateList', value)
+        }
+    }
 }
 </script>
