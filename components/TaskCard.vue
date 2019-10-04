@@ -46,7 +46,7 @@
 
                 <v-card-actions>
                     <EditTaskForm v-bind="task" />
-                    <v-btn class="ml-2" color="red" text>delete</v-btn>
+                    <DeleteTaskModal v-bind="task" />
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -55,6 +55,7 @@
 
 <script>
 import EditTaskForm from './EditTaskForm'
+import DeleteTaskModal from './DeleteTaskModal'
 import SiteChip from './chips/SiteChip'
 import TypeChip from './chips/TypeChip'
 import PriorityChip from './chips/PriorityChip'
@@ -64,6 +65,7 @@ import ReporterChip from './chips/ReporterChip'
 export default {
     components: {
         EditTaskForm,
+        DeleteTaskModal,
         SiteChip,
         TypeChip,
         PriorityChip,
