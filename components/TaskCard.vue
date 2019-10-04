@@ -24,20 +24,29 @@
             <v-card outlined @click="taskView = true">
                 <v-list-item three-line>
                     <v-list-item-content>
-                        <div class="overline mb-4" v-text="task.priority"></div>
+                        <div>
+                            <SiteChip :site="task.site" />
+                            <TypeChip :type="task.type" />
+                            <PriorityChip :priority="task.priority" />
+                        </div>
                         <v-list-item-title
-                            class="headline mb-1"
+                            class="headline mb-1 mt-3"
                             v-text="task.title"
                         ></v-list-item-title>
                         <v-list-item-subtitle
+                            class="mb-4"
                             v-text="task.description"
                         ></v-list-item-subtitle>
+                        <div>
+                            <PointsChip :points="task.points" />
+                            <ReporterChip :reporter="task.reporter" />
+                        </div>
                     </v-list-item-content>
                 </v-list-item>
 
                 <v-card-actions>
-                    <EditTaskForm />
-                    <v-btn outlined text>delete</v-btn>
+                    <EditTaskForm v-bind="task" />
+                    <v-btn class="ml-2" color="red" text>delete</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -46,14 +55,20 @@
 
 <script>
 import EditTaskForm from './EditTaskForm'
-import PriorityChip from './chips/PriorityChip'
 import SiteChip from './chips/SiteChip'
+import TypeChip from './chips/TypeChip'
+import PriorityChip from './chips/PriorityChip'
+import PointsChip from './chips/PointsChip'
+import ReporterChip from './chips/ReporterChip'
 
 export default {
     components: {
         EditTaskForm,
+        SiteChip,
+        TypeChip,
         PriorityChip,
-        SiteChip
+        PointsChip,
+        ReporterChip
     },
     props: {
         task: Object

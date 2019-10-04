@@ -73,7 +73,7 @@ const tasks = [
         description: 'we need to complete the entire backend of this app',
         assignee: 'Will',
         reporter: 'Brad',
-        site: 'plumbersstock',
+        site: 'PlumbersStock',
         type: 'Task',
         points: 100,
         status: 'In Progress'
@@ -84,7 +84,7 @@ const tasks = [
         description: 'we need to complete the entire backend of this app',
         assignee: 'Will',
         reporter: 'Brad',
-        site: 'plumbersstock',
+        site: 'PlumbersStock',
         type: 'Task',
         points: 100,
         status: 'In Progress'
@@ -95,7 +95,7 @@ const tasks = [
         description: 'we need to complete the entire backend of this app',
         assignee: 'Will',
         reporter: 'Brad',
-        site: 'plumbersstock',
+        site: 'PlumbersStock',
         type: 'Task',
         points: 100,
         status: 'In Progress'

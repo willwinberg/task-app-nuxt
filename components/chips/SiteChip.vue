@@ -1,14 +1,15 @@
 <template>
     <v-chip pill>
         <v-avatar left color="red">
-            P
+            {{ site.split('')[0] }}
         </v-avatar>
-        PlumbersStock
+        {{ site }}
     </v-chip>
 </template>
 
 <script>
 export default {
+    props: ['site'],
     data: () => ({
         value: true
     })
