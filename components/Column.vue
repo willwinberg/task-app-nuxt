@@ -22,11 +22,11 @@
             <v-row>
                 <v-col>
                     <draggable
-                        class="list-group"
+                        v-model="list"
+                        class="list-group pl-0"
                         :list="list"
                         group="tasks"
                         tag="ul"
-                        v-model="list"
                         v-bind="dragOptions"
                         @start="drag = true"
                         @end="drag = false"
@@ -137,3 +137,25 @@ export default {
     }
 }
 </script>
+
+<style>
+.flip-list-move {
+    transition: transform 0.5s;
+}
+.no-move {
+    transition: transform 0s;
+}
+.ghost {
+    opacity: 0.5;
+    background: #c8ebfb;
+}
+.list-group {
+    min-height: 20px;
+}
+.list-group-item {
+    cursor: move;
+}
+.list-group-item i {
+    cursor: pointer;
+}
+</style>

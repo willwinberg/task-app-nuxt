@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-navigation-drawer v-model="drawer" app clipped>
-            <v-list dense>
+            <v-list>
                 <nuxt-link to="/">
                     <v-list-item @click="goHome">
                         <v-list-item-action>
@@ -65,3 +65,15 @@ export default {
     }
 }
 </script>
+
+<style>
+a,
+u {
+    text-decoration: none;
+}
+ol,
+ul,
+li {
+    list-style: none;
+}
+</style>
