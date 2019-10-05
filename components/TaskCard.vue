@@ -80,3 +80,9 @@ export default {
     })
 }
 </script>
+
+<style scoped>
+.v-card--link {
+    cursor: move;
+}
+</style>

@@ -37,9 +37,9 @@
                             :name="!drag ? 'flip-list' : null"
                         >
                             <li
-                                class="list-group-item"
                                 v-for="task in list"
                                 :key="task.order"
+                                class="list-group-item"
                             >
                                 <i
                                     :class="
@@ -47,8 +47,8 @@
                                             ? 'fa fa-anchor'
                                             : 'glyphicon glyphicon-pushpin'
                                     "
-                                    @click="task.fixed = !task.fixed"
                                     aria-hidden="true"
+                                    @click="task.fixed = !task.fixed"
                                 ></i>
                                 <TaskCard :task="task.task" />
                             </li>
@@ -138,7 +138,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .flip-list-move {
     transition: transform 0.5s;
 }
