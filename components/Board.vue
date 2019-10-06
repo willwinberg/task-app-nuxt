@@ -18,7 +18,7 @@ export default {
     data: () => ({
         columns: [
             {
-                title: 'TODO'
+                title: 'Todo'
             },
             {
                 title: 'Doing'

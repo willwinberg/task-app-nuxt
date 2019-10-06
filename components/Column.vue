@@ -38,7 +38,7 @@
                         >
                             <li
                                 v-for="task in list"
-                                :key="task.order"
+                                :key="task.task.id"
                                 class="list-group-item"
                             >
                                 <i
@@ -68,6 +68,7 @@ import AddTaskForm from './AddTaskForm'
 
 const tasks = [
     {
+        id: 456789,
         priority: 'highest',
         title: 'do backend',
         description: 'we need to complete the entire backend of this app',
@@ -79,6 +80,7 @@ const tasks = [
         status: 'In Progress'
     },
     {
+        id: 347898,
         priority: 'highest',
         title: 'do backend',
         description: 'we need to complete the entire backend of this app',
@@ -90,6 +92,7 @@ const tasks = [
         status: 'In Progress'
     },
     {
+        id: 54901,
         priority: 'highest',
         title: 'do backend',
         description: 'we need to complete the entire backend of this app',
@@ -150,7 +153,7 @@ export default {
     background: #c8ebfb;
 }
 .list-group {
-    min-height: 20px;
+    min-height: 200px !important;
 }
 .list-group-item {
     cursor: move;
