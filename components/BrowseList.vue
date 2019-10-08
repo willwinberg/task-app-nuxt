@@ -1,108 +1,325 @@
+<!--This component is perhaps too large but... -->
 <template>
-    <v-card max-width="500" class="mx-auto">
-        <v-toolbar color="pink" dark>
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-container fluid>
+        <v-data-iterator
+            :items="items"
+            :items-per-page.sync="itemsPerPage"
+            :page="page"
+            :search="search"
+            :sort-by="sortBy.toLowerCase()"
+            :sort-desc="sortDesc"
+            hide-default-footer
+        >
+            <template v-slot:header>
+                <v-toolbar dark color="blue-grey darken-3" class="mb-1">
+                    <v-text-field
+                        v-model="search"
+                        clearable
+                        flat
+                        solo-inverted
+                        hide-details
+                        prepend-inner-icon="mdi-magnify"
+                        label="Search"
+                    ></v-text-field>
+                    <template v-if="$vuetify.breakpoint.mdAndUp">
+                        <div class="flex-grow-1"></div>
+                        <v-select
+                            v-model="sortBy"
+                            flat
+                            solo-inverted
+                            hide-details
+                            :items="keys"
+                            prepend-inner-icon="mdi-magnify"
+                            label="Sort by"
+                        ></v-select>
+                        <div class="flex-grow-1"></div>
+                        <v-btn-toggle v-model="sortDesc" mandatory>
+                            <v-btn
+                                large
+                                depressed
+                                color="blue-grey"
+                                :value="false"
+                            >
+                                <v-icon>mdi-arrow-up</v-icon>
+                            </v-btn>
+                            <v-btn
+                                large
+                                depressed
+                                color="blue-grey"
+                                :value="true"
+                            >
+                                <v-icon>mdi-arrow-down</v-icon>
+                            </v-btn>
+                        </v-btn-toggle>
+                    </template>
+                </v-toolbar>
+            </template>
 
-            <v-toolbar-title>Inbox</v-toolbar-title>
+            <template v-slot:default="props">
+                <v-row>
+                    <v-col
+                        v-for="item in props.items"
+                        :key="item.name"
+                        cols="12"
+                        sm="6"
+                        md="4"
+                        lg="3"
+                    >
+                        <v-card>
+                            <v-card-title class="subheading font-weight-bold">{{
+                                item.name
+                            }}</v-card-title>
 
-            <div class="flex-grow-1"></div>
+                            <v-divider></v-divider>
 
-            <v-btn icon>
-                <v-icon>mdi-magnify</v-icon>
-            </v-btn>
+                            <v-list dense>
+                                <v-list-item
+                                    v-for="(key, index) in filteredKeys"
+                                    :key="index"
+                                    :color="
+                                        sortBy === key
+                                            ? `blue-grey lighten-4`
+                                            : `white`
+                                    "
+                                >
+                                    <v-list-item-content
+                                        >{{ key }}:</v-list-item-content
+                                    >
+                                    <v-list-item-content class="align-end">{{
+                                        item[key.toLowerCase()]
+                                    }}</v-list-item-content>
+                                </v-list-item>
+                            </v-list>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </template>
 
-            <v-btn icon>
-                <v-icon>mdi-checkbox-marked-circle</v-icon>
-            </v-btn>
-        </v-toolbar>
-
-        <v-list two-line>
-            <v-list-item-group
-                v-model="selected"
-                multiple
-                active-class="pink--text"
-            >
-                <template v-for="(item, index) in items">
-                    <v-list-item :key="item.title">
-                        <template v-slot:default="{ active, toggle }">
-                            <v-list-item-content>
-                                <v-list-item-title
-                                    v-text="item.title"
-                                ></v-list-item-title>
-                                <v-list-item-subtitle
-                                    class="text--primary"
-                                    v-text="item.headline"
-                                ></v-list-item-subtitle>
-                                <v-list-item-subtitle
-                                    v-text="item.subtitle"
-                                ></v-list-item-subtitle>
-                            </v-list-item-content>
-
-                            <v-list-item-action>
-                                <v-list-item-action-text
-                                    v-text="item.action"
-                                ></v-list-item-action-text>
-                                <v-icon v-if="!active" color="grey lighten-1">
-                                    star_border
-                                </v-icon>
-
-                                <v-icon v-else color="yellow">
-                                    star
-                                </v-icon>
-                            </v-list-item-action>
+            <template v-slot:footer>
+                <v-row class="mt-2" align="center" justify="center">
+                    <span class="grey--text">Items per page</span>
+                    <v-menu offset-y>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                dark
+                                text
+                                color="blue-grey"
+                                class="ml-2"
+                                v-on="on"
+                            >
+                                {{ itemsPerPage }}
+                                <v-icon>mdi-chevron-down</v-icon>
+                            </v-btn>
                         </template>
-                    </v-list-item>
+                        <v-list>
+                            <v-list-item
+                                v-for="(number, index) in itemsPerPageArray"
+                                :key="index"
+                                @click="updateItemsPerPage(number)"
+                            >
+                                <v-list-item-title>{{
+                                    number
+                                }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
 
-                    <v-divider
-                        v-if="index + 1 < items.length"
-                        :key="index"
-                    ></v-divider>
-                </template>
-            </v-list-item-group>
-        </v-list>
-    </v-card>
+                    <div class="flex-grow-1"></div>
+
+                    <span
+                        class="mr-4
+            grey--text"
+                    >
+                        Page {{ page }} of {{ numberOfPages }}
+                    </span>
+                    <v-btn
+                        fab
+                        dark
+                        color="blue-grey darken-3"
+                        class="mr-1"
+                        @click="formerPage"
+                    >
+                        <v-icon>mdi-chevron-left</v-icon>
+                    </v-btn>
+                    <v-btn
+                        fab
+                        dark
+                        color="blue-grey darken-3"
+                        class="ml-1"
+                        @click="nextPage"
+                    >
+                        <v-icon>mdi-chevron-right</v-icon>
+                    </v-btn>
+                </v-row>
+            </template>
+        </v-data-iterator>
+    </v-container>
 </template>
 
 <script>
 export default {
-    data: () => ({
-        selected: [2],
-        items: [
-            {
-                action: '15 min',
-                headline: 'Brunch this weekend?',
-                title: 'Ali Connors',
-                subtitle:
-                    "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
-            },
-            {
-                action: '2 hr',
-                headline: 'Summer BBQ',
-                title: 'me, Scrott, Jennifer',
-                subtitle: "Wish I could come, but I'm out of town this weekend."
-            },
-            {
-                action: '6 hr',
-                headline: 'Oui oui',
-                title: 'Sandra Adams',
-                subtitle:
-                    'Do you have Paris recommendations? Have you ever been?'
-            },
-            {
-                action: '12 hr',
-                headline: 'Birthday gift',
-                title: 'Trevor Hansen',
-                subtitle:
-                    'Have any ideas about what we should get Heidi for her birthday?'
-            },
-            {
-                action: '18hr',
-                headline: 'Recipe to try',
-                title: 'Britta Holt',
-                subtitle:
-                    'We should eat this: Grate, Squash, Corn, and tomatillo Tacos.'
-            }
-        ]
-    })
+    data() {
+        return {
+            itemsPerPageArray: [4, 8, 12],
+            search: '',
+            filter: {},
+            sortDesc: false,
+            page: 1,
+            itemsPerPage: 4,
+            sortBy: 'name',
+            keys: [
+                'Name',
+                'Site',
+                'Reporter',
+                'Type',
+                'Points',
+                'Priority',
+                'Description',
+                'Date'
+            ],
+            items: [
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                },
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                },
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                },
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                },
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                },
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                },
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                },
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                },
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                },
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                },
+                {
+                    name: 'Make routes',
+                    site: 'PlumbersStock',
+                    reporter: 'Austen Strine',
+                    type: 'Task',
+                    points: 300,
+                    priority: 'Medium',
+                    description:
+                        'Need to build the api out for this whole app. This is a necessary part',
+                    date: new Date()
+                }
+            ]
+        }
+    },
+    computed: {
+        numberOfPages() {
+            return Math.ceil(this.items.length / this.itemsPerPage)
+        },
+        filteredKeys() {
+            return this.keys.filter((key) => key !== `Title`)
+        }
+    },
+    methods: {
+        nextPage() {
+            if (this.page + 1 <= this.numberOfPages) this.page += 1
+        },
+        formerPage() {
+            if (this.page - 1 >= 1) this.page -= 1
+        },
+        updateItemsPerPage(number) {
+            this.itemsPerPage = number
+        }
+    }
 }
 </script>
