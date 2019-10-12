@@ -2,8 +2,8 @@
 <template>
     <v-container fluid>
         <v-data-iterator
-            :items="items"
-            :items-per-page.sync="itemsPerPage"
+            :items="tasks"
+            :items-per-page.sync="tasksPerPage"
             :page="page"
             :search="search"
             :sort-by="sortBy.toLowerCase()"
@@ -55,24 +55,11 @@
                 </v-toolbar>
             </template>
 
-            <template v-slot:default="props">
-                <v-row>
-                    <v-col
-                        v-for="item in props.items"
-                        :key="item.name"
-                        cols="12"
-                        sm="6"
-                        md="4"
-                        lg="3"
-                    >
-                        <BrowseCard v-bind="item" />
-                    </v-col>
-                </v-row>
-            </template>
+            <BrowseCards />
 
             <template v-slot:footer>
                 <v-row class="mt-2" align="center" justify="center">
-                    <span class="grey--text">Items per page</span>
+                    <span class="grey--text">Tasks per page</span>
                     <v-menu offset-y>
                         <template v-slot:activator="{ on }">
                             <v-btn
@@ -82,13 +69,13 @@
                                 class="ml-2"
                                 v-on="on"
                             >
-                                {{ itemsPerPage }}
+                                {{ tasksPerPage }}
                                 <v-icon>mdi-chevron-down</v-icon>
                             </v-btn>
                         </template>
                         <v-list>
                             <v-list-item
-                                v-for="(number, index) in itemsPerPageArray"
+                                v-for="(number, index) in tasksPerPageArray"
                                 :key="index"
                                 @click="updateItemsPerPage(number)"
                             >
@@ -132,20 +119,20 @@
 </template>
 
 <script>
-import BrowseCard from './BrowseCard'
+import BrowseCards from './BrowseCards'
 
 export default {
     components: {
-        BrowseCard
+        BrowseCards
     },
     data() {
         return {
-            itemsPerPageArray: [4, 8, 12],
+            tasksPerPageArray: [4, 8, 12],
             search: '',
             filter: {},
             sortDesc: false,
             page: 1,
-            itemsPerPage: 4,
+            tasksPerPage: 4,
             sortBy: 'name',
             keys: [
                 'Title',
@@ -157,7 +144,7 @@ export default {
                 'Description',
                 'Date'
             ],
-            items: [
+            tasks: [
                 {
                     _id: '5d9c018ba130ecebd9bacfa5',
                     index: 0,
@@ -298,7 +285,7 @@ export default {
     },
     computed: {
         numberOfPages() {
-            return Math.ceil(this.items.length / this.itemsPerPage)
+            return Math.ceil(this.tasks.length / this.tasksPerPage)
         },
         filteredKeys() {
             return this.keys.filter((key) => key !== `Title`)
@@ -312,7 +299,7 @@ export default {
             if (this.page - 1 >= 1) this.page -= 1
         },
         updateItemsPerPage(number) {
-            this.itemsPerPage = number
+            this.tasksPerPage = number
         }
     }
 }
