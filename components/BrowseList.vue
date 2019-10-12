@@ -55,7 +55,16 @@
                 </v-toolbar>
             </template>
 
-            <BrowseCards />
+            <v-row
+                v-for="task in tasks"
+                :key="task.name"
+                cols="12"
+                sm="6"
+                md="4"
+                lg="3"
+            >
+                <BrowseCard :task="task" />
+            </v-row>
 
             <template v-slot:footer>
                 <v-row class="mt-2" align="center" justify="center">
@@ -119,11 +128,11 @@
 </template>
 
 <script>
-import BrowseCards from './BrowseCards'
+import BrowseCard from './BrowseCard'
 
 export default {
     components: {
-        BrowseCards
+        BrowseCard
     },
     data() {
         return {
