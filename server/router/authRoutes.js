@@ -10,7 +10,7 @@ module.exports = function(path, router) {
             //     const valid = email.length && password === '123'
             //
             //     if (!valid) {
-            //         console.log('AAAAAAA')
+            //         console.log('invalid credentials')
             //         throw new Error('Invalid credentials')
             //     }
             //

@@ -65,32 +65,7 @@
                         md="4"
                         lg="3"
                     >
-                        <v-card>
-                            <v-card-title class="subheading font-weight-bold">{{
-                                item.name
-                            }}</v-card-title>
-
-                            <v-divider></v-divider>
-
-                            <v-list dense>
-                                <v-list-item
-                                    v-for="(key, index) in filteredKeys"
-                                    :key="index"
-                                    :color="
-                                        sortBy === key
-                                            ? `blue-grey lighten-4`
-                                            : `white`
-                                    "
-                                >
-                                    <v-list-item-content
-                                        >{{ key }}:</v-list-item-content
-                                    >
-                                    <v-list-item-content class="align-end">{{
-                                        item[key.toLowerCase()]
-                                    }}</v-list-item-content>
-                                </v-list-item>
-                            </v-list>
-                        </v-card>
+                        <BrowseCard v-bind="item" />
                     </v-col>
                 </v-row>
             </template>
@@ -157,7 +132,12 @@
 </template>
 
 <script>
+import BrowseCard from './BrowseCard'
+
 export default {
+    components: {
+        BrowseCard
+    },
     data() {
         return {
             itemsPerPageArray: [4, 8, 12],
