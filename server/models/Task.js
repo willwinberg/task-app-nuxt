@@ -3,6 +3,10 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 const TaskSchema = mongoose.Schema(
     {
+        id: {
+            type: Number,
+            required: true
+        },
         site: {
             type: String,
             required: true
@@ -51,9 +55,9 @@ const TaskSchema = mongoose.Schema(
             type: mongoose.Schema.Types.Date,
             default: Date.now
         },
-        dateComplete: { type: mongoose.Schema.Types.Date, default: null },
-        user: [{ type: ObjectId, ref: 'User' }],
-        board: [{ type: ObjectId, ref: 'Board' }],
+        dateCompleted: { type: mongoose.Schema.Types.Date, default: null },
+        // user: [{ type: ObjectId, ref: 'User' }],
+        // board: [{ type: ObjectId, ref: 'Board' }],
         column: [{ type: ObjectId, ref: 'Column' }]
     },
     {

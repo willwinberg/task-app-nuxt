@@ -21,7 +21,7 @@ module.exports = function(path, router) {
         })
     })
 
-    /* SAVE USER */
+    /* ADD USER */
     router.post('/', function(req, res, next) {
         User.create(req.body, function(err, post) {
             if (err) return next(err)
