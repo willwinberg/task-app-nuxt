@@ -6,7 +6,9 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 const UserSchema = mongoose.Schema(
     {
         id: {
-            type: Number
+            type: Number,
+            required: true,
+            unique: true
         },
         email: {
             type: String,
@@ -37,15 +39,10 @@ const UserSchema = mongoose.Schema(
             type: String
         },
         board: [
+            // add this now or worry about it later when we want to add more boards?
             {
                 type: ObjectId,
                 ref: 'Board'
-            }
-        ],
-        columns: [
-            {
-                type: ObjectId,
-                ref: 'Column'
             }
         ],
         tasks: [
