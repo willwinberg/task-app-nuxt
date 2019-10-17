@@ -1,7 +1,6 @@
 // const express = require('express')
 // const passport = require('passport')
 const Task = require('../models/Task')
-// const router = express.Router()
 
 module.exports = function(path, router) {
     router
@@ -73,5 +72,3 @@ module.exports = function(path, router) {
                 })
         })
 }
-
-// module.exports = router
