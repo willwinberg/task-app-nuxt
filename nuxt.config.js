@@ -97,25 +97,26 @@ module.exports = {
         }
     },
     router: {
-        // middleware: ['auth']
+        middleware: ['auth']
     },
     /*
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        // baseURL: 'http://localhost:3001',
+        // baseURL: 'http://localhost:3000',
         debug: true,
-        proxy: true
+        proxy: true,
+        prefix: '/api/'
         // process.env.AXIOS_SERVER
     },
     proxy: {
-        '/api/': 'http://localhost:3001'
+        '/api/': 'http://localhost:8100'
     },
     // serverMiddleware: ['~/server/index.js'],
     server: {
-        port: 3000, // default: 3000
-        host: 'localhost' // default: localhost,
+        // port: 3000, // default: 3000
+        // host: 'localhost' // default: localhost,
         // timing: false,
         // https: {
         //   key: fs.readFileSync(path.resolve(__dirname, 'server.key')),

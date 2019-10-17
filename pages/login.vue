@@ -44,7 +44,7 @@ import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
     layout: 'unauthenticated',
-    middleware: ['auth'],
+    // middleware: ['auth'],
     components: {},
     mixins: [formValidatorMixin],
     data: () => ({
