@@ -26,8 +26,14 @@
             show-expand
             class="elevation-1"
         >
+            <template v-slot:item.title="{ item }">
+                <div class="limit-characters">{{ item.title }}</div>
+            </template>
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length" v-text="item.description"></td>
+            </template>
+            <template v-slot:item.date="{ item }">
+                <div>{{ formattedDate(item.date) }}</div>
             </template>
             <template v-slot:item.action="{ item }">
                 <v-icon small class="mr-3" @click="editItem(item)">
@@ -201,6 +207,22 @@ export default {
                 }
             ]
         }
+    },
+    methods: {
+        // TODO: change this function after all dates are javascript date objects
+        formattedDate(dateStr) {
+            const arr = dateStr.split(' ')
+            return `${arr[1].substring(0, 3)}, ${arr[2]} ${arr[3]}`
+        }
     }
 }
 </script>
+
+<style>
+.limit-characters {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+</style>
