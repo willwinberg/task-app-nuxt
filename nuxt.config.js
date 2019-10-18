@@ -97,21 +97,20 @@ module.exports = {
         }
     },
     router: {
-        middleware: ['auth']
+        // middleware: ['auth']
     },
     /*
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        // baseURL: 'http://localhost:3000',
+        baseURL: 'http://localhost:3000',
         debug: true,
-        proxy: true,
-        prefix: '/api/'
+        proxy: true
         // process.env.AXIOS_SERVER
     },
     proxy: {
-        '/api/': 'http://localhost:8100'
+        '/api/': 'http://localhost:3000'
     },
     // serverMiddleware: ['~/server/index.js'],
     server: {

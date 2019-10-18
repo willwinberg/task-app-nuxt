@@ -57,7 +57,7 @@
 
             <v-row
                 v-for="task in tasks"
-                :key="task.name"
+                :key="task.title"
                 cols="12"
                 sm="6"
                 md="4"
@@ -142,7 +142,7 @@ export default {
             sortDesc: false,
             page: 1,
             tasksPerPage: 4,
-            sortBy: 'name',
+            sortBy: 'Title',
             keys: [
                 'Title',
                 'Site',
