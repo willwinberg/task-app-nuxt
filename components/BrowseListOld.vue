@@ -1,66 +1,157 @@
+<!--This component is perhaps too large but... -->
 <template>
-    <v-card>
-        <v-card-title>
-            Unassigned Tasks
-            <v-spacer></v-spacer>
-            <v-text-field
-                v-model="search"
-                append-icon="mdi-magnify"
-                label="Search"
-                single-line
-                hide-details
-            ></v-text-field>
-            <AddTaskForm />
-        </v-card-title>
-        <v-data-table
-            item-key="name"
-            :loading="loading"
-            loading-text="Loading tasks... Please wait"
-            :headers="headers"
+    <v-container fluid>
+        <v-data-iterator
             :items="tasks"
+            :items-per-page.sync="tasksPerPage"
+            :page="page"
             :search="search"
-            :sort-by="['calories', 'fat']"
-            :sort-desc="[false, true]"
-            multi-sort
-            :expanded.sync="expanded"
-            show-expand
-            class="elevation-1"
+            :sort-by="sortBy.toLowerCase()"
+            :sort-desc="sortDesc"
+            hide-default-footer
         >
-            <template v-slot:expanded-item="{ headers, item }">
-                <td :colspan="headers.length" v-text="item.description"></td>
+            <template v-slot:header>
+                <v-toolbar dark color="blue-grey darken-3" class="mb-1">
+                    <v-text-field
+                        v-model="search"
+                        clearable
+                        flat
+                        solo-inverted
+                        hide-details
+                        prepend-inner-icon="mdi-magnify"
+                        label="Search"
+                    ></v-text-field>
+                    <template v-if="$vuetify.breakpoint.mdAndUp">
+                        <div class="flex-grow-1"></div>
+                        <v-select
+                            v-model="sortBy"
+                            flat
+                            solo-inverted
+                            hide-details
+                            :items="keys"
+                            prepend-inner-icon="mdi-magnify"
+                            label="Sort by"
+                        ></v-select>
+                        <div class="flex-grow-1"></div>
+                        <v-btn-toggle v-model="sortDesc" mandatory>
+                            <v-btn
+                                large
+                                depressed
+                                color="blue-grey"
+                                :value="false"
+                            >
+                                <v-icon>mdi-arrow-up</v-icon>
+                            </v-btn>
+                            <v-btn
+                                large
+                                depressed
+                                color="blue-grey"
+                                :value="true"
+                            >
+                                <v-icon>mdi-arrow-down</v-icon>
+                            </v-btn>
+                        </v-btn-toggle>
+                    </template>
+                </v-toolbar>
             </template>
-            <template v-slot:item.action="{ item }">
-                <v-icon small class="mr-3" @click="editItem(item)">
-                    mdi-pencil
-                </v-icon>
-                <v-icon @click="takeItem(item)">
-                    mdi-plus
-                </v-icon>
+
+            <v-row
+                v-for="task in tasks"
+                :key="task.title"
+                cols="12"
+                sm="6"
+                md="4"
+                lg="3"
+            >
+                <BrowseCard :task="task" />
+            </v-row>
+
+            <template v-slot:footer>
+                <v-row class="mt-2" align="center" justify="center">
+                    <span class="grey--text">Tasks per page</span>
+                    <v-menu offset-y>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                dark
+                                text
+                                color="blue-grey"
+                                class="ml-2"
+                                v-on="on"
+                            >
+                                {{ tasksPerPage }}
+                                <v-icon>mdi-chevron-down</v-icon>
+                            </v-btn>
+                        </template>
+                        <v-list>
+                            <v-list-item
+                                v-for="(number, index) in tasksPerPageArray"
+                                :key="index"
+                                @click="updateItemsPerPage(number)"
+                            >
+                                <v-list-item-title>{{
+                                    number
+                                }}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+
+                    <div class="flex-grow-1"></div>
+
+                    <span
+                        class="mr-4
+            grey--text"
+                    >
+                        Page {{ page }} of {{ numberOfPages }}
+                    </span>
+                    <v-btn
+                        fab
+                        dark
+                        color="blue-grey darken-3"
+                        class="mr-1"
+                        @click="formerPage"
+                    >
+                        <v-icon>mdi-chevron-left</v-icon>
+                    </v-btn>
+                    <v-btn
+                        fab
+                        dark
+                        color="blue-grey darken-3"
+                        class="ml-1"
+                        @click="nextPage"
+                    >
+                        <v-icon>mdi-chevron-right</v-icon>
+                    </v-btn>
+                </v-row>
             </template>
-        </v-data-table>
-    </v-card>
+        </v-data-iterator>
+    </v-container>
 </template>
 
 <script>
-import AddTaskForm from './AddTaskForm'
+import BrowseCard from './BrowseCard'
+
 export default {
     components: {
-        AddTaskForm
+        BrowseCard
     },
     data() {
         return {
+            tasksPerPageArray: [4, 8, 12],
             search: '',
-            expanded: [],
-            singleExpand: false,
-            loading: false,
-            headers: [
-                { text: 'Title', value: 'title' },
-                { text: 'Site', value: 'site' },
-                { text: 'Priority', value: 'priority' },
-                { text: 'Type', value: 'type' },
-                { text: 'Reporter', value: 'reporter' },
-                { text: 'Date', value: 'date' },
-                { text: 'Actions', value: 'action', sortable: false }
+            filter: {},
+            sortDesc: false,
+            page: 1,
+            tasksPerPage: 4,
+            sortBy: 'Title',
+            keys: [
+                'Title',
+                'Site',
+                'Reporter',
+                'Type',
+                'Points',
+                'Priority',
+                'Description',
+                'Date'
             ],
             tasks: [
                 {
@@ -72,8 +163,7 @@ export default {
                     type: 'Epic',
                     asignee: '5d9c018bf52557d9674caee0',
                     reporter: 'Leah',
-                    title:
-                        'incididunt incididunt pariatur culpa non incididunt incididunt pariatur culpa non',
+                    title: 'incididunt incididunt pariatur culpa non',
                     description:
                         'Dolore quis reprehenderit reprehenderit ex eiusmod exercitation exercitation sunt exercitation anim. Irure nisi sit commodo esse. Culpa sint veniam tempor qui pariatur velit nostrud. Consequat cupidatat incididunt deserunt laboris labore id qui cillum velit adipisicing. Incididunt nisi occaecat et anim laboris ea sit adipisicing.',
                     date: 'Sunday, June 11, 2017 4:35 PM',
@@ -200,6 +290,25 @@ export default {
                     completeDate: 'Tuesday, April 15, 2014 10:04 PM'
                 }
             ]
+        }
+    },
+    computed: {
+        numberOfPages() {
+            return Math.ceil(this.tasks.length / this.tasksPerPage)
+        },
+        filteredKeys() {
+            return this.keys.filter((key) => key !== `Title`)
+        }
+    },
+    methods: {
+        nextPage() {
+            if (this.page + 1 <= this.numberOfPages) this.page += 1
+        },
+        formerPage() {
+            if (this.page - 1 >= 1) this.page -= 1
+        },
+        updateItemsPerPage(number) {
+            this.tasksPerPage = number
         }
     }
 }
