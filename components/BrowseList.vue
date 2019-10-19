@@ -34,7 +34,7 @@
                 <div class="limit-characters">{{ item.title }}</div>
             </template>
             <template v-slot:expanded-item="{ headers, item }">
-                <td class="pb-3" :colspan="headers.length">
+                <td class="pb-3 wrap-hack" :colspan="headers.length">
                     <p class="description">{{ item.description }}</p>
                     <EditTaskForm v-bind="item" />
                     <DeleteTaskModal v-bind="item" />
@@ -234,8 +234,10 @@ export default {
     text-overflow: ellipsis;
     max-width: 200px;
 }
+.wrap-hack {
+    max-width: 1px;
+}
 .description {
-    box-sizing: initial;
-    margin: 1em;
+    overflow-wrap: break-word;
 }
 </style>

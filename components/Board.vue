@@ -1,11 +1,9 @@
 <template>
-    <v-container fluid>
-        <v-row>
-            <v-col v-for="(column, i) in columns" :key="i">
-                <Column :column="column" />
-            </v-col>
-        </v-row>
-    </v-container>
+    <v-row>
+        <v-col v-for="(column, i) in columns" :key="i">
+            <Column :column="column" />
+        </v-col>
+    </v-row>
 </template>
 
 <script>
