@@ -27,3 +27,4 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 * Multiple boards
 * Vuetify styling theme 
 * integrate JS date objects in all data
+* find out why browse table gets messed up on expand

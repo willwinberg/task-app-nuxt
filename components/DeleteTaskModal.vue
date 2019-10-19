@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="dialog" max-width="290">
+    <v-dialog v-model="dialog" persistent max-width="290">
         <template v-slot:activator="{ on }">
             <v-btn outlined text v-on="on">Delete</v-btn>
         </template>

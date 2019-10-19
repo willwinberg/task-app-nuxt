@@ -13,7 +13,7 @@
             <AddTaskForm />
         </v-card-title>
         <v-data-table
-            item-key="name"
+            item-key="index"
             :loading="loading"
             loading-text="Loading tasks... Please wait"
             :headers="headers"
@@ -22,6 +22,7 @@
             :sort-by="['calories', 'fat']"
             :sort-desc="[false, true]"
             multi-sort
+            single-expanded
             :expanded.sync="expanded"
             show-expand
             class="elevation-1"
@@ -30,15 +31,16 @@
                 <div class="limit-characters">{{ item.title }}</div>
             </template>
             <template v-slot:expanded-item="{ headers, item }">
-                <td :colspan="headers.length" v-text="item.description"></td>
+                <td class="pb-3" :colspan="headers.length">
+                    <p class="description">{{ item.description }}</p>
+                    <EditTaskForm v-bind="item" />
+                    <DeleteTaskModal v-bind="item" />
+                </td>
             </template>
             <template v-slot:item.date="{ item }">
                 <div>{{ formattedDate(item.date) }}</div>
             </template>
             <template v-slot:item.action="{ item }">
-                <v-icon small class="mr-3" @click="editItem(item)">
-                    mdi-pencil
-                </v-icon>
                 <v-icon @click="takeItem(item)">
                     mdi-plus
                 </v-icon>
@@ -49,9 +51,13 @@
 
 <script>
 import AddTaskForm from './AddTaskForm'
+import EditTaskForm from './EditTaskForm'
+import DeleteTaskModal from './DeleteTaskModal'
 export default {
     components: {
-        AddTaskForm
+        AddTaskForm,
+        EditTaskForm,
+        DeleteTaskModal
     },
     data() {
         return {
@@ -65,7 +71,7 @@ export default {
                 { text: 'Priority', value: 'priority' },
                 { text: 'Type', value: 'type' },
                 { text: 'Reporter', value: 'reporter' },
-                { text: 'Date', value: 'date' },
+                { text: 'Date', value: 'date', width: '120px' },
                 { text: 'Actions', value: 'action', sortable: false }
             ],
             tasks: [
@@ -224,5 +230,9 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px;
+}
+.description {
+    box-sizing: initial;
+    margin: 1em;
 }
 </style>
