@@ -1,7 +1,7 @@
 <template>
     <v-switch
-        append-icon="palette"
-        hint="switch theme"
+        append-icon="mdi-palette"
+        hint="Brad's button"
         @change="switchTheme"
     ></v-switch>
 </template>
@@ -12,9 +12,9 @@ export default {
     methods: {
         switchTheme() {
             const switchOff = this.$vuetify.dark
-                ? 'theme--dark'
-                : 'theme--light'
-            const switchOn = this.$vuetify.dark ? 'theme--light' : 'theme--dark'
+                ? 'theme--light'
+                : 'theme--dark'
+            const switchOn = this.$vuetify.dark ? 'theme--dark' : 'theme--light'
             const themed = document.getElementsByClassName(switchOff)
 
             Array.from(themed).forEach((el) => {
@@ -23,7 +23,7 @@ export default {
             })
 
             this.$vuetify.dark = !this.$vuetify.dark
-            this.theme.isDark = !this.theme.isDark
+            // this.theme.isDark = !this.theme.isDark
         }
     }
 }
