@@ -1,8 +1,6 @@
 <template>
     <v-card max-width="400" class="mx-auto">
-        <v-system-bar color="blue-grey darken-2"></v-system-bar>
-
-        <v-app-bar dark color="blue-grey">
+        <v-app-bar color="blue-grey">
             <v-btn icon>
                 <v-icon>mdi-settings</v-icon>
             </v-btn>

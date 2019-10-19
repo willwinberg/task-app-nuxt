@@ -1,17 +1,20 @@
 <template>
     <v-card>
-        <v-card-title>
-            Unassigned Tasks
+        <v-toolbar color="blue-grey">
+            <v-toolbar-title>
+                Unassigned Tasks
+            </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-text-field
                 v-model="search"
+                class="mr-4"
                 append-icon="mdi-magnify"
                 label="Search"
                 single-line
                 hide-details
             ></v-text-field>
             <AddTaskForm />
-        </v-card-title>
+        </v-toolbar>
         <v-data-table
             item-key="index"
             :loading="loading"
@@ -41,7 +44,7 @@
                 <div>{{ formattedDate(item.date) }}</div>
             </template>
             <template v-slot:item.action="{ item }">
-                <v-icon @click="takeItem(item)">
+                <v-icon right @click="takeItem(item)">
                     mdi-plus
                 </v-icon>
             </template>
@@ -72,7 +75,7 @@ export default {
                 { text: 'Type', value: 'type' },
                 { text: 'Reporter', value: 'reporter' },
                 { text: 'Date', value: 'date', width: '120px' },
-                { text: 'Actions', value: 'action', sortable: false }
+                { text: 'Take', value: 'action', sortable: false }
             ],
             tasks: [
                 {

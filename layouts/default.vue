@@ -40,6 +40,7 @@
                 @click.stop="drawer = !drawer"
             ></v-app-bar-nav-icon>
             <v-toolbar-title>{{ title }}</v-toolbar-title>
+            <ThemeSwitcher />
         </v-app-bar>
         <v-content>
             <v-container fluid>
@@ -53,7 +54,11 @@
 </template>
 
 <script>
+import ThemeSwitcher from '../components/ThemeSwitcher'
 export default {
+    components: {
+        ThemeSwitcher
+    },
     data: () => ({
         drawer: null,
         title: 'Gogrello'
