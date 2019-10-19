@@ -34,6 +34,7 @@
             @change="$v.checkbox.$touch()"
             @blur="$v.checkbox.$touch()"
         ></v-checkbox>
+        <ThemeSwitcher />
 
         <v-btn class="mr-4" @click="submit">submit</v-btn>
         <v-btn @click="clear">clear</v-btn>
@@ -43,10 +44,13 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email } from 'vuelidate/lib/validators'
+import ThemeSwitcher from '../components/ThemeSwitcher'
 
 export default {
+    components: {
+        ThemeSwitcher
+    },
     mixins: [validationMixin],
-
     validations: {
         name: { required, maxLength: maxLength(10) },
         email: { required, email },
@@ -57,7 +61,6 @@ export default {
             }
         }
     },
-
     data: () => ({
         name: '',
         email: '',

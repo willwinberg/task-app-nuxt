@@ -19,7 +19,7 @@
             :headers="headers"
             :items="tasks"
             :search="search"
-            :sort-by="['calories', 'fat']"
+            :sort-by="['site', 'priority']"
             :sort-desc="[false, true]"
             multi-sort
             single-expanded
