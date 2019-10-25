@@ -22,7 +22,7 @@ module.exports = {
      */
     head: {
         titleTemplate: '%s - ' + process.env.npm_package_name,
-        title: process.env.npm_package_name || '',
+        title: 'Gogrello',
         meta: [
             { charset: 'utf-8' },
             {
@@ -48,7 +48,12 @@ module.exports = {
     /*
      ** Plugins to load before mounting the App
      */
-    plugins: ['@plugins/vuetify'],
+    plugins: [
+        // { src: '@/plugins/vue-notifications', ssr: false },
+        { src: '@/plugins/vuetify' }
+        // TODO: use moment?
+        // { src: '@/plugins/vue-moment' }
+    ],
     /*
      ** Nuxt.js dev-modules
      */
@@ -104,10 +109,13 @@ module.exports = {
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        baseURL: 'http://localhost:3000',
+        baseURL: process.env.API_URL || 'http://localhost:3001/',
+        redirectError: {
+            401: '/login',
+            404: '/notfound'
+        },
         debug: true,
         proxy: true
-        // process.env.AXIOS_SERVER
     },
     proxy: {
         '/api/': 'http://localhost:3000'

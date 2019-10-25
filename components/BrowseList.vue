@@ -1,3 +1,4 @@
+<script src="../mixins/formValidatorMixin.js"></script>
 <template>
     <v-card>
         <v-toolbar color="blue-grey">

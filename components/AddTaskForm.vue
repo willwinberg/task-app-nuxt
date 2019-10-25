@@ -83,28 +83,17 @@ export default {
         error: null,
         submitStatus: null
     }),
-    computed: {
-        redirect() {
-            return (
-                this.$route.query.redirect &&
-                decodeURIComponent(this.$route.query.redirect)
-            )
-        }
-    },
+    // computed: {
+    //     redirect() {
+    //         return (
+    //             this.$route.query.redirect &&
+    //             decodeURIComponent(this.$route.query.redirect)
+    //         )
+    //     }
+    // },
     methods: {
-        addTask() {
-            this.error = null
-            this.$v.$touch()
-
-            if (this.$v.invalid) {
-                this.submitStatus = 'ERROR'
-            } else {
-                this.submitStatus = 'PENDING'
-                const payload = 'stuff'
-                return this.$store.addTask(payload).catch((e) => {
-                    this.error = e + ''
-                })
-            }
+        addTask(task) {
+            this.$store.dispatch('tasks/addTask', task)
             this.dialog = false
         },
         clear() {

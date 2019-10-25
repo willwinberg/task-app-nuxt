@@ -90,8 +90,9 @@ export default {
         description: ''
     }),
     methods: {
-        getUsersArray() {
-            return ['bill', 'gill']
+        editTask: (taskId) => {
+            this.$store.dispatch('tasks/editTask', taskId)
+            this.dialog = false
         }
     }
 }
