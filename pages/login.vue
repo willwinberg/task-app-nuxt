@@ -4,7 +4,7 @@
             <v-toolbar-title>Login</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-            <v-form @keydown.enter="login" @submit.prevent="test">
+            <v-form @keydown.enter="login" @submit.prevent="login">
                 <v-text-field
                     v-model.trim="email"
                     :error-messages="emailErrors"
@@ -33,7 +33,9 @@
         </v-card-text>
         <v-card-actions>
             <div class="flex-grow-1"></div>
-            <v-btn color="primary" type="submit" @click="login">Login</v-btn>
+            <v-btn color="primary" type="submit" @click.prevent="login"
+                >Login</v-btn
+            >
             <v-btn @click="clear">Clear</v-btn>
         </v-card-actions>
     </v-card>

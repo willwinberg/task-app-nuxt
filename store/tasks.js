@@ -1,4 +1,4 @@
-// import tasks from '../server/'
+import axios from 'axios'
 
 export const state = () => ({
     tasks: [
@@ -41,8 +41,6 @@ export const state = () => ({
     ]
 })
 
-const api = 'dogs'
-
 export const mutations = {
     SET_TASKS(state, tasks) {
         state.tasks = tasks
@@ -56,12 +54,12 @@ export const mutations = {
 }
 export const actions = {
     fetchTasks({ commit }) {
-        return api.get('/tasks').then((response) => {
+        return axios.get('/tasks').then((response) => {
             commit('SET_TASKS', response.data)
         })
     },
     fetchTask({ commit }, id) {
-        return api.get('/tasks/:id', id).then((response) => {
+        return axios.get('/tasks/:id', id).then((response) => {
             commit('SET_TASK', response.data)
         })
     },

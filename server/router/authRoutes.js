@@ -7,16 +7,10 @@ module.exports = function(path, router) {
         .post('/login', (req, res, next) => {
             res.send(req.body)
             const { email, password } = req.body
-            const valid = email.length && password === '123'
-
-            if (!valid) {
-                console.log('invalid credentials')
-                throw new Error('Invalid credentials')
-            }
-
             const token = jsonwebtoken.sign(
                 {
                     email,
+                    password,
                     name: 'User ' + email,
                     scope: ['test', 'user']
                 },

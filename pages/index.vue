@@ -8,6 +8,9 @@ import Board from '@@/components/Board'
 
 export default {
     // middleware: ['auth'],
+    fetch(context) {
+        return context.store.dispatch('auth/fetchData')
+    },
     components: {
         Board
     },

@@ -10,6 +10,9 @@
 import Column from './Column'
 
 export default {
+    fetch({ store }) {
+        return store.dispatch('tasks/fetchTasks')
+    },
     components: {
         Column
     },

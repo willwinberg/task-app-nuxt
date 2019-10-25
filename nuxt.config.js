@@ -109,7 +109,7 @@ module.exports = {
      ** See https://axios.nuxtjs.org/options
      */
     axios: {
-        baseURL: process.env.API_URL || 'http://localhost:3001/',
+        baseURL: process.env.API_URL || 'http://localhost:3000/',
         redirectError: {
             401: '/login',
             404: '/notfound'
@@ -118,7 +118,7 @@ module.exports = {
         proxy: true
     },
     proxy: {
-        '/api/': 'http://localhost:3000'
+        '/api/': 'http://localhost:3001'
     },
     // serverMiddleware: ['~/server/index.js'],
     server: {
