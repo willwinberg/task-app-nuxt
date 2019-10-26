@@ -15,7 +15,8 @@ config.dev = process.env.NODE_ENV !== 'production'
 // connect to mongodb
 mongoose
     .connect(dbConfig.connection, {
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        useUnifiedTopology: true
     })
     .then(() => console.log(`connection successful: ${dbConfig.connection}`))
     .catch((err) => console.error(err))
