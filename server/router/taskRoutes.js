@@ -1,11 +1,8 @@
-// const express = require('express')
-// const passport = require('passport')
 const router = require('express').Router()
 const Task = require('../models/Task')
 
 router
     .use('/tasks', router)
-
     .get('/', (req, res) => {
         const { _id } = req.user
         Task.find({ user: _id })
@@ -15,11 +12,8 @@ router
             .catch((err) => {
                 res.status(500).json({ message: err.message })
             })
-        // } else {
-        //   return res.status(400).json({ message: 'Must be logged in as either an employer or a seeker to view tasks.' })
     })
     .get('/browse', (req, res) => {
-        // const { category } = req.user
         Task.find({ assignee: null })
             // .populate({ path: 'details', select: 'name description' })
             .then((tasks) => {
