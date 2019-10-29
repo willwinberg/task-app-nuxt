@@ -51,7 +51,7 @@ app.use(corsConfig)
 //     })
 // )
 
-const { router } = require('./router')
+const { router } = require('./routes')
 app.use('/api', router)
 
 async function start() {
