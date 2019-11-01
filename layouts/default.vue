@@ -2,36 +2,30 @@
     <v-app>
         <v-navigation-drawer v-model="drawer" app clipped>
             <v-list>
-                <nuxt-link to="/">
-                    <v-list-item @click="goHome">
-                        <v-list-item-action>
-                            <v-icon>mdi-view-dashboard</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>Dashboard</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </nuxt-link>
-                <nuxt-link to="/browse">
-                    <v-list-item @click="goBrowse">
-                        <v-list-item-action>
-                            <v-icon>mdi-magnify-plus</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>Browse Tasks</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </nuxt-link>
-                <nuxt-link to="/settings">
-                    <v-list-item @click="goSettings">
-                        <v-list-item-action>
-                            <v-icon>mdi-settings</v-icon>
-                        </v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>Settings</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </nuxt-link>
+                <v-list-item @click="goHome">
+                    <v-list-item-action>
+                        <v-icon>mdi-view-dashboard</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Dashboard</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="goBrowse">
+                    <v-list-item-action>
+                        <v-icon>mdi-magnify-plus</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Browse Tasks</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="goSettings">
+                    <v-list-item-action>
+                        <v-icon>mdi-settings</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Settings</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
 
@@ -65,9 +59,21 @@ export default {
         title: 'Gogrello'
     }),
     methods: {
-        goHome() {},
-        goSettings() {},
-        goBrowse() {}
+        goHome() {
+            this.$router.push({
+                path: '/'
+            })
+        },
+        goSettings() {
+            this.$router.push({
+                path: '/settings'
+            })
+        },
+        goBrowse() {
+            this.$router.push({
+                path: '/browse'
+            })
+        }
     }
 }
 </script>

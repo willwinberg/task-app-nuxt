@@ -27,8 +27,10 @@ export default {
         async logout() {
             await this.$auth.logout()
         },
-        async goToProfile() {
-            await this.$auth.logout()
+        goToProfile() {
+            this.$router.push({
+                path: '/settings'
+            })
         }
     }
 }
