@@ -1,6 +1,6 @@
 // const User = require('../models/User')
 const router = require('express').Router()
-const jsonwebtoken = require('jsonwebtoken')
+// const jsonwebtoken = require('jsonwebtoken')
 
 router
     .use('/auth', router)
@@ -8,18 +8,22 @@ router
     .post('/login', (req, res, next) => {
         res.send(req.body)
         const { email, password } = req.body
-        // req.session.authUser = { username: 'demo' }
-        const token = jsonwebtoken.sign(
-            {
-                email,
-                password,
-                name: 'User ' + email,
-                scope: ['test', 'user']
-            },
-            'adumbsecret'
-        )
-        console.log(token)
-        res.json({ token })
+        if (password === 'test' && email === 'will@bill.org') {
+            req.session.authUser = { username: 'test' }
+            return res.json({ username: 'demo' })
+        }
+        res.status(401).json({ message: 'Bad credentials' })
+        // const token = jsonwebtoken.sign(
+        //     {
+        //         email,
+        //         password,
+        //         name: 'User ' + email,
+        //         scope: ['test', 'user']
+        //     },
+        //     'adumbsecret'
+        // )
+        // console.log(token)
+        // res.json({ token })
     })
 
     .post('/logins', (req, res) => {

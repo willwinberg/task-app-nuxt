@@ -71,7 +71,7 @@ module.exports = {
         '@nuxtjs/proxy'
     ],
     auth: {
-        plugins: ['~/plugins/auth.js'],
+        // plugins: ['~/plugins/auth.js'],
         strategies: {
             local: {
                 endpoints: {
@@ -83,22 +83,24 @@ module.exports = {
                     logout: {
                         url: '/api/auth/logout',
                         method: 'post'
-                    },
-                    user: {
-                        url: '/api/auth/user',
-                        method: 'get',
-                        propertyName: 'user'
                     }
-                },
+                    // user: {
+                    //     url: '/api/auth/user',
+                    //     method: 'get',
+                    //     propertyName: 'user'
+                    // }
+                }
                 // These are the defaults
-                tokenRequired: true,
-                tokenType: 'bearer',
-                tokenName: 'authorization'
+                // tokenRequired: true,
+                // tokenType: 'bearer',
+                // tokenName: 'authorization'
             }
         },
         redirect: {
-            login: '/',
-            logout: '/login'
+            login: '/login',
+            logout: '/login',
+            callback: '/login',
+            home: '/'
         }
     },
     router: {
