@@ -70,7 +70,6 @@
 import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
-    // middleware: ['auth'],
     components: {},
     mixins: [formValidatorMixin],
     data: () => ({

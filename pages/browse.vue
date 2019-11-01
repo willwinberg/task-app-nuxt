@@ -7,7 +7,6 @@ import formValidatorMixin from '@@/mixins/formValidatorMixin'
 import BrowseList from '@@/components/BrowseList'
 
 export default {
-    // middleware: ['auth'],
     components: {
         BrowseList
     },

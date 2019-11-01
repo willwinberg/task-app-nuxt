@@ -11,7 +11,6 @@
 <script>
 import FormBuilder from '@@/builders/FormBuilder'
 import FormDirector from '@@/builders/FormDirector'
-
 export default {
     name: 'EditProfilePage',
     components: {

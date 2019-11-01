@@ -8,11 +8,7 @@
 
 <script>
 import Column from './Column'
-
 export default {
-    fetch({ store }) {
-        return store.dispatch('tasks/fetchTasks')
-    },
     components: {
         Column
     },
@@ -35,6 +31,9 @@ export default {
         },
         set(value) {
             return this.$store.commit('updateList', value)
+        },
+        fetch({ store }) {
+            return store.dispatch('tasks/fetchTasks')
         }
     }
 }

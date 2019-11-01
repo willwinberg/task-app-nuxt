@@ -4,9 +4,11 @@
             <v-btn fab v-on="on">
                 <v-avatar>
                     <img
+                        v-if="avatarImg"
                         src="https://cdn.vuetifyjs.com/images/john.jpg"
                         alt="John"
                     />
+                    <span v-else class="headline" v-text="initials"></span>
                 </v-avatar>
             </v-btn>
         </template>
@@ -23,6 +25,17 @@
 
 <script>
 export default {
+    computed: {
+        // Todo: make this get the avatar url
+        avatarImg() {
+            // return this.$auth.user.avatar || null
+            return ''
+        },
+        initials() {
+            // return $user.initials
+            return 'WW'
+        }
+    },
     methods: {
         async logout() {
             await this.$auth.logout()
