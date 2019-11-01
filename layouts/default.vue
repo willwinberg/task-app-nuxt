@@ -40,7 +40,8 @@
                 @click.stop="drawer = !drawer"
             ></v-app-bar-nav-icon>
             <v-toolbar-title>{{ title }}</v-toolbar-title>
-            <ThemeSwitcher />
+            <v-spacer></v-spacer>
+            <AvatarMenu />
         </v-app-bar>
         <v-content>
             <v-container fluid>
@@ -54,10 +55,10 @@
 </template>
 
 <script>
-import ThemeSwitcher from '../components/ThemeSwitcher'
+import AvatarMenu from '../components/AvatarMenu'
 export default {
     components: {
-        ThemeSwitcher
+        AvatarMenu
     },
     data: () => ({
         drawer: null,

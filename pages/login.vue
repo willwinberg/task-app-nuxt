@@ -88,9 +88,6 @@ export default {
                     })
             }
         },
-        logout() {
-            return this.$auth.logout(/* .... */)
-        },
         clear() {
             // const response = this.$store.dispatch('user/fetchUsers')
             this.$v.$reset()
