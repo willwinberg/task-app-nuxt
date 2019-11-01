@@ -68,7 +68,7 @@ import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
     layout: 'unauthenticated',
-    // middleware: ['auth'],
+    // middleware: 'guest',
     components: {},
     mixins: [formValidatorMixin],
     data: () => ({
@@ -80,15 +80,15 @@ export default {
         error: null,
         submitStatus: null
     }),
-    asyncData: async (context) => {
-        try {
-            return await context.$axios.get('http://localhost:8000/foo').data
-        } catch {
-            context.error({
-                message: 'ajax problem...'
-            })
-        }
-    },
+    // asyncData: async (context) => {
+    //     try {
+    //         return await context.$axios.get('http://localhost:8000/foo').data
+    //     } catch {
+    //         context.error({
+    //             message: 'ajax problem...'
+    //         })
+    //     }
+    // },
     methods: {
         register() {
             this.error = null
