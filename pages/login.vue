@@ -66,7 +66,7 @@ export default {
         }
     },
     methods: {
-        login() {
+        async login() {
             this.error = null
             // await formValidatorMixin.validate()
             this.$v.$touch()
@@ -75,15 +75,16 @@ export default {
                 this.submitStatus = 'ERROR'
             } else {
                 this.submitStatus = 'PENDING'
-                return this.$auth
+                await this.$auth
                     .loginWith('local', {
                         data: {
                             email: this.email,
                             password: this.password
                         }
                     })
+                    // this.$router.push('/');
                     .catch((e) => {
-                        this.error = e + ''
+                        this.error = e.response.data.message + ''
                     })
             }
         },
