@@ -50,7 +50,6 @@ import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
     layout: 'unauthenticated',
-    auth: false,
     components: {},
     mixins: [formValidatorMixin],
     data: () => ({

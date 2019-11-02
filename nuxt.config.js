@@ -78,17 +78,18 @@ module.exports = {
                     login: {
                         url: '/api/auth/login',
                         method: 'post',
-                        propertyName: 'token'
+                        propertyName: 'token.accessToken'
                     },
                     logout: {
                         url: '/api/auth/logout',
                         method: 'post'
                     },
-                    user: {
-                        url: '/api/auth/user',
-                        method: 'get',
-                        propertyName: 'user'
-                    }
+                    user: false
+                    // user: {
+                    //     url: '/api/auth/user',
+                    //     method: 'get',
+                    //     propertyName: 'user'
+                    // }
                 }
                 // These are the defaults
                 // tokenRequired: true,
@@ -116,22 +117,13 @@ module.exports = {
         //     401: '/login',
         //     404: '/notfound'
         // },
-        debug: true,
-        proxy: true
+        // debug: true
+        // proxy: true
+        // },
+        // proxy: {
+        //     '/api': 'http://localhost:3000'
     },
-    proxy: {
-        '/api/': 'http://localhost:3000'
-    },
-    // serverMiddleware: ['~/server/index.js'],
-    server: {
-        // port: 3000, // default: 3000
-        // host: 'localhost' // default: localhost,
-        // timing: false,
-        // https: {
-        //   key: fs.readFileSync(path.resolve(__dirname, 'server.key')),
-        //   cert: fs.readFileSync(path.resolve(__dirname, 'server.crt'))
-        // }
-    },
+    serverMiddleware: ['~/server'],
     /*
      ** Build configuration
      */

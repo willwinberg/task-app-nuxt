@@ -1,16 +1,12 @@
 const express = require('express')
-const consola = require('consola')
-const { Nuxt, Builder } = require('nuxt')
+// const consola = require('consola')
 const app = express()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-// const jwt = require('express-jwt')
+const jwt = require('express-jwt')
+// const jsonwebtoken = require('jsonwebtoken')
 const mongoose = require('mongoose')
-const config = require('../nuxt.config.js')
 const dbConfig = require('./config/index')
-
-// Import and Set Nuxt.js options
-config.dev = process.env.NODE_ENV !== 'production'
 
 // connect to mongodb
 mongoose
@@ -43,40 +39,16 @@ app.use(corsConfig)
 //     jwt({
 //         secret: 'adumbsecret'
 //     }).unless({
-//         path: [
-//             '/api/auth/login',
-//             '/login',
-//             '/'
-//         ]
+//         path: ['/api/auth/login', '/login', '/']
 //     })
 // )
 
+jwt({ secret: 'shhhhhhared-secret', audience: '/api/auth', issuer: '/' })
+
 const { router } = require('./routes')
-app.use('/api', router)
+app.use(router)
 
-async function start() {
-    // Init Nuxt.js
-    const nuxt = new Nuxt(config)
-
-    const { host, port } = nuxt.options.server
-
-    // Build only in dev mode
-    if (config.dev) {
-        const builder = new Builder(nuxt)
-        await builder.build()
-    } else {
-        await nuxt.ready()
-    }
-
-    // Give nuxt middleware to express
-    app.use(nuxt.render)
-
-    // Listen the server
-    app.listen(port, host)
-    consola.ready({
-        message: `Server listening on http://${host}:${port}`,
-        badge: true
-    })
+module.exports = {
+    path: '/api',
+    handler: app
 }
-
-start()
