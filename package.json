@@ -5,9 +5,9 @@
   "author": "William",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nuxt",
+    "dev": "nuxt",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production nuxt start",
+    "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest"
@@ -32,7 +32,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.5",
     "nuxt": "^2.10.2",
-    "serve-static": "^1.14.1",
     "vuedraggable": "github:willhoyle/Vue.Draggable",
     "vuelidate": "^0.7.4",
     "vuetify": "^2.1.9"
