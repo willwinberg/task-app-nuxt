@@ -4,11 +4,15 @@
             <v-btn fab v-on="on">
                 <v-avatar>
                     <img
-                        v-if="avatarImg"
-                        src="https://cdn.vuetifyjs.com/images/john.jpg"
+                        v-if="loggedInUser.avatar"
+                        src="loggedInUser.avatar"
                         alt="John"
                     />
-                    <span v-else class="headline" v-text="initials"></span>
+                    <span
+                        v-else
+                        class="headline"
+                        v-text="loggedInUser.initials"
+                    ></span>
                 </v-avatar>
             </v-btn>
         </template>
@@ -24,17 +28,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
     computed: {
-        // Todo: make this get the avatar url
-        avatarImg() {
-            // return this.$auth.user.avatar || null
-            return ''
-        },
-        initials() {
-            // return $user.initials
-            return 'WW'
-        }
+        ...mapGetters(['loggedInUser'])
     },
     methods: {
         async logout() {

@@ -6,11 +6,11 @@ router
     .use('/auth', router)
 
     .post('/login', (req, res, next) => {
-        res.send(req.body)
+        console.log(req.body)
         const { email, password } = req.body
-        if (password === 'test' && email === 'will@bill.org') {
-            req.session.authUser = { username: 'test' }
-            return res.json({ username: 'demo' })
+        if (password === 'tester' && email === 'will@bill.org') {
+            // this.$auth.user = { name: 'Will' }
+            return res.json({ name: 'Will' })
         }
         res.status(401).json({ message: 'Bad credentials' })
         // const token = jsonwebtoken.sign(

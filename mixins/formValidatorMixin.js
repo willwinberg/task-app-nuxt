@@ -14,12 +14,12 @@ export default {
         name: { alpha },
         email: {
             required,
-            email,
-            async isUnique(value) {
-                if (value === '') return true
-                const response = await fetch(`/api/unique/${value}`)
-                return Boolean(await response.json())
-            }
+            email
+            // async isUnique(value) {
+            //     if (value === '') return true
+            //     const response = await fetch(`/api/unique/${value}`)
+            //     return Boolean(await response.json())
+            // }
         },
         password: {
             required,

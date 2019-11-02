@@ -99,7 +99,9 @@ export default {
                 this.submitStatus = 'ERROR'
             } else {
                 this.submitStatus = 'PENDING'
-                // api register
+                // await api register
+                // this.$auth.setUserToken(token)
+                // .then(() => this.$toast.success('User set!'))
             }
         },
         clear() {

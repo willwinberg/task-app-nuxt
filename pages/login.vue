@@ -4,7 +4,11 @@
             <v-toolbar-title>Login</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-            <v-form @keydown.enter="login" @submit.prevent="login">
+            <v-form
+                method="post"
+                @keydown.enter="login"
+                @submit.prevent="login"
+            >
                 <v-text-field
                     v-model.trim="email"
                     :error-messages="emailErrors"
@@ -56,7 +60,7 @@ export default {
         error: null,
         submitStatus: null
     }),
-    // validations: formValidatorMixin.validations,
+    validations: formValidatorMixin.validations,
     computed: {
         redirect() {
             return (
@@ -68,7 +72,7 @@ export default {
     methods: {
         async login() {
             this.error = null
-            // await formValidatorMixin.validate()
+            await formValidatorMixin.validate
             this.$v.$touch()
 
             if (this.$v.invalid) {
@@ -87,6 +91,7 @@ export default {
                         this.error = e.response.data.message + ''
                     })
             }
+            console.log(this.error)
         },
         clear() {
             // const response = this.$store.dispatch('user/fetchUsers')

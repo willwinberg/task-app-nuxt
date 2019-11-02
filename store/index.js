@@ -1,6 +1,9 @@
-export const state = () => ({
-    authUser: null
-})
+// export const state = () => ({
+// auth: {
+//     user: null,
+//     loggedIn: false
+// }
+// })
 
 export const getters = {
     isAuthenticated(state) {
