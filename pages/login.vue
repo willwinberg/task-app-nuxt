@@ -17,6 +17,7 @@
                     name="email"
                     prepend-icon="mdi-login"
                     autocomplete="off"
+                    value="will@bill.org"
                     @input="$v.email.$touch()"
                     @blur="$v.email.$touch()"
                 ></v-text-field>
@@ -30,6 +31,7 @@
                     prepend-icon="mdi-lock"
                     type="password"
                     autocomplete="off"
+                    value="tester"
                     @input="$v.password.$touch()"
                     @blur="$v.password.$touch()"
                 ></v-text-field>
