@@ -12,13 +12,13 @@
                     >
                 </FormLabel>
                 <Component
-                    v-model="data[field.name]"
                     :is="field.component"
+                    :id="`${_uid}-${field.name}`"
+                    v-model="data[field.name]"
                     v-bind="{
                         ...field.options.props,
                         ...field.options.attrs
                     }"
-                    :id="`${_uid}-${field.name}`"
                     @input="$v.data[field.name].$touch()"
                 />
                 <FormInlineMessage v-if="$v.data[field.name].$error">
@@ -48,15 +48,15 @@ const defaultField = {
 
 export default {
     name: 'FormFactory',
-    // 'vuelidate' validation mixin for basic form validation.
-    mixins: [validationMixin],
-    // Inject dependencies as to reuse this component for all kinds of content types
-    inject: ['fetch', 'post'],
     components: {
         FormGroup,
         FormInlineMessage,
         FormLabel
     },
+    // 'vuelidate' validation mixin for basic form validation.
+    mixins: [validationMixin],
+    // Inject dependencies as to reuse this component for all kinds of content types
+    inject: ['fetch', 'post'],
     props: {
         fields: {
             default: () => [],

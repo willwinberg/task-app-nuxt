@@ -4,6 +4,11 @@
 
 <script>
 export default {
-    props: ['type']
+    props: {
+        type: {
+            type: String,
+            default: 'Task'
+        }
+    }
 }
 </script>

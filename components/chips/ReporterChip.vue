@@ -4,6 +4,11 @@
 
 <script>
 export default {
-    props: ['reporter']
+    props: {
+        reporter: {
+            type: String,
+            default: 'None'
+        }
+    }
 }
 </script>

@@ -4,6 +4,11 @@
 
 <script>
 export default {
-    props: ['points']
+    props: {
+        points: {
+            type: Number,
+            default: 0
+        }
+    }
 }
 </script>

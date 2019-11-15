@@ -110,7 +110,10 @@ export default {
         TaskCard
     },
     props: {
-        column: Object
+        column: {
+            type: Object,
+            default: Object
+        }
     },
     data: () => ({
         list: tasks.map((task, i) => {

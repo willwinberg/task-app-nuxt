@@ -9,7 +9,12 @@
 
 <script>
 export default {
-    props: ['site'],
+    props: {
+        site: {
+            type: String,
+            default: 'None'
+        }
+    },
     data: () => ({
         value: true
     })

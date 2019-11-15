@@ -5,17 +5,17 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const jwt = require('express-jwt')
 // const jsonwebtoken = require('jsonwebtoken')
-// const mongoose = require('mongoose')
-// const dbConfig = require('./config/index')
+const mongoose = require('mongoose')
+const dbConfig = require('./config/index')
 
 // connect to mongodb
-// mongoose
-// .connect(dbConfig.connection, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// })
-// .then(() => console.log(`connection successful: ${dbConfig.connection}`))
-// .catch((err) => console.error(err))
+mongoose
+    .connect(dbConfig.connection, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => console.log(`connection successful: ${dbConfig.connection}`))
+    .catch((err) => console.error(err))
 
 app.use(cookieParser())
 app.use(bodyParser.json())

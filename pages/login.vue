@@ -92,7 +92,6 @@ export default {
                         this.error = e.response.data.message + ''
                     })
             }
-            console.log(this.error)
         },
         clear() {
             // const response = this.$store.dispatch('user/fetchUsers')

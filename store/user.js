@@ -21,7 +21,6 @@ export const actions = {
         })
     },
     fetchUser({ commit }, id) {
-        console.log('fetchUser called')
         return this.$axios.get('/api/users/:id', id).then((response) => {
             commit('SET_USER', response.data)
         })

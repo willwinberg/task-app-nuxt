@@ -82,7 +82,10 @@ import formValidatorMixin from '@@/mixins/formValidatorMixin'
 export default {
     mixins: [formValidatorMixin],
     props: {
-        task: Object
+        task: {
+            type: Object,
+            default: Object
+        }
     },
     data: () => ({
         dialog: false,

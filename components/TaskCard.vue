@@ -73,7 +73,10 @@ export default {
         ReporterChip
     },
     props: {
-        task: Object
+        task: {
+            type: Object,
+            default: Object
+        }
     },
     data: () => ({
         taskView: false

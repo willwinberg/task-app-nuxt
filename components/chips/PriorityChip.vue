@@ -4,7 +4,12 @@
 
 <script>
 export default {
-    props: ['priority'],
+    props: {
+        priority: {
+            type: String,
+            default: 'Medium'
+        }
+    },
     data: () => ({
         value: true
     })
