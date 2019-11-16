@@ -4,7 +4,7 @@
             <v-toolbar-title>Register</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-            <form @keydown.enter="register" @submit.prevent="test">
+            <form @keydown.enter="register" @submit.prevent="register">
                 <v-text-field
                     v-model.trim="email"
                     :error-messages="emailErrors"
@@ -57,7 +57,9 @@
         </v-card-text>
         <v-card-actions>
             <div class="flex-grow-1"></div>
-            <v-btn color="primary" type="submit" @click="login">Register</v-btn>
+            <v-btn color="primary" type="submit" @click="register"
+                >Register</v-btn
+            >
             <v-btn @click="clear">Clear</v-btn>
         </v-card-actions>
     </v-card>
@@ -68,17 +70,17 @@ import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
     layout: 'unauthenticated',
-    auth: false,
+    // auth: false,
     components: {},
     mixins: [formValidatorMixin],
     data: () => ({
-        drawer: null,
         email: '',
         emailConfirm: '',
         password: '',
         passwordConfirm: '',
         error: null,
-        submitStatus: null
+        submitStatus: null,
+        drawer: null
     }),
     // asyncData: async (context) => {
     //     try {
@@ -90,7 +92,7 @@ export default {
     //     }
     // },
     methods: {
-        register() {
+        async register() {
             this.error = null
             // formValidatorMixin.validate()
             this.$v.$touch()
@@ -99,8 +101,21 @@ export default {
                 this.submitStatus = 'ERROR'
             } else {
                 this.submitStatus = 'PENDING'
-                // await api register
-                // this.$auth.setUserToken(token)
+                const data = {
+                    email: this.email,
+                    password: this.password
+                }
+                await this.$store.dispatch('user/register', data).catch((e) => {
+                    this.error = e.response.data.message + ''
+                })
+                if (!this.error) {
+                    this.$auth.loginWith('local', {
+                        data: {
+                            email: 'will@bill.org',
+                            password: 'testerer'
+                        }
+                    })
+                }
                 // .then(() => this.$toast.success('User set!'))
             }
         },

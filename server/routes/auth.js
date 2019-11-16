@@ -8,7 +8,7 @@ router
     .post('/login', (req, res, next) => {
         const { email, password } = req.body
 
-        if (password !== 'tester' && email !== 'will@bill.org') {
+        if (password !== 'testerer' && email !== 'will@bill.org') {
             throw new Error('Invalid username or password')
         }
         // res.status(401).json({ message: 'Bad credentials' })

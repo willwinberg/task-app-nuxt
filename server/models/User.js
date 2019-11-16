@@ -5,11 +5,11 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 const UserSchema = mongoose.Schema(
     {
-        id: {
-            type: Number,
-            required: true,
-            unique: true
-        },
+        // id: {
+        //     type: Number,
+        //     required: true,
+        //     unique: true
+        // },
         email: {
             type: String,
             required: true,
@@ -21,12 +21,12 @@ const UserSchema = mongoose.Schema(
             required: true
         },
         firstName: {
-            type: String,
-            required: true
+            type: String
+            // required: true
         },
         lastName: {
-            type: String,
-            required: true
+            type: String
+            // required: true
         },
         title: {
             type: String

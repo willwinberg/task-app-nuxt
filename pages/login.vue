@@ -44,6 +44,10 @@
             >
             <v-btn @click="clear">Clear</v-btn>
         </v-card-actions>
+        <p class="text-center subtitle-1 pt-2 pb-2">
+            Don't have an account yet?
+            <nuxt-link to="/register"> Register!</nuxt-link>
+        </p>
     </v-card>
 </template>
 

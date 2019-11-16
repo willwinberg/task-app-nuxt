@@ -21,11 +21,16 @@ export default {
             //     return Boolean(await response.json())
             // }
         },
+        emailConfirm: {
+            required,
+            sameAsEmail: sameAs('email')
+        },
         password: {
             required,
             minLength: minLength(6)
         },
-        repeatPassword: {
+        passwordConfirm: {
+            required,
             sameAsPassword: sameAs('password')
         },
         users: {
@@ -80,12 +85,28 @@ export default {
             !this.$v.email.required && errors.push('E-mail is required')
             return errors
         },
+        emailConfirmErrors() {
+            const errors = []
+            if (!this.$v.emailConfirm.$error) return errors
+            !this.$v.emailConfirm.sameAsEmail && errors.push('Must match email')
+            !this.$v.emailConfirm.required && errors.push('Must confirm email')
+            return errors
+        },
         passwordErrors() {
             const errors = []
             if (!this.$v.password.$error) return errors
             !this.$v.password.minLength &&
                 errors.push('Must be at least 6 characters')
             !this.$v.password.required && errors.push('Password is required')
+            return errors
+        },
+        passwordConfirmErrors() {
+            const errors = []
+            if (!this.$v.passwordConfirm.$error) return errors
+            !this.$v.passwordConfirm.sameAsPassword &&
+                errors.push('Must match password')
+            !this.$v.passwordConfirm.required &&
+                errors.push('Must confirm password')
             return errors
         },
         titleErrors() {

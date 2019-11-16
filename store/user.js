@@ -10,11 +10,19 @@ export const mutations = {
     },
     SET_USER(state, user) {
         state.user = user
+    },
+    ADD_USER(state, user) {
+        state.user = user
     }
 }
 
 export const actions = {
     login() {},
+    register({ commit }, data) {
+        return this.$axios.post('/api/users', data).then((response) => {
+            commit('SET_USER', response.data)
+        })
+    },
     fetchUsers({ commit }) {
         return this.$axios.get('/api/users').then((response) => {
             commit('SET_USERS', response.data)

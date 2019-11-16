@@ -4,14 +4,14 @@
             <v-btn fab v-on="on">
                 <v-avatar>
                     <img
-                        v-if="loggedInUser.avatar"
-                        src="loggedInUser.avatar"
+                        v-if="loggedInUser"
+                        src="loggedInUser.avatar | 'https://avatars3.githubusercontent.com/u/29470415?s=460&v=4'"
                         alt="John"
                     />
                     <span
                         v-else
                         class="headline"
-                        v-text="loggedInUser.initials"
+                        v-text="loggedInUser || 'WW'"
                     ></span>
                 </v-avatar>
             </v-btn>
