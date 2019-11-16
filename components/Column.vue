@@ -22,7 +22,7 @@
                     <draggable
                         v-model="list"
                         class="list-group pl-0"
-                        :list="list"
+                        :list="list.title"
                         group="tasks"
                         tag="ul"
                         v-bind="dragOptions"

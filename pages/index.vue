@@ -13,9 +13,9 @@ export default {
     mixins: [formValidatorMixin],
     data: () => ({}),
     computed: {},
-    fetch(context) {
-        return context.store.dispatch('auth/fetchData')
-    },
+    // fetch(context) {
+    //     return context.store.dispatch('auth/fetchData')
+    // },
     methods: {}
 }
 </script>

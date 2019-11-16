@@ -5,7 +5,7 @@
                 <v-avatar>
                     <img
                         v-if="loggedInUser"
-                        src="loggedInUser.avatar | 'https://avatars3.githubusercontent.com/u/29470415?s=460&v=4'"
+                        src="https://avatars3.githubusercontent.com/u/29470415?s=460&v=4"
                         alt="John"
                     />
                     <span
