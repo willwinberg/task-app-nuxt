@@ -12,6 +12,7 @@ const dbConfig = require('./config/index')
 mongoose
     .connect(dbConfig.connection, {
         useNewUrlParser: true,
+        useCreateIndex: true,
         useUnifiedTopology: true
     })
     .then(() => console.log(`connection successful: ${dbConfig.connection}`))
