@@ -1,54 +1,60 @@
 <template>
-    <v-card class="elevation-12">
-        <v-toolbar color="primary" dark flat>
-            <v-toolbar-title>Login</v-toolbar-title>
-        </v-toolbar>
-        <v-card-text>
-            <v-form
-                @keydown.enter="login"
-                @submit.prevent="login"
-                method="post"
-            >
-                <v-text-field
-                    v-model.trim="email"
-                    :error-messages="emailErrors"
-                    @input="$v.email.$touch()"
-                    @blur="$v.email.$touch()"
-                    label="Email"
-                    required
-                    name="email"
-                    prepend-icon="mdi-login"
-                    autocomplete="off"
-                    value="will@bill.org"
-                ></v-text-field>
+    <v-col cols="12" sm="6" md="4">
+        <v-alert v-if="$auth.$state.redirect" type="error"
+            >You have to login before accessing to
+            {{ $auth.$state.redirect }}</v-alert
+        >
+        <v-card class="elevation-12">
+            <v-toolbar color="primary" dark flat>
+                <v-toolbar-title>Login</v-toolbar-title>
+            </v-toolbar>
+            <v-card-text>
+                <v-form
+                    @keydown.enter="login"
+                    @submit.prevent="login"
+                    method="post"
+                >
+                    <v-text-field
+                        v-model.trim="email"
+                        :error-messages="emailErrors"
+                        @input="$v.email.$touch()"
+                        @blur="$v.email.$touch()"
+                        label="Email"
+                        required
+                        name="email"
+                        prepend-icon="mdi-login"
+                        autocomplete="off"
+                        value="will@bill.org"
+                    ></v-text-field>
 
-                <v-text-field
-                    v-model.trim="password"
-                    :error-messages="passwordErrors"
-                    @input="$v.password.$touch()"
-                    @blur="$v.password.$touch()"
-                    label="Password"
-                    required
-                    name="password"
-                    prepend-icon="mdi-lock"
-                    type="password"
-                    autocomplete="off"
-                    value="tester"
-                ></v-text-field>
-            </v-form>
-        </v-card-text>
-        <v-card-actions>
-            <div class="flex-grow-1"></div>
-            <v-btn @click.prevent="login" color="primary" type="submit"
-                >Login</v-btn
-            >
-            <v-btn @click="clear">Clear</v-btn>
-        </v-card-actions>
-        <p class="text-center subtitle-1 pt-2 pb-2">
-            Don't have an account yet?
-            <nuxt-link to="/register"> Register!</nuxt-link>
-        </p>
-    </v-card>
+                    <v-text-field
+                        v-model.trim="password"
+                        :error-messages="passwordErrors"
+                        @input="$v.password.$touch()"
+                        @blur="$v.password.$touch()"
+                        label="Password"
+                        required
+                        name="password"
+                        prepend-icon="mdi-lock"
+                        type="password"
+                        autocomplete="off"
+                        value="tester"
+                    ></v-text-field>
+                </v-form>
+            </v-card-text>
+            <v-card-actions>
+                <div class="flex-grow-1"></div>
+                <v-btn @click.prevent="login" color="primary" type="submit"
+                    >Login</v-btn
+                >
+                <v-btn @click="clear">Clear</v-btn>
+            </v-card-actions>
+            <p class="text-center subtitle-1 pt-2 pb-2">
+                Don't have an account yet?
+                <nuxt-link to="/register"> Register!</nuxt-link>
+            </p>
+        </v-card>
+    </v-col>
 </template>
 
 <script>
