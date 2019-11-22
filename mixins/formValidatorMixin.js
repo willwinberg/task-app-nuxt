@@ -11,7 +11,16 @@ import {
 export default {
     mixins: [validationMixin],
     validations: {
-        name: { alpha },
+        firstName: {
+            required,
+            alpha,
+            minLength: minLength(2)
+        },
+        lastName: {
+            required,
+            alpha,
+            minLength: minLength(2)
+        },
         email: {
             required,
             email
@@ -70,12 +79,21 @@ export default {
             // !this.$v.select.required && errors.push('Item is required')
             // return errors
         },
-        nameErrors() {
+        firstNameErrors() {
             const errors = []
-            if (!this.$v.name.$dirty) return errors
-            !this.$v.name.maxLength &&
-                errors.push('Name must be at most 10 characters long')
-            !this.$v.name.required && errors.push('Name is required.')
+            if (!this.$v.firstName.$dirty) return errors
+            !this.$v.firstName.minLength &&
+                errors.push('Name must be at least 2 characters long')
+            !this.$v.firstName.required &&
+                errors.push('First name is required.')
+            return errors
+        },
+        lastNameErrors() {
+            const errors = []
+            if (!this.$v.lastName.$dirty) return errors
+            !this.$v.lastName.minLength &&
+                errors.push('Name must be at least 2 characters long')
+            !this.$v.lastName.required && errors.push('Last name is required.')
             return errors
         },
         emailErrors() {
@@ -111,18 +129,18 @@ export default {
         },
         titleErrors() {
             const errors = []
-            if (!this.$v.name.$dirty) return errors
-            !this.$v.name.maxLength &&
-                errors.push('Name must be at most 10 characters long')
-            !this.$v.name.required && errors.push('Name is required.')
+            if (!this.$v.title.$dirty) return errors
+            !this.$v.title.maxLength &&
+                errors.push('Name must be at most 20 characters long')
+            !this.$v.title.required && errors.push('Title is required.')
             return errors
         },
         descriptionErrors() {
             const errors = []
-            if (!this.$v.name.$dirty) return errors
-            !this.$v.name.maxLength &&
-                errors.push('Name must be at most 10 characters long')
-            !this.$v.name.required && errors.push('Name is required.')
+            // if (!this.$v.description.$dirty) return errors
+            // !this.$v.description.maxLength &&
+            //     errors.push('Name must be at most 10 characters long')
+            // !this.$v.description.required && errors.push('Name is required.')
             return errors
         }
     },

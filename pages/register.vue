@@ -4,56 +4,91 @@
             <v-toolbar-title>Register</v-toolbar-title>
         </v-toolbar>
         <v-card-text>
-            <form @keydown.enter="register" @submit.prevent="register">
-                <v-text-field
-                    v-model.trim="email"
-                    :error-messages="emailErrors"
-                    @input="$v.email.$touch()"
-                    @blur="$v.email.$touch()"
-                    label="Email"
-                    required
-                    name="email"
-                    prepend-icon="mdi-login"
-                    autocomplete="off"
-                ></v-text-field>
+            <v-form @keydown.enter="register" @submit.prevent="register">
+                <v-container>
+                    <v-row>
+                        <v-col cols="12" sm="6">
+                            <v-text-field
+                                v-model.trim="firstName"
+                                :error-messages="firstNameErrors"
+                                @input="$v.firstName.$touch()"
+                                @blur="$v.firstName.$touch()"
+                                label="First Name"
+                                required
+                                name="firstName"
+                                autocomplete="off"
+                            ></v-text-field>
+                        </v-col>
 
-                <v-text-field
-                    v-model.trim="emailConfirm"
-                    :error-messages="emailConfirmErrors"
-                    @input="$v.emailConfirm.$touch()"
-                    @blur="$v.emailConfirm.$touch()"
-                    label="Confirm Email"
-                    required
-                    name="email-confirm"
-                    prepend-icon="mdi-login"
-                    autocomplete="off"
-                ></v-text-field>
+                        <v-col cols="12" sm="6">
+                            <v-text-field
+                                v-model.trim="lastName"
+                                :error-messages="lastNameErrors"
+                                @input="$v.lastName.$touch()"
+                                @blur="$v.lastName.$touch()"
+                                label="Last Name"
+                                required
+                                name="lastName"
+                                autocomplete="off"
+                            ></v-text-field>
+                        </v-col>
 
-                <v-text-field
-                    v-model.trim="password"
-                    :error-messages="passwordErrors"
-                    @input="$v.password.$touch()"
-                    @blur="$v.password.$touch()"
-                    label="Password"
-                    required
-                    name="password"
-                    prepend-icon="mdi-lock"
-                    type="password"
-                    autocomplete="off"
-                ></v-text-field>
-                <v-text-field
-                    v-model.trim="passwordConfirm"
-                    :error-messages="passwordConfirmErrors"
-                    @input="$v.passwordConfirm.$touch()"
-                    @blur="$v.passwordConfirm.$touch()"
-                    label="Confirm Password"
-                    required
-                    name="password-confirm"
-                    prepend-icon="mdi-lock"
-                    type="password"
-                    autocomplete="off"
-                ></v-text-field>
-            </form>
+                        <v-col cols="12" sm="6">
+                            <v-text-field
+                                v-model.trim="email"
+                                :error-messages="emailErrors"
+                                @input="$v.email.$touch()"
+                                @blur="$v.email.$touch()"
+                                label="Email"
+                                required
+                                name="email"
+                                autocomplete="off"
+                            ></v-text-field>
+                        </v-col>
+
+                        <v-col cols="12" sm="6">
+                            <v-text-field
+                                v-model.trim="emailConfirm"
+                                :error-messages="emailConfirmErrors"
+                                @input="$v.emailConfirm.$touch()"
+                                @blur="$v.emailConfirm.$touch()"
+                                label="Confirm Email"
+                                required
+                                name="email-confirm"
+                                autocomplete="off"
+                            ></v-text-field>
+                        </v-col>
+
+                        <v-col cols="12" sm="6">
+                            <v-text-field
+                                v-model.trim="password"
+                                :error-messages="passwordErrors"
+                                @input="$v.password.$touch()"
+                                @blur="$v.password.$touch()"
+                                label="Password"
+                                required
+                                name="password"
+                                type="password"
+                                autocomplete="off"
+                            ></v-text-field>
+                        </v-col>
+
+                        <v-col cols="12" sm="6">
+                            <v-text-field
+                                v-model.trim="passwordConfirm"
+                                :error-messages="passwordConfirmErrors"
+                                @input="$v.passwordConfirm.$touch()"
+                                @blur="$v.passwordConfirm.$touch()"
+                                label="Confirm Password"
+                                required
+                                name="password-confirm"
+                                type="password"
+                                autocomplete="off"
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-form>
         </v-card-text>
         <v-card-actions>
             <div class="flex-grow-1"></div>
@@ -78,6 +113,8 @@ export default {
     components: {},
     mixins: [formValidatorMixin],
     data: () => ({
+        firstName: '',
+        lastName: '',
         email: '',
         emailConfirm: '',
         password: '',
