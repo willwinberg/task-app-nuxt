@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent max-width="290">
         <template v-slot:activator="{ on }">
-            <v-btn outlined text v-on="on">Delete</v-btn>
+            <v-btn v-on="on" outlined text>Delete</v-btn>
         </template>
         <v-card>
             <v-card-title class="headline">
@@ -16,11 +16,11 @@
             <v-card-actions>
                 <div class="flex-grow-1"></div>
 
-                <v-btn color="green" text @click="dialog = false">
+                <v-btn @click="dialog = false" color="green" text>
                     Cancel
                 </v-btn>
 
-                <v-btn color="red" text @click="deleteTask">
+                <v-btn @click="deleteTask" color="red" text>
                     Delete
                 </v-btn>
             </v-card-actions>

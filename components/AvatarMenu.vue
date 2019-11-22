@@ -1,7 +1,7 @@
 <template>
     <v-menu transition="slide-y-transition" bottom>
         <template v-slot:activator="{ on }">
-            <v-btn fab v-on="on">
+            <v-btn v-on="on" fab>
                 <v-avatar>
                     <img
                         v-if="loggedInUser"
@@ -10,8 +10,8 @@
                     />
                     <span
                         v-else
-                        class="headline"
                         v-text="loggedInUser || 'WW'"
+                        class="headline"
                     ></span>
                 </v-avatar>
             </v-btn>

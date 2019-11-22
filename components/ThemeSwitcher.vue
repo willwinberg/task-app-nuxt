@@ -1,8 +1,8 @@
 <template>
     <v-switch
+        @change="switchTheme"
         append-icon="mdi-palette"
         hint="Brad's button"
-        @change="switchTheme"
     ></v-switch>
 </template>
 

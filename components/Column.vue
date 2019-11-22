@@ -21,18 +21,18 @@
                 <v-col>
                     <draggable
                         v-model="list"
-                        class="list-group pl-0"
                         :list="list.title"
-                        group="tasks"
-                        tag="ul"
                         v-bind="dragOptions"
                         @start="drag = true"
                         @end="drag = false"
                         @change="log"
+                        class="list-group pl-0"
+                        group="tasks"
+                        tag="ul"
                     >
                         <transition-group
-                            type="transition"
                             :name="!drag ? 'flip-list' : null"
+                            type="transition"
                         >
                             <li
                                 v-for="task in list"
@@ -45,8 +45,8 @@
                                             ? 'fa fa-anchor'
                                             : 'glyphicon glyphicon-pushpin'
                                     "
-                                    aria-hidden="true"
                                     @click="task.fixed = !task.fixed"
+                                    aria-hidden="true"
                                 ></i>
                                 <TaskCard :task="task.task" />
                             </li>

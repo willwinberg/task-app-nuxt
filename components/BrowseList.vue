@@ -17,17 +17,17 @@
             <AddTaskForm />
         </v-toolbar>
         <v-data-table
-            item-key="index"
             :loading="loading"
-            loading-text="Loading tasks... Please wait"
             :headers="headers"
             :items="tasks"
             :search="search"
             :sort-by="['site', 'priority']"
             :sort-desc="[false, true]"
+            :expanded.sync="expanded"
+            item-key="index"
+            loading-text="Loading tasks... Please wait"
             multi-sort
             single-expanded
-            :expanded.sync="expanded"
             show-expand
             class="elevation-1"
         >
@@ -35,7 +35,7 @@
                 <div class="limit-characters">{{ item.title }}</div>
             </template>
             <template v-slot:expanded-item="{ headers, item }">
-                <td class="pb-3 wrap-hack" :colspan="headers.length">
+                <td :colspan="headers.length" class="pb-3 wrap-hack">
                     <p class="description">{{ item.description }}</p>
                     <EditTaskForm v-bind="item" />
                     <DeleteTaskModal v-bind="item" />
@@ -45,7 +45,7 @@
                 <div>{{ formattedDate(item.date) }}</div>
             </template>
             <template v-slot:item.action="{ item }">
-                <v-icon right @click="takeItem(item)">
+                <v-icon @click="takeItem(item)" right>
                     mdi-plus
                 </v-icon>
             </template>

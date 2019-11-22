@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
-            <v-btn outlined text v-on="on">Add New Task</v-btn>
+            <v-btn v-on="on" outlined text>Add New Task</v-btn>
         </template>
         <v-card>
             <v-card-title>
@@ -15,19 +15,19 @@
                                 v-model="title"
                                 :error-messages="titleErrors"
                                 :counter="10"
-                                label="Title"
-                                required
                                 @input="$v.title.$touch()"
                                 @blur="$v.title.$touch()"
+                                label="Title"
+                                required
                             ></v-text-field>
                         </v-col>
                         <v-col cols="12">
                             <v-text-field
                                 v-model="description"
                                 :error-messages="descriptionErrors"
-                                label="Description"
                                 @input="$v.description.$touch()"
                                 @blur="$v.description.$touch()"
+                                label="Description"
                             ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6">
@@ -35,20 +35,20 @@
                                 v-model="priority"
                                 :items="priorityLevels"
                                 :error-messages="selectErrors"
-                                label="Priority"
-                                required
                                 @change="$v.select.$touch()"
                                 @blur="$v.select.$touch()"
+                                label="Priority"
+                                required
                             ></v-select>
                         </v-col>
                         <v-col cols="12" sm="6">
                             <v-checkbox
                                 v-model="checkbox"
                                 :error-messages="checkboxErrors"
-                                label="Do you agree?"
-                                required
                                 @change="$v.checkbox.$touch()"
                                 @blur="$v.checkbox.$touch()"
+                                label="Do you agree?"
+                                required
                             ></v-checkbox>
                         </v-col>
                     </v-row>
@@ -57,10 +57,10 @@
             </v-card-text>
             <v-card-actions>
                 <div class="flex-grow-1"></div>
-                <v-btn color="blue darken-1" text @click="dialog = false"
+                <v-btn @click="dialog = false" color="blue darken-1" text
                     >Close</v-btn
                 >
-                <v-btn color="blue darken-1" text @click="addTask">Save</v-btn>
+                <v-btn @click="addTask" color="blue darken-1" text>Save</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

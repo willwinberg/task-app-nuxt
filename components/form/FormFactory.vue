@@ -1,5 +1,5 @@
 <template>
-    <form class="form-factory" @submit.prevent="submit">
+    <form @submit.prevent="submit" class="form-factory">
         <div v-if="success" class="form-factory-success">
             Success!
         </div>
@@ -7,20 +7,18 @@
             <FormGroup v-for="field in fieldsWithDefaults" :key="field.name">
                 <FormLabel :for="`${_uid}-${field.name}`">
                     {{ field.label }}
-                    <template v-if="field.validation.required"
-                        >*</template
-                    >
+                    <template v-if="field.validation.required">*</template>
                 </FormLabel>
-                <Component
-                    :is="field.component"
-                    :id="`${_uid}-${field.name}`"
-                    v-model="data[field.name]"
-                    v-bind="{
-                        ...field.options.props,
-                        ...field.options.attrs
-                    }"
-                    @input="$v.data[field.name].$touch()"
-                />
+                <!--                <Component-->
+                <!--                    :is="field.component"-->
+                <!--                    :id="`${_uid}-${field.name}`"-->
+                <!--                    v-model="data[field.name]"-->
+                <!--                    v-bind="{-->
+                <!--                        ...field.options.props,-->
+                <!--                        ...field.options.attrs-->
+                <!--                    }"-->
+                <!--                    @input="$v.data[field.name].$touch()"-->
+                <!--                />-->
                 <FormInlineMessage v-if="$v.data[field.name].$error">
                     Please fill in this field correctly.
                 </FormInlineMessage>

@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
-            <v-btn outlined text v-on="on">Edit</v-btn>
+            <v-btn v-on="on" outlined text>Edit</v-btn>
         </template>
         <v-card>
             <v-card-title>
@@ -14,23 +14,23 @@
                             <v-text-field
                                 v-model="title"
                                 :error-messages="titleErrors"
+                                @input="$v.title.$touch()"
+                                @blur="$v.title.$touch()"
                                 label="Title*"
                                 required
                                 name="title"
-                                @input="$v.title.$touch()"
-                                @blur="$v.title.$touch()"
                             ></v-text-field>
                         </v-col>
                         <v-col cols="12">
                             <v-textarea
                                 v-model="description"
                                 :error-messages="descriptionErrors"
+                                @input="$v.description.$touch()"
+                                @blur="$v.description.$touch()"
                                 label="Description"
                                 required
                                 name="description"
                                 autocomplete="off"
-                                @input="$v.description.$touch()"
-                                @blur="$v.description.$touch()"
                             >
                                 <template v-slot:label>
                                     <div>
@@ -65,10 +65,10 @@
             </v-card-text>
             <v-card-actions>
                 <div class="flex-grow-1"></div>
-                <v-btn color="blue darken-1" text @click="dialog = false"
+                <v-btn @click="dialog = false" color="blue darken-1" text
                     >Close</v-btn
                 >
-                <v-btn color="blue darken-1" text @click="dialog = false"
+                <v-btn @click="dialog = false" color="blue darken-1" text
                     >Save</v-btn
                 >
             </v-card-actions>

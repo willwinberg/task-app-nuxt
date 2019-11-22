@@ -1,5 +1,5 @@
 const express = require('express')
-// const consola = require('consola')
+const morgan = require('morgan')
 const app = express()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -34,6 +34,7 @@ const corsConfig = function(req, res, next) {
 }
 
 app.use(corsConfig)
+app.use(morgan('tiny'))
 
 // JWT middleware TODO: can this be moved to authRoutes.js?
 // app.use(

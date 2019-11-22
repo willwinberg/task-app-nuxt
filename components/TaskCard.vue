@@ -1,17 +1,17 @@
 <template>
     <div>
         <v-card
+            @click="taskView = true"
             class="mx-auto"
             max-width="344"
             outlined
-            @click="taskView = true"
         >
             <v-list-item three-line>
                 <v-list-item-content>
-                    <div class="overline mb-4" v-text="task.priority"></div>
+                    <div v-text="task.priority" class="overline mb-4"></div>
                     <v-list-item-title
-                        class="headline mb-1"
                         v-text="task.title"
+                        class="headline mb-1"
                     ></v-list-item-title>
                     <v-list-item-subtitle
                         v-text="task.description"
@@ -21,7 +21,7 @@
         </v-card>
 
         <v-dialog v-model="taskView" max-width="600px">
-            <v-card outlined @click="taskView = true">
+            <v-card @click="taskView = true" outlined>
                 <v-list-item three-line>
                     <v-list-item-content>
                         <div>
@@ -30,12 +30,12 @@
                             <PriorityChip :priority="task.priority" />
                         </div>
                         <v-list-item-title
-                            class="headline mb-1 mt-3"
                             v-text="task.title"
+                            class="headline mb-1 mt-3"
                         ></v-list-item-title>
                         <v-list-item-subtitle
-                            class="mb-4"
                             v-text="task.description"
+                            class="mb-4"
                         ></v-list-item-subtitle>
                         <div>
                             <PointsChip :points="task.points" />
