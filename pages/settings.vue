@@ -4,39 +4,39 @@
             v-model="name"
             :error-messages="nameErrors"
             :counter="10"
-            label="Name"
-            required
             @input="$v.name.$touch()"
             @blur="$v.name.$touch()"
+            label="Name"
+            required
         ></v-text-field>
         <v-text-field
             v-model="email"
             :error-messages="emailErrors"
-            label="E-mail"
-            required
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
+            label="E-mail"
+            required
         ></v-text-field>
         <v-select
             v-model="select"
             :items="items"
             :error-messages="selectErrors"
-            label="Item"
-            required
             @change="$v.select.$touch()"
             @blur="$v.select.$touch()"
+            label="Item"
+            required
         ></v-select>
         <v-checkbox
             v-model="checkbox"
             :error-messages="checkboxErrors"
-            label="Do you agree?"
-            required
             @change="$v.checkbox.$touch()"
             @blur="$v.checkbox.$touch()"
+            label="Do you agree?"
+            required
         ></v-checkbox>
         <ThemeSwitcher />
 
-        <v-btn class="mr-4" @click="submit">submit</v-btn>
+        <v-btn @click="submit" class="mr-4">submit</v-btn>
         <v-btn @click="clear">clear</v-btn>
     </form>
 </template>

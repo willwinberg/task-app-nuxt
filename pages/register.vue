@@ -8,60 +8,64 @@
                 <v-text-field
                     v-model.trim="email"
                     :error-messages="emailErrors"
+                    @input="$v.email.$touch()"
+                    @blur="$v.email.$touch()"
                     label="Email"
                     required
                     name="email"
                     prepend-icon="mdi-login"
                     autocomplete="off"
-                    @input="$v.email.$touch()"
-                    @blur="$v.email.$touch()"
                 ></v-text-field>
 
                 <v-text-field
                     v-model.trim="emailConfirm"
                     :error-messages="emailConfirmErrors"
+                    @input="$v.emailConfirm.$touch()"
+                    @blur="$v.emailConfirm.$touch()"
                     label="Confirm Email"
                     required
                     name="email-confirm"
                     prepend-icon="mdi-login"
                     autocomplete="off"
-                    @input="$v.emailConfirm.$touch()"
-                    @blur="$v.emailConfirm.$touch()"
                 ></v-text-field>
 
                 <v-text-field
                     v-model.trim="password"
                     :error-messages="passwordErrors"
+                    @input="$v.password.$touch()"
+                    @blur="$v.password.$touch()"
                     label="Password"
                     required
                     name="password"
                     prepend-icon="mdi-lock"
                     type="password"
                     autocomplete="off"
-                    @input="$v.password.$touch()"
-                    @blur="$v.password.$touch()"
                 ></v-text-field>
                 <v-text-field
                     v-model.trim="passwordConfirm"
                     :error-messages="passwordConfirmErrors"
+                    @input="$v.passwordConfirm.$touch()"
+                    @blur="$v.passwordConfirm.$touch()"
                     label="Confirm Password"
                     required
                     name="password-confirm"
                     prepend-icon="mdi-lock"
                     type="password"
                     autocomplete="off"
-                    @input="$v.passwordConfirm.$touch()"
-                    @blur="$v.passwordConfirm.$touch()"
                 ></v-text-field>
             </form>
         </v-card-text>
         <v-card-actions>
             <div class="flex-grow-1"></div>
-            <v-btn color="primary" type="submit" @click="register"
+            <v-btn @click="register" color="primary" type="submit"
                 >Register</v-btn
             >
             <v-btn @click="clear">Clear</v-btn>
         </v-card-actions>
+        <p class="text-center subtitle-1 pt-2 pb-2">
+            Already have an account?
+            <nuxt-link to="/login"> Login!</nuxt-link>
+        </p>
     </v-card>
 </template>
 
@@ -70,7 +74,7 @@ import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
     layout: 'unauthenticated',
-    // auth: false,
+    auth: false,
     components: {},
     mixins: [formValidatorMixin],
     data: () => ({

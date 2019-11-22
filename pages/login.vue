@@ -5,26 +5,28 @@
         </v-toolbar>
         <v-card-text>
             <v-form
-                method="post"
                 @keydown.enter="login"
                 @submit.prevent="login"
+                method="post"
             >
                 <v-text-field
                     v-model.trim="email"
                     :error-messages="emailErrors"
+                    @input="$v.email.$touch()"
+                    @blur="$v.email.$touch()"
                     label="Email"
                     required
                     name="email"
                     prepend-icon="mdi-login"
                     autocomplete="off"
                     value="will@bill.org"
-                    @input="$v.email.$touch()"
-                    @blur="$v.email.$touch()"
                 ></v-text-field>
 
                 <v-text-field
                     v-model.trim="password"
                     :error-messages="passwordErrors"
+                    @input="$v.password.$touch()"
+                    @blur="$v.password.$touch()"
                     label="Password"
                     required
                     name="password"
@@ -32,14 +34,12 @@
                     type="password"
                     autocomplete="off"
                     value="tester"
-                    @input="$v.password.$touch()"
-                    @blur="$v.password.$touch()"
                 ></v-text-field>
             </v-form>
         </v-card-text>
         <v-card-actions>
             <div class="flex-grow-1"></div>
-            <v-btn color="primary" type="submit" @click.prevent="login"
+            <v-btn @click.prevent="login" color="primary" type="submit"
                 >Login</v-btn
             >
             <v-btn @click="clear">Clear</v-btn>
