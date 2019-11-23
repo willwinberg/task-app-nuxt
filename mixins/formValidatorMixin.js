@@ -36,7 +36,7 @@ export default {
         },
         password: {
             required,
-            minLength: minLength(6)
+            minLength: minLength(8)
         },
         passwordConfirm: {
             required,
@@ -114,7 +114,7 @@ export default {
             const errors = []
             if (!this.$v.password.$error) return errors
             !this.$v.password.minLength &&
-                errors.push('Must be at least 6 characters')
+                errors.push('Must be at least 8 characters')
             !this.$v.password.required && errors.push('Password is required')
             return errors
         },

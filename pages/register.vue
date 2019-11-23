@@ -1,5 +1,6 @@
 <template>
     <v-col cols="12" sm="8">
+        <v-alert v-if="this.error" type="error">{{ this.error }}</v-alert>
         <v-card class="elevation-12">
             <v-toolbar color="primary" dark flat>
                 <v-toolbar-title>Register</v-toolbar-title>
@@ -122,8 +123,7 @@ export default {
         password: '',
         passwordConfirm: '',
         error: null,
-        submitStatus: null,
-        drawer: null
+        submitStatus: null
     }),
     // asyncData: async (context) => {
     //     try {
@@ -145,10 +145,13 @@ export default {
             } else {
                 this.submitStatus = 'PENDING'
                 const data = {
+                    firstName: this.firstName,
+                    lastName: this.lastName,
                     email: this.email,
                     password: this.password
                 }
                 await this.$store.dispatch('user/register', data).catch((e) => {
+                    console.log(e)
                     this.error = e.response.data.message + ''
                 })
                 if (!this.error) {
@@ -158,6 +161,8 @@ export default {
                             password: 'testerer'
                         }
                     })
+                } else {
+                    console.log(this.error)
                 }
                 // .then(() => this.$toast.success('User set!'))
             }

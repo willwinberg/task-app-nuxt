@@ -19,9 +19,14 @@ export const mutations = {
 export const actions = {
     login() {},
     register({ commit }, data) {
-        return this.$axios.post('/api/users', data).then((response) => {
-            commit('SET_USER', response.data)
-        })
+        return this.$axios
+            .post('/api/users', data)
+            .then((response) => {
+                commit('SET_USER', response.data)
+            })
+            .catch((e) => {
+                console.log(e)
+            })
     },
     fetchUsers({ commit }) {
         return this.$axios.get('/api/users').then((response) => {

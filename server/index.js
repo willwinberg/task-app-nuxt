@@ -36,6 +36,8 @@ const corsConfig = function(req, res, next) {
 app.use(corsConfig)
 app.use(morgan('tiny'))
 
+// app.listen(3000)
+
 // JWT middleware TODO: can this be moved to authRoutes.js?
 // app.use(
 //     jwt({
@@ -43,7 +45,7 @@ app.use(morgan('tiny'))
 //     }).unless({
 //         path: ['/api/auth/login', '/login', '/']
 //     })
-// )
+// ) dd
 
 jwt({ secret: 'shhhhhhared-secret', audience: '/api/auth', issuer: '/' })
 

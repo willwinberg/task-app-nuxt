@@ -117,7 +117,7 @@ module.exports = {
         //     401: '/login',
         //     404: '/notfound'
         // },
-        // debug: true
+        debug: true
         // proxy: true
         // },
         // proxy: {
