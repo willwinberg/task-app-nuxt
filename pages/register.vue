@@ -1,6 +1,6 @@
 <template>
     <v-col cols="12" sm="8">
-        <v-alert v-if="this.error" type="error">{{ this.error }}</v-alert>
+        <v-alert v-if="error" type="error">{{ error }}</v-alert>
         <v-card class="elevation-12">
             <v-toolbar color="primary" dark flat>
                 <v-toolbar-title>Register</v-toolbar-title>
@@ -150,20 +150,23 @@ export default {
                     email: this.email,
                     password: this.password
                 }
-                await this.$store.dispatch('user/register', data).catch((e) => {
-                    console.log(e)
-                    this.error = e.response.data.message + ''
-                })
-                if (!this.error) {
-                    this.$auth.loginWith('local', {
-                        data: {
-                            email: 'will@bill.org',
-                            password: 'testerer'
+                await this.$store
+                    .dispatch('user/register', data)
+                    .then((response) => {
+                        if (!this.error) {
+                            this.$auth.loginWith('local', {
+                                data: {
+                                    email: response.email,
+                                    password: response.password
+                                }
+                            })
+                        } else {
+                            return response.error || 'Need to fix this flow'
                         }
                     })
-                } else {
-                    console.log(this.error)
-                }
+                    .catch((e) => {
+                        this.error = e.response.data.message + ''
+                    })
                 // .then(() => this.$toast.success('User set!'))
             }
         },

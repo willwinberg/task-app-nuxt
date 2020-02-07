@@ -4,6 +4,6 @@ if (process.env.NODE_ENV === 'production') {
     module.exports = {
         seedData: true,
         connection: 'mongodb://127.0.0.1:27017/gogrellodb',
-        jwtSecret: 'pdumbsecret'
+        jwtSecret: 'prettydumbsecret'
     }
 }

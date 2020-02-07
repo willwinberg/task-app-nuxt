@@ -23,9 +23,10 @@ export const actions = {
             .post('/api/users', data)
             .then((response) => {
                 commit('SET_USER', response.data)
+                return response.data
             })
             .catch((e) => {
-                console.log(e)
+                return e.response
             })
     },
     fetchUsers({ commit }) {
