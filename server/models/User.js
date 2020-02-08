@@ -35,6 +35,10 @@ const UserSchema = mongoose.Schema(
             type: String,
             maxlength: 256
         },
+        theme: {
+            type: String,
+            enum: ['light', 'dark']
+        },
         location: {
             type: String
         },
