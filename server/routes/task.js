@@ -5,7 +5,7 @@ router
     .use('/tasks', router)
     .get('/', (req, res) => {
         const { _id } = req.user
-        Task.find({ user: _id })
+        Task.find({ assignee: _id })
             .then((tasks) => {
                 res.status(200).json(tasks)
             })
@@ -13,9 +13,8 @@ router
                 res.status(500).json({ message: err.message })
             })
     })
-    .get('/browse', (req, res) => {
+    .get('/unassigned', (req, res) => {
         Task.find({ assignee: null })
-            // .populate({ path: 'details', select: 'name description' })
             .then((tasks) => {
                 res.status(200).json(tasks)
             })
@@ -24,7 +23,6 @@ router
             })
     })
     .post('/', (req, res) => {
-        // const user = req.user
         const data = req.body
         const task = new Task(data)
         task.save()

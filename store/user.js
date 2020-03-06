@@ -1,7 +1,7 @@
 // import EventService from '@/services/EventService.js'
 // state must return an anonymous function. Otherwise the same state would be shared across ALL requests
 export const state = () => ({
-    users: ['Will', 'Noob', 'Death']
+    user: null
 })
 
 export const mutations = {

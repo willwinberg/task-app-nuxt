@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-// const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt')
 // const url = require('mongoose-type-url')
 const ObjectId = mongoose.Schema.Types.ObjectId
 
@@ -67,18 +67,25 @@ const UserSchema = mongoose.Schema(
     }
 )
 
-// UserSchema.pre('save', function hashPassword(next) {
-//   bcrypt.hash(this.password, 13, (err, hash) => {
-//     if (err) {
-//       return next(err)
-//     }
-//     this.password = hash
-//     return next()
-//   })
-// })
-//
-// UserSchema.methods.validify = function(passwordTry) {
-//   return bcrypt.compare(passwordTry, this.password)
-// }
+UserSchema.pre('save', function hashPassword(next) {
+    if (!this.isModified('password')) {
+        return next()
+    }
+
+    bcrypt.hash(this.password, 10, (err, hashword) => {
+        if (err) {
+            return next(err)
+        }
+        this.password = hashword
+        return next()
+    })
+})
+
+UserSchema.methods.validify = function(passwordTry, next) {
+    bcrypt.compare(passwordTry, this.password, function(err, isMatch) {
+        if (err) return next(err)
+        next(null, isMatch)
+    })
+}
 
 module.exports = mongoose.model('User', UserSchema, 'users')
