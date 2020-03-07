@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
 const User = require('../models/User')
 
@@ -12,22 +13,23 @@ router
         user.findOne(function(err, user) {
             if (err) return next(err)
             if (user) {
-                if (user.password !== password || user.email !== email) {
+                if (
+                    !bcrypt.compare(password, user.password) ||
+                    user.email !== email
+                ) {
                     // throw new Error('Invalid username or password')
-                    res.status(401).json({ message: 'Bad credentials' })
+                    res.status(406).json({ message: 'Bad credentials' })
                 } else {
-                    const accessToken = jsonwebtoken.sign(
+                    const token = jsonwebtoken.sign(
                         {
                             email: user.email,
-                            name: user.name,
-                            scope: ['test', 'user']
+                            name: user.name
                         },
-                        'aprettydumbsecret'
+                        'prettydumbsecret',
+                        { expiresIn: '1440m' }
                     )
-                    res.json({
-                        token: {
-                            accessToken
-                        }
+                    res.status(200).json({
+                        token
                     })
                 }
             }
