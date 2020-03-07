@@ -52,14 +52,14 @@ app.use(morgan('tiny'))
 //     jwt({
 //         secret: 'aprettydumbsecret'
 //     }).unless({
-//         path: ['/api/auth/login', '/login', '/']
+//         path: ['*']
 //     })
 // )
 
 // const token = jwt({
-//     secret: 'aprettydumbsecret'
-// audience: '/api/auth',
-// issuer: '/'
+//     secret: 'aprettydumbsecret',
+//     audience: '/api/auth',
+//     issuer: '/'
 // })
 
 const { router } = require('./routes')

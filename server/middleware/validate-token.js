@@ -11,7 +11,7 @@ function validateToken(req, res, next) {
     const token = getTokenFromHeaders(req)
 
     if (token) {
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        jwt.verify(token, 'prettydumbsecret', (err, decoded) => {
             if (err) {
                 return res.json({
                     success: false,

@@ -2,6 +2,7 @@ const router = require('express').Router()
 const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
 const User = require('../models/User')
+const validateToken = require('../middleware/validate-token')
 
 router
     .use('/auth', router)
@@ -36,11 +37,11 @@ router
         })
     })
 
-    .get('/user', (req, res, next) => {
+    .get('/user', validateToken, (req, res, next) => {
         res.json({ user: req.user })
     })
 
-    .post('/logout', (req, res, next) => {
+    .post('/logout', validateToken, (req, res, next) => {
         res.json({ status: 'OK' })
     })
 
