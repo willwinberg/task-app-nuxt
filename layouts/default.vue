@@ -30,12 +30,10 @@
         </v-navigation-drawer>
 
         <v-app-bar app clipped-left>
-            <v-app-bar-nav-icon
-                @click.stop="drawer = !drawer"
-            ></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
             <v-toolbar-title>{{ title }}</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <AvatarMenu />
+            <v-spacer />
+            <AvatarMenu v-if="$auth.loggedIn" />
         </v-app-bar>
         <v-content>
             <v-container fluid>

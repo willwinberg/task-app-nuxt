@@ -67,8 +67,8 @@ module.exports = {
     modules: [
         // Doc: https://axios.nuxtjs.org/usage
         '@nuxtjs/axios',
-        '@nuxtjs/auth',
-        '@nuxtjs/proxy'
+        '@nuxtjs/auth'
+        // '@nuxtjs/proxy'
     ],
     auth: {
         // plugins: ['~/plugins/auth.js'],
@@ -78,18 +78,17 @@ module.exports = {
                     login: {
                         url: '/api/auth/login',
                         method: 'post',
-                        propertyName: 'token.accessToken'
+                        propertyName: 'token'
                     },
                     logout: {
                         url: '/api/auth/logout',
                         method: 'post'
                     },
-                    user: false
-                    // user: {
-                    //     url: '/api/auth/user',
-                    //     method: 'get',
-                    //     propertyName: 'user'
-                    // }
+                    user: {
+                        url: '/api/auth/user',
+                        method: 'get',
+                        propertyName: 'user'
+                    }
                 }
                 // These are the defaults
                 // tokenRequired: true,

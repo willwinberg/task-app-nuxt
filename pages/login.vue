@@ -5,6 +5,7 @@
             {{ $auth.$state.redirect }}</v-alert
         >
         <v-alert v-if="error" type="error">{{ error }}</v-alert>
+        <v-alert v-if="$auth.loggedIn" type="success">Logged in Yo</v-alert>
         <v-card class="elevation-12">
             <v-toolbar color="primary" dark flat>
                 <v-toolbar-title>Login</v-toolbar-title>
@@ -26,7 +27,7 @@
                         prepend-icon="mdi-login"
                         autocomplete="off"
                         value="will@bill.org"
-                    ></v-text-field>
+                    />
 
                     <v-text-field
                         v-model.trim="password"
@@ -40,7 +41,7 @@
                         type="password"
                         autocomplete="off"
                         value="tester"
-                    ></v-text-field>
+                    />
                 </v-form>
             </v-card-text>
             <v-card-actions>
@@ -67,8 +68,8 @@ export default {
     mixins: [formValidatorMixin],
     data: () => ({
         drawer: null,
-        email: '',
-        password: '',
+        email: 'wtpwinberg@gmail.oom',
+        password: 'ambros1a',
         error: null,
         submitStatus: null
     }),
@@ -101,7 +102,7 @@ export default {
                     .then((res) => {})
                     .catch((e) => {
                         alert(e)
-                        this.error = e.response.data.message + ''
+                        this.error = e + ''
                     })
             }
         },
