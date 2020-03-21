@@ -35,6 +35,7 @@
     "mongoose": "^5.9.3",
     "morgan": "^1.9.1",
     "nuxt": "^2.11.0",
+    "vue-notifications": "^1.0.2",
     "vuedraggable": "github:willhoyle/Vue.Draggable",
     "vuelidate": "^0.7.5",
     "vuetify": "^2.2.15"
