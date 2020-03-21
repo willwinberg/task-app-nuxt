@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const bcrypt = require('bcrypt')
-const jsonwebtoken = require('jsonwebtoken')
+// const jsonwebtoken = require('jsonwebtoken')
 const User = require('../models/User')
 const validateToken = require('../middleware/validate-token')
 
@@ -12,36 +12,40 @@ router
         const user = User.where({ email, password })
 
         user.findOne(function(err, user) {
-            if (err) return next(err)
+            if (err) {
+                res.status(400).json({ message: err })
+            }
             if (user) {
                 if (
                     !bcrypt.compare(password, user.password) ||
                     user.email !== email
                 ) {
-                    // throw new Error('Invalid username or password')
                     res.status(406).json({ message: 'Bad credentials' })
                 } else {
-                    const token = jsonwebtoken.sign(
-                        {
-                            email: user.email,
-                            name: user.name
-                        },
-                        'prettydumbsecret',
-                        { expiresIn: '1440m' }
-                    )
-                    res.status(200).json({
-                        token
-                    })
+                    req.session.authUser = user
+                    return res.json(user)
+                    // const token = jsonwebtoken.sign(
+                    //     {
+                    //         email: user.email,
+                    //         name: user.name
+                    //     },
+                    //     'prettydumbsecret',
+                    //     { expiresIn: '1440m' }
+                    // )
+                    // res.status(200).json({
+                    //     token: user.token
+                    // })
                 }
             }
         })
     })
 
-    .get('/user', validateToken, (req, res, next) => {
+    .get('/user', (req, res, next) => {
         res.json({ user: req.user })
     })
 
     .post('/logout', validateToken, (req, res, next) => {
+        delete req.session.authUser
         res.json({ status: 'OK' })
     })
 

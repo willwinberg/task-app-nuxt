@@ -1,8 +1,6 @@
 // import EventService from '@/services/EventService.js'
 // state must return an anonymous function. Otherwise the same state would be shared across ALL requests
-export const state = () => ({
-    user: null
-})
+export const state = () => ({ user: null })
 
 export const mutations = {
     SET_USERS(state, users) {
@@ -17,6 +15,11 @@ export const mutations = {
 }
 
 export const actions = {
+    nuxtServerInit({ commit }, { req }) {
+        if (req.session && req.session.authUser) {
+            commit('SET_USER', req.session.authUser)
+        }
+    },
     login() {},
     register({ commit }, data) {
         return this.$axios

@@ -69,7 +69,7 @@ export default {
     mixins: [formValidatorMixin],
     data: () => ({
         drawer: null,
-        email: 'wtpwinberg@gmail.oom',
+        email: 'wtpwinberg@gmail.com',
         password: 'ambros1a'
     }),
     validations: formValidatorMixin.validations,
@@ -96,6 +96,7 @@ export default {
                         }
                     })
                     this.showLoginSuccess()
+                    await this.$router.push('/')
                 } catch (e) {
                     this.showLoginError({ message: e.message })
                 }

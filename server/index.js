@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const morgan = require('morgan')
 const app = express()
 const bodyParser = require('body-parser')
@@ -20,6 +21,15 @@ mongoose.connect(dbConfig.connection, {
 
 app.use(cookieParser())
 app.use(bodyParser.json())
+
+app.use(
+    session({
+        secret: 'aprettydumbsecret',
+        resave: false,
+        saveUninitialized: false,
+        cookie: { maxAge: 60000 }
+    })
+)
 
 // configure CORS settings
 // const corsConfig = function(req, res, next) {
