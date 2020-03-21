@@ -4,8 +4,9 @@
             >You have to login before accessing to
             {{ $auth.$state.redirect }}</v-alert
         >
-        <v-alert v-if="error" type="error">{{ error }}</v-alert>
-        <v-alert v-if="$auth.loggedIn" type="success">Logged in Yo</v-alert>
+        <v-alert v-if="$auth.loggedIn" type="success"
+            >You already logged in yo</v-alert
+        >
         <v-card class="elevation-12">
             <v-toolbar color="primary" dark flat>
                 <v-toolbar-title>Login</v-toolbar-title>
@@ -69,9 +70,7 @@ export default {
     data: () => ({
         drawer: null,
         email: 'wtpwinberg@gmail.oom',
-        password: 'ambros1a',
-        error: null,
-        submitStatus: null
+        password: 'ambros1a'
     }),
     validations: formValidatorMixin.validations,
     computed: {
@@ -88,22 +87,18 @@ export default {
             await formValidatorMixin.validate
             this.$v.$touch()
 
-            if (this.$v.invalid) {
-                this.submitStatus = 'ERROR'
-            } else {
-                this.submitStatus = 'PENDING'
-                await this.$auth
-                    .loginWith('local', {
+            if (!this.$v.invalid) {
+                try {
+                    await this.$auth.loginWith('local', {
                         data: {
                             email: this.email,
                             password: this.password
                         }
                     })
-                    .then((res) => {})
-                    .catch((e) => {
-                        alert(e)
-                        this.error = e + ''
-                    })
+                    this.showLoginSuccess()
+                } catch (e) {
+                    this.showLoginError({ message: e.message })
+                }
             }
         },
         clear() {
@@ -113,6 +108,18 @@ export default {
             this.email = ''
             this.select = null
             this.checkbox = false
+        }
+    },
+    notifications: {
+        showLoginError: {
+            title: 'Login Failed',
+            message: 'Failed to authenticate',
+            type: 'error'
+        },
+        showLoginSuccess: {
+            title: 'Login Success',
+            message: 'Welcome back!',
+            type: 'success'
         }
     }
 }
