@@ -4,10 +4,7 @@
             <v-btn icon>
                 <v-icon>mdi-settings</v-icon>
             </v-btn>
-            <v-toolbar-title
-                :column="column"
-                v-text="column.title"
-            ></v-toolbar-title>
+            <v-toolbar-title :column="column" v-text="column.title" />
 
             <div class="flex-grow-1"></div>
 
@@ -20,8 +17,7 @@
             <v-row>
                 <v-col>
                     <draggable
-                        v-model="list"
-                        :list="list.title"
+                        v-model="column.tasks"
                         v-bind="dragOptions"
                         @start="drag = true"
                         @end="drag = false"
@@ -30,27 +26,22 @@
                         group="tasks"
                         tag="ul"
                     >
-                        <transition-group
-                            :name="!drag ? 'flip-list' : null"
-                            type="transition"
+                        <li
+                            v-for="task in column.tasks"
+                            :key="task.id"
+                            class="list-group-item"
                         >
-                            <li
-                                v-for="task in list"
-                                :key="task.task.id"
-                                class="list-group-item"
-                            >
-                                <i
-                                    :class="
-                                        task.fixed
-                                            ? 'fa fa-anchor'
-                                            : 'glyphicon glyphicon-pushpin'
-                                    "
-                                    @click="task.fixed = !task.fixed"
-                                    aria-hidden="true"
-                                ></i>
-                                <TaskCard :task="task.task" />
-                            </li>
-                        </transition-group>
+                            <i
+                                :class="
+                                    task.fixed
+                                        ? 'fa fa-anchor'
+                                        : 'glyphicon glyphicon-pushpin'
+                                "
+                                @click="task.fixed = !task.fixed"
+                                aria-hidden="true"
+                            />
+                            <TaskCard :task="task" />
+                        </li>
                     </draggable>
                 </v-col>
             </v-row>
@@ -63,45 +54,6 @@
 import draggable from 'vuedraggable'
 import TaskCard from './TaskCard'
 import AddTaskForm from './AddTaskForm'
-
-const tasks = [
-    {
-        id: 456789,
-        priority: 'highest',
-        title: 'do backend',
-        description: 'we need to complete the entire backend of this app',
-        assignee: 'Will',
-        reporter: 'Brad',
-        site: 'PlumbersStock',
-        type: 'Task',
-        points: 100,
-        status: 'In Progress'
-    },
-    {
-        id: 347898,
-        priority: 'highest',
-        title: 'do backend',
-        description: 'we need to complete the entire backend of this app',
-        assignee: 'Will',
-        reporter: 'Brad',
-        site: 'PlumbersStock',
-        type: 'Task',
-        points: 100,
-        status: 'In Progress'
-    },
-    {
-        id: 54901,
-        priority: 'highest',
-        title: 'do backend',
-        description: 'we need to complete the entire backend of this app',
-        assignee: 'Will',
-        reporter: 'Brad',
-        site: 'PlumbersStock',
-        type: 'Task',
-        points: 100,
-        status: 'In Progress'
-    }
-]
 
 export default {
     components: {
@@ -116,9 +68,6 @@ export default {
         }
     },
     data: () => ({
-        list: tasks.map((task, i) => {
-            return { task, order: i + 1 }
-        }),
         drag: false
     }),
     computed: {

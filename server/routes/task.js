@@ -4,7 +4,7 @@ const Task = require('../models/Task')
 router
     .use('/tasks', router)
     .get('/', (req, res) => {
-        const { _id } = req.user
+        const _id = '5dcf4dc027d8f55672c2fa2c'
         Task.find({ assignee: _id })
             .then((tasks) => {
                 res.status(200).json(tasks)

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const state = () => ({
-    tasks: [
+    myTasks: [
         {
             id: 456789,
             priority: 'highest',
@@ -38,12 +38,13 @@ export const state = () => ({
             points: 100,
             status: 'In Progress'
         }
-    ]
+    ],
+    browse: []
 })
 
 export const mutations = {
     SET_TASKS(state, tasks) {
-        state.tasks = tasks
+        state.myTasks = tasks
     },
     SET_TASK(state, task) {
         state.task = task
@@ -54,7 +55,7 @@ export const mutations = {
 }
 export const actions = {
     fetchTasks({ commit }) {
-        return axios.get('/tasks').then((response) => {
+        return axios.get('api/tasks').then((response) => {
             commit('SET_TASKS', response.data)
         })
     },

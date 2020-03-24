@@ -12,10 +12,8 @@
                     <v-list-item-title
                         v-text="task.title"
                         class="headline mb-1"
-                    ></v-list-item-title>
-                    <v-list-item-subtitle
-                        v-text="task.description"
-                    ></v-list-item-subtitle>
+                    />
+                    <v-list-item-subtitle v-text="task.description" />
                 </v-list-item-content>
             </v-list-item>
         </v-card>
@@ -32,11 +30,11 @@
                         <v-list-item-title
                             v-text="task.title"
                             class="headline mb-1 mt-3"
-                        ></v-list-item-title>
+                        />
                         <v-list-item-subtitle
                             v-text="task.description"
                             class="mb-4"
-                        ></v-list-item-subtitle>
+                        />
                         <div>
                             <PointsChip :points="task.points" />
                             <ReporterChip :reporter="task.reporter" />

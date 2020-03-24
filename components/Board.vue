@@ -1,7 +1,7 @@
 <template>
     <v-row>
-        <v-col v-for="(column, i) in columns" :key="i">
-            <Column :column="column" />
+        <v-col v-for="key in Object.keys(columns)" :key="key">
+            <Column :column="columns[key]" />
         </v-col>
     </v-row>
 </template>
@@ -13,27 +13,38 @@ export default {
         Column
     },
     data: () => ({
-        columns: [
-            {
-                title: 'Todo'
+        columns: {
+            Backlog: {
+                key: 'todo',
+                title: 'Todo',
+                tasks: []
             },
-            {
-                title: 'Doing'
+            'In Progress': {
+                key: 'doing',
+                title: 'Doing',
+                tasks: []
             },
-            {
-                title: 'Done'
+            Done: {
+                key: 'done',
+                title: 'Done',
+                tasks: []
+            },
+            'To Do': {
+                key: 'todo2',
+                title: 'To Do',
+                tasks: []
             }
-        ]
+        }
     }),
-    computed: {
-        get() {
-            return this.$store.state.lists
-        },
-        set(value) {
-            return this.$store.commit('updateList', value)
-        },
-        fetch({ store }) {
-            return store.dispatch('tasks/fetchTasks')
+    async created() {
+        await this.$store.dispatch('tasks/fetchTasks')
+        this.loadColumnsWithTasks()
+    },
+    methods: {
+        loadColumnsWithTasks() {
+            this.$store.state.tasks.myTasks.forEach((task) => {
+                this.columns[task.status].tasks.push(task)
+            })
         }
     }
 }

@@ -3,8 +3,8 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 const TaskSchema = mongoose.Schema(
     {
-        id: {
-            type: Number,
+        _id: {
+            type: ObjectId,
             required: true
         },
         site: {
@@ -35,18 +35,14 @@ const TaskSchema = mongoose.Schema(
             type: String,
             required: true
         },
-        assignee: [
-            {
-                type: ObjectId,
-                ref: 'User'
-            }
-        ],
-        reporter: [
-            {
-                type: ObjectId,
-                ref: 'User'
-            }
-        ],
+        assignee: {
+            type: ObjectId,
+            ref: 'User'
+        },
+        reporter: {
+            type: ObjectId,
+            ref: 'User'
+        },
         comment: {
             type: String
         },
