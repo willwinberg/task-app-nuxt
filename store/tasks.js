@@ -1,44 +1,7 @@
 import axios from 'axios'
 
 export const state = () => ({
-    myTasks: [
-        {
-            id: 456789,
-            priority: 'highest',
-            title: 'do backend',
-            description: 'we need to complete the entire backend of this app',
-            assignee: 'Will',
-            reporter: 'Brad',
-            site: 'PlumbersStock',
-            type: 'Task',
-            points: 100,
-            status: 'In Progress'
-        },
-        {
-            id: 347898,
-            priority: 'highest',
-            title: 'do backend',
-            description: 'we need to complete the entire backend of this app',
-            assignee: 'Will',
-            reporter: 'Brad',
-            site: 'PlumbersStock',
-            type: 'Task',
-            points: 100,
-            status: 'In Progress'
-        },
-        {
-            id: 54901,
-            priority: 'highest',
-            title: 'do backend',
-            description: 'we need to complete the entire backend of this app',
-            assignee: 'Will',
-            reporter: 'Brad',
-            site: 'PlumbersStock',
-            type: 'Task',
-            points: 100,
-            status: 'In Progress'
-        }
-    ],
+    myTasks: [],
     unassignedTasks: []
 })
 
