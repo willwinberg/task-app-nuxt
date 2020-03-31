@@ -1,10 +1,10 @@
-# task-mgmt
+# gogrello
 
-> A task management app for teams
+> A task management app for the Go Green development team. Contact <williamw@plumbersstock.com> for issues or make a pull request.
 
-####Vue, Nuxt, Vuetify,Vuelidate, MongoDB Stitch
+## Vue/Nuxt, Node, Express, and MongoDB
 
-## Build Setup
+### Build Setup
 
 ``` bash
 # install dependencies
@@ -30,4 +30,4 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 * find out why browse table gets messed up on expand
 * separate button templates from forms/modals to be more dynamic
 * hash passwords
-implement vue-notification package
+* implement vue-notification package
