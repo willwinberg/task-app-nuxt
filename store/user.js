@@ -1,13 +1,23 @@
 // import EventService from '@/services/EventService.js'
 // state must return an anonymous function. Otherwise the same state would be shared across ALL requests
-export const state = () => ({ user: null })
+export const state = () => ({ user: null, allUsers: [], usersNameKey: {} })
 
 export const mutations = {
-    SET_USERS(state, users) {
-        state.users = users
-    },
     SET_USER(state, user) {
         state.user = user
+    },
+    SET_USERS(state, users) {
+        state.allUsers = users
+    },
+    CREATE_USERS_NAME_KEY(state, users) {
+        const key = {}
+
+        users.forEach((user) => {
+            key[user._id] = `${user.firstName} ${user.lastName}`
+        })
+
+        state.usersNameKey = key
+        console.log('state.usersNameKey', key)
     },
     ADD_USER(state, user) {
         state.user = user
@@ -35,6 +45,7 @@ export const actions = {
     fetchUsers({ commit }) {
         return this.$axios.get('/api/users').then((response) => {
             commit('SET_USERS', response.data)
+            commit('CREATE_USERS_NAME_KEY', response.data)
         })
     },
     fetchUser({ commit }, id) {

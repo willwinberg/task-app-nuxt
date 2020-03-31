@@ -14,9 +14,9 @@ router
             })
     })
     .get('/unassigned', (req, res) => {
-        Task.find({ assignee: null })
+        Task.find({ assignee: '5e82e09aebe921535502e437' })
             .then((tasks) => {
-                res.status(200).json(tasks)
+                res.status(202).json(tasks)
             })
             .catch((err) => {
                 res.status(500).json({ message: err.message })

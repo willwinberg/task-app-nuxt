@@ -39,12 +39,15 @@ export const state = () => ({
             status: 'In Progress'
         }
     ],
-    browse: []
+    unassignedTasks: []
 })
 
 export const mutations = {
     SET_TASKS(state, tasks) {
         state.myTasks = tasks
+    },
+    SET_UNASSIGNED_TASKS(state, tasks) {
+        state.unassignedTasks = tasks
     },
     SET_TASK(state, task) {
         state.task = task
@@ -57,6 +60,12 @@ export const actions = {
     fetchTasks({ commit }) {
         return axios.get('api/tasks').then((response) => {
             commit('SET_TASKS', response.data)
+        })
+    },
+    fetchUnassignedTasks({ commit }) {
+        return axios.get('api/tasks/unassigned').then((response) => {
+            console.log('unassigned', response.data)
+            commit('SET_UNASSIGNED_TASKS', response.data)
         })
     },
     fetchTask({ commit }, id) {
