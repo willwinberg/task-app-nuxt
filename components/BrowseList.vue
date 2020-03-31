@@ -72,8 +72,8 @@ export default {
         return {
             search: '',
             expanded: [],
-            singleExpand: false,
-            loading: false,
+            singleExpand: true,
+            loading: true,
             headers: [
                 { text: 'Title', value: 'title' },
                 { text: 'Site', value: 'site' },
@@ -92,6 +92,7 @@ export default {
         await this.$store.dispatch('tasks/fetchUnassignedTasks')
         await this.$store.dispatch('user/fetchUsers')
         this.loadListWithTasks()
+        this.loading = false
     },
     methods: {
         loadListWithTasks() {
