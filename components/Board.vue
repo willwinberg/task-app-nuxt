@@ -38,6 +38,7 @@ export default {
     }),
     async created() {
         await this.$store.dispatch('tasks/fetchTasks')
+        await this.$store.dispatch('user/fetchUsers')
         this.loadColumnsWithTasks()
     },
     methods: {

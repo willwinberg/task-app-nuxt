@@ -51,9 +51,27 @@ export default {
         },
         title: {
             required,
-            maxLength: maxLength(20)
+            maxLength: maxLength(25)
         },
         description: {
+            required
+        },
+        priority: {
+            required
+        },
+        type: {
+            required
+        },
+        status: {
+            required
+        },
+        points: {
+            required
+        },
+        assignee: {
+            required
+        },
+        reporter: {
             required
         },
         tags: {
@@ -131,16 +149,51 @@ export default {
             const errors = []
             if (!this.$v.title.$dirty) return errors
             !this.$v.title.maxLength &&
-                errors.push('Name must be at most 20 characters long')
+                errors.push('Title must be at most 25 characters long')
             !this.$v.title.required && errors.push('Title is required.')
             return errors
         },
         descriptionErrors() {
             const errors = []
-            // if (!this.$v.description.$dirty) return errors
-            // !this.$v.description.maxLength &&
-            //     errors.push('Name must be at most 10 characters long')
-            // !this.$v.description.required && errors.push('Name is required.')
+            if (!this.$v.description.$dirty) return errors
+            !this.$v.description.required &&
+                errors.push('Description is required.')
+            return errors
+        },
+        priorityErrors() {
+            const errors = []
+            if (!this.$v.description.$dirty) return errors
+            !this.$v.priority.required && errors.push('Priority is required.')
+            return errors
+        },
+        typeErrors() {
+            const errors = []
+            if (!this.$v.type.$dirty) return errors
+            !this.$v.type.required && errors.push('Type is required.')
+            return errors
+        },
+        statusErrors() {
+            const errors = []
+            if (!this.$v.status.$dirty) return errors
+            !this.$v.status.required && errors.push('Status is required.')
+            return errors
+        },
+        pointsErrors() {
+            const errors = []
+            if (!this.$v.points.$dirty) return errors
+            !this.$v.points.required && errors.push('Points is required.')
+            return errors
+        },
+        assigneeErrors() {
+            const errors = []
+            if (!this.$v.assignee.$dirty) return errors
+            !this.$v.assignee.required && errors.push('Assignee is required.')
+            return errors
+        },
+        reporterErrors() {
+            const errors = []
+            if (!this.$v.reporter.$dirty) return errors
+            !this.$v.reporter.required && errors.push('Reporter is required.')
             return errors
         }
     },

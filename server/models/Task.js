@@ -21,11 +21,13 @@ const TaskSchema = mongoose.Schema(
         },
         priority: {
             type: String,
-            required: true
+            required: true,
+            enum: ['Lowest', 'Low', 'Medium', 'High', 'Highest']
         },
         type: {
             type: String,
-            required: true
+            required: true,
+            enum: ['Task', 'Bug', 'Story', 'Epic', 'Theme']
         },
         points: {
             type: Number,

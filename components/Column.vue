@@ -45,7 +45,7 @@
                     </draggable>
                 </v-col>
             </v-row>
-            <AddTaskForm />
+            <AddTaskForm :formTitle="`Add task to ${column.title}`" />
         </v-container>
     </v-card>
 </template>
