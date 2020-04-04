@@ -2,7 +2,8 @@ import axios from 'axios'
 
 export const state = () => ({
     myTasks: [],
-    unassignedTasks: []
+    unassignedTasks: [],
+    title: ''
 })
 
 export const mutations = {
@@ -17,6 +18,9 @@ export const mutations = {
     },
     ADD_TASK(state, task) {
         // api stuff
+    },
+    SET_TITLE(state, title) {
+        state.title = title
     }
 }
 export const actions = {
@@ -40,6 +44,8 @@ export const actions = {
         commit('taskAdded', await this.ADD_TASK)
     }
 }
-export const computed = {
-    // compute derived state based on store state,
+export const getters = {
+    getTitle(state) {
+        return state.title
+    }
 }

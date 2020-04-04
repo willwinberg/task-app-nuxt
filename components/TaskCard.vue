@@ -43,7 +43,7 @@
                 </v-list-item>
 
                 <v-card-actions>
-                    <EditTaskForm v-bind="task" />
+                    <TaskForm :task-to-edit="task" />
                     <DeleteTaskModal v-bind="task" />
                 </v-card-actions>
             </v-card>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import EditTaskForm from './EditTaskForm'
+import TaskForm from './TaskForm'
 import DeleteTaskModal from './DeleteTaskModal'
 import SiteChip from './chips/SiteChip'
 import TypeChip from './chips/TypeChip'
@@ -62,7 +62,7 @@ import ReporterChip from './chips/ReporterChip'
 
 export default {
     components: {
-        EditTaskForm,
+        TaskForm,
         DeleteTaskModal,
         SiteChip,
         TypeChip,

@@ -51,10 +51,10 @@ export default {
         },
         title: {
             required,
-            maxLength: maxLength(25)
+            maxLength: maxLength(70)
         },
         description: {
-            required
+            minLength: minLength(10)
         },
         priority: {
             required
@@ -149,7 +149,7 @@ export default {
             const errors = []
             if (!this.$v.title.$dirty) return errors
             !this.$v.title.maxLength &&
-                errors.push('Title must be at most 25 characters long')
+                errors.push('Title must be at most 70 characters long')
             !this.$v.title.required && errors.push('Title is required.')
             return errors
         },
@@ -162,7 +162,7 @@ export default {
         },
         priorityErrors() {
             const errors = []
-            if (!this.$v.description.$dirty) return errors
+            if (!this.$v.priority.$dirty) return errors
             !this.$v.priority.required && errors.push('Priority is required.')
             return errors
         },
@@ -198,6 +198,10 @@ export default {
         }
     },
     methods: {
+        setTitle(value) {
+            this.title = value
+            this.$v.title.$touch()
+        },
         focusFirstStatus(component = this) {
             if (component.status) {
                 component.$el.focus()

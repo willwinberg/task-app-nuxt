@@ -45,7 +45,7 @@
                     </draggable>
                 </v-col>
             </v-row>
-            <AddTaskForm :formTitle="`Add task to ${column.title}`" />
+            <TaskForm />
         </v-container>
     </v-card>
 </template>
@@ -53,12 +53,12 @@
 <script>
 import draggable from 'vuedraggable'
 import TaskCard from './TaskCard'
-import AddTaskForm from './AddTaskForm'
+import TaskForm from './TaskForm'
 
 export default {
     components: {
         draggable,
-        AddTaskForm,
+        TaskForm,
         TaskCard
     },
     props: {

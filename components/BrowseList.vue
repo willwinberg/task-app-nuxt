@@ -4,7 +4,7 @@
             <v-toolbar-title>
                 Unassigned Tasks
             </v-toolbar-title>
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-text-field
                 v-model="search"
                 class="mr-4"
@@ -12,8 +12,8 @@
                 label="Search"
                 single-line
                 hide-details
-            ></v-text-field>
-            <AddTaskForm />
+            />
+            <TaskForm />
         </v-toolbar>
         <v-data-table
             :loading="loading"
@@ -36,7 +36,7 @@
             <template v-slot:expanded-item="{ headers, item }">
                 <td :colspan="headers.length" class="pb-3 wrap-hack">
                     <p class="description">{{ item.description }}</p>
-                    <EditTaskForm v-bind="item" />
+                    <TaskForm :task-to-edit="item" />
                     <DeleteTaskModal v-bind="item" />
                 </td>
             </template>
@@ -57,14 +57,12 @@
 
 <script>
 import formValidatorMixin from '@@/mixins/formValidatorMixin'
-import AddTaskForm from './AddTaskForm'
-import EditTaskForm from './EditTaskForm'
+import TaskForm from './TaskForm'
 import DeleteTaskModal from './DeleteTaskModal'
 
 export default {
     components: {
-        AddTaskForm,
-        EditTaskForm,
+        TaskForm,
         DeleteTaskModal
     },
     mixins: [formValidatorMixin],

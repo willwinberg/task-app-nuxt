@@ -17,7 +17,6 @@ export const mutations = {
         })
 
         state.usersNameKey = key
-        console.log('state.usersNameKey', key)
     },
     ADD_USER(state, user) {
         state.user = user

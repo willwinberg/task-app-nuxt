@@ -1,11 +1,17 @@
 <template>
     <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
-            <v-btn v-on="on" outlined text>Add New Task</v-btn>
+            <slot name="button">
+                <v-btn v-on="on" outlined text>{{
+                    !taskToEdit ? 'Add Task' : 'Edit'
+                }}</v-btn>
+            </slot>
         </template>
         <v-card>
             <v-card-title>
-                <span class="headline">{{ formTitle }}</span>
+                <span class="headline">{{
+                    !taskToEdit ? 'Add New Task' : 'Edit Task'
+                }}</span>
             </v-card-title>
             <v-card-text>
                 <v-container>
@@ -14,18 +20,16 @@
                             <v-text-field
                                 v-model="title"
                                 :error-messages="titleErrors"
-                                :counter="10"
-                                @input="$v.title.$touch()"
+                                :counter="70"
                                 @blur="$v.title.$touch()"
-                                label="Title"
+                                label="Title*"
                                 required
                             />
                         </v-col>
                         <v-col cols="12">
                             <v-textarea
-                                v-model="description"
+                                v-model.lazy="description"
                                 :error-messages="descriptionErrors"
-                                @input="$v.description.$touch()"
                                 @blur="$v.description.$touch()"
                                 label="Description"
                                 height="100"
@@ -38,7 +42,7 @@
                                 :error-messages="priorityErrors"
                                 @change="$v.priority.$touch()"
                                 @blur="$v.priority.$touch()"
-                                label="Priority"
+                                label="Priority*"
                                 required
                             />
                         </v-col>
@@ -49,7 +53,7 @@
                                 :error-messages="typeErrors"
                                 @change="$v.type.$touch()"
                                 @blur="$v.type.$touch()"
-                                label="Type"
+                                label="Type*"
                                 required
                             />
                         </v-col>
@@ -60,7 +64,7 @@
                                 :error-messages="statusErrors"
                                 @change="$v.status.$touch()"
                                 @blur="$v.status.$touch()"
-                                label="Status"
+                                label="Status*"
                                 required
                             />
                         </v-col>
@@ -76,7 +80,7 @@
                                 step="10"
                                 hide-details
                                 thumb-label="always"
-                                label="Points"
+                                label="Points*"
                                 required
                             >
                             </v-slider>
@@ -89,30 +93,29 @@
                                 @change="$v.assignee.$touch()"
                                 @blur="$v.assignee.$touch()"
                                 label="Assignee"
-                                required
                             />
                         </v-col>
-                        <v-col cols="12" sm="6">
-                            <v-select
-                                v-model="reporter"
-                                :items="users"
-                                :error-messages="reporterErrors"
-                                @change="$v.reporter.$touch()"
-                                @blur="$v.reporter.$touch()"
-                                label="Reporter"
-                                required
-                            />
-                        </v-col>
+                        <!--                        <v-col cols="12" sm="6">-->
+                        <!--                            <v-select-->
+                        <!--                                :value="task.reporter"-->
+                        <!--                                :items="users"-->
+                        <!--                                :error-messages="reporterErrors"-->
+                        <!--                                @change="$v.reporter.$touch()"-->
+                        <!--                                @blur="$v.reporter.$touch()"-->
+                        <!--                                label="Reporter"-->
+                        <!--                                required-->
+                        <!--                            />-->
+                        <!--                        </v-col>-->
                     </v-row>
                 </v-container>
                 <small>*indicates required field</small>
             </v-card-text>
             <v-card-actions>
                 <div class="flex-grow-1"></div>
-                <v-btn @click="dialog = false" color="blue darken-1" text
-                    >Close</v-btn
+                <v-btn @click="clear" color="blue darken-1" text>Cancel</v-btn>
+                <v-btn @click="handleSubmit" color="blue darken-1" text
+                    >Submit</v-btn
                 >
-                <v-btn @click="addTask" color="blue darken-1" text>Save</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -122,60 +125,92 @@
 import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
-    components: {},
     mixins: [formValidatorMixin],
     props: {
-        formTitle: {
-            type: String,
-            default: 'Add Task'
+        taskToEdit: {
+            type: Object,
+            default: null
         }
     },
     data: () => ({
-        dialog: false,
         title: '',
         description: '',
-        checkbox: '',
         priority: '',
-        priorityLevels: ['Lowest', 'Low', 'Medium', 'High', 'Highest'],
         type: '',
-        types: ['Task', 'Bug', 'Story', 'Epic', 'Theme'],
         status: '',
-        statusTypes: ['Task', 'Bug', 'Story', 'Epic', 'Theme'],
         points: 10,
         assignee: '',
-        reporter: '',
+        // reporter: '',
+        priorityLevels: ['Lowest', 'Low', 'Medium', 'High', 'Highest'],
+        types: ['Task', 'Bug', 'Story', 'Epic', 'Theme'],
+        statusTypes: ['Task', 'Bug', 'Story', 'Epic', 'Theme'],
+        dialog: false,
         users: [],
         error: null,
         submitStatus: null
     }),
     async created() {
+        // this loads the task to edit data in to form
+        if (this.taskToEdit) {
+            Object.keys(this.taskToEdit).forEach((key) => {
+                if (key in this) {
+                    this[key] = this.taskToEdit[key]
+                }
+            })
+        }
         await this.$store.dispatch('user/fetchUsers')
-        await this.getUserNames()
+        await this.makeUserNamesArray()
     },
-    // computed: {
-    //     redirect() {
-    //         return (
-    //             this.$route.query.redirect &&
-    //             decodeURIComponent(this.$route.query.redirect)
-    //         )
-    //     }
-    // },
     methods: {
-        addTask(task) {
-            this.$store.dispatch('tasks/addTask', task)
+        handleSubmit() {
+            this.$v.$touch()
+            if (this.$v.$invalid) return
+
+            if (this.taskToEdit) {
+                this.editTask()
+            } else {
+                this.handleAddTask()
+            }
+
             this.dialog = false
         },
-        getUserNames(id) {
+        handleAddTask() {
+            const route = this.$router.currentRoute.name
+            const task = this.task
+
+            if (route === 'index') {
+                task.assignee = this.$auth.user._id
+            } else if (route === 'browse') {
+                task.assignee = null
+            }
+
+            this.$store.dispatch('tasks/addTask', task)
+        },
+        editTask() {
+            const payload = {
+                update: this.task,
+                taskId: this.taskId
+            }
+
+            this.$store.dispatch('tasks/updateTask', payload)
+        },
+        makeUserNamesArray() {
             const key = this.$store.state.user.usersNameKey
             this.users = Object.values(key)
         },
         clear() {
-            // const response = this.$store.dispatch('user/fetchUsers')
             this.$v.$reset()
-            this.name = ''
-            this.email = ''
-            this.select = null
-            this.checkbox = false
+            this.task = {
+                title: '',
+                description: '',
+                priority: '',
+                type: '',
+                status: '',
+                points: 10,
+                assignee: '',
+                reporter: ''
+            }
+
             this.dialog = false
         }
     }
