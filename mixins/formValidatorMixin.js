@@ -156,8 +156,8 @@ export default {
         descriptionErrors() {
             const errors = []
             if (!this.$v.description.$dirty) return errors
-            !this.$v.description.required &&
-                errors.push('Description is required.')
+            !this.$v.description.minLength &&
+                errors.push('Description has a minimum length of 10.')
             return errors
         },
         priorityErrors() {

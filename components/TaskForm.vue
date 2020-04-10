@@ -28,7 +28,7 @@
                         </v-col>
                         <v-col cols="12">
                             <v-textarea
-                                v-model.lazy="description"
+                                v-model="description"
                                 :error-messages="descriptionErrors"
                                 @blur="$v.description.$touch()"
                                 label="Description"
@@ -88,7 +88,7 @@
                         <v-col cols="12" sm="6">
                             <v-select
                                 v-model="assignee"
-                                :items="users"
+                                :items="Object.values(users)"
                                 :error-messages="assigneeErrors"
                                 @change="$v.assignee.$touch()"
                                 @blur="$v.assignee.$touch()"
@@ -145,26 +145,32 @@ export default {
         types: ['Task', 'Bug', 'Story', 'Epic', 'Theme'],
         statusTypes: ['Task', 'Bug', 'Story', 'Epic', 'Theme'],
         dialog: false,
-        users: [],
+        users: {},
         error: null,
         submitStatus: null
     }),
     async created() {
+        await this.$store.dispatch('user/fetchUsers')
+        // await this.makeUserNamesArray()
+        this.users = this.$store.state.user.usersNameKey
+
         // this loads the task to edit data in to form
         if (this.taskToEdit) {
             Object.keys(this.taskToEdit).forEach((key) => {
                 if (key in this) {
-                    this[key] = this.taskToEdit[key]
+                    if (key === 'assignee') {
+                        this[key] = this.users[this.taskToEdit[key]]
+                    } else {
+                        this[key] = this.taskToEdit[key]
+                    }
                 }
             })
         }
-        await this.$store.dispatch('user/fetchUsers')
-        await this.makeUserNamesArray()
     },
     methods: {
         handleSubmit() {
             this.$v.$touch()
-            if (this.$v.$invalid) return
+            if (this.$v.$error) return
 
             if (this.taskToEdit) {
                 this.editTask()
