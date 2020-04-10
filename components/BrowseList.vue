@@ -23,10 +23,10 @@
             :sort-by="['site', 'priority']"
             :sort-desc="[false, true]"
             :expanded.sync="expanded"
-            item-key="index"
+            item-key="_id"
             loading-text="Loading tasks... Please wait"
             multi-sort
-            single-expanded
+            single-expand
             show-expand
             class="elevation-1"
         >
