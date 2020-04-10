@@ -1,8 +1,7 @@
 const router = require('express').Router()
 const bcrypt = require('bcrypt')
-// const jsonwebtoken = require('jsonwebtoken')
 const User = require('../models/User')
-const validateToken = require('../middleware/validate-token')
+// const validateToken = require('../middleware/validate-token')
 
 router
     .use('/auth', router)
@@ -24,17 +23,6 @@ router
                 } else {
                     req.session.authUser = user
                     return res.json(user)
-                    // const token = jsonwebtoken.sign(
-                    //     {
-                    //         email: user.email,
-                    //         name: user.name
-                    //     },
-                    //     'prettydumbsecret',
-                    //     { expiresIn: '1440m' }
-                    // )
-                    // res.status(200).json({
-                    //     token: user.token
-                    // })
                 }
             }
         })
@@ -44,7 +32,7 @@ router
         res.json({ user: req.user })
     })
 
-    .post('/logout', validateToken, (req, res, next) => {
+    .post('/logout', (req, res, next) => {
         delete req.session.authUser
         res.json({ status: 'OK' })
     })

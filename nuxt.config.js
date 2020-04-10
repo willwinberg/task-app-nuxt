@@ -110,6 +110,9 @@ module.exports = {
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options
      */
+    // env: {
+    //     sessionSecret: process.env.SECRET || 'prettydumbsecret'
+    // },
     axios: {
         baseURL: process.env.API_URL || 'http://localhost:3000/',
         // prefix: '/api',
