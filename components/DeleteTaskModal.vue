@@ -20,7 +20,7 @@
                     Cancel
                 </v-btn>
 
-                <v-btn @click="deleteTask" color="red" text>
+                <v-btn @click="handleDeleteTask" color="red" text>
                     Delete
                 </v-btn>
             </v-card-actions>
@@ -30,14 +30,20 @@
 
 <script>
 export default {
+    props: {
+        taskId: {
+            type: String,
+            default: null
+        }
+    },
     data() {
         return {
             dialog: false
         }
     },
     methods: {
-        deleteTask: (taskId) => {
-            this.$store.dispatch('tasks/deleteTask', taskId)
+        handleDeleteTask() {
+            this.$store.dispatch('tasks/deleteTask', this.taskId)
             this.dialog = false
         }
     }

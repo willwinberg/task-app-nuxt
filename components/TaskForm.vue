@@ -173,7 +173,7 @@ export default {
             if (this.$v.$error) return
 
             if (this.taskToEdit) {
-                this.editTask()
+                this.handleEditTask()
             } else {
                 this.handleAddTask()
             }
@@ -192,10 +192,10 @@ export default {
 
             this.$store.dispatch('tasks/addTask', task)
         },
-        editTask() {
+        handleEditTask() {
             const payload = {
                 update: this.task,
-                taskId: this.taskId
+                taskId: this.taskToEdit._id
             }
 
             this.$store.dispatch('tasks/updateTask', payload)

@@ -37,7 +37,7 @@
                 <td :colspan="headers.length" class="pb-3 wrap-hack">
                     <p class="description">{{ item.description }}</p>
                     <TaskForm :task-to-edit="item" />
-                    <DeleteTaskModal v-bind="item" />
+                    <DeleteTaskModal :task-id="item._id" />
                 </td>
             </template>
             <template v-slot:item.reporter="{ item }">

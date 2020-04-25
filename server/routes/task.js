@@ -33,12 +33,12 @@ router
                 res.status(500).json({ message: err.message })
             })
     })
-    .put('/:task_id', (req, res) => {
-        const { taskId } = req.params
-        if (!req.user.tasks.includes(taskId)) {
-            return res.status(401).json({ message: 'You dont own that task' })
-        }
-        Task.findByIdAndUpdate(taskId, req.body)
+    .put('/', (req, res) => {
+        const { taskId, update } = req.body
+        // if (!req.user.tasks.includes(taskId)) {
+        //     return res.status(401).json({ message: 'You dont own that task' })
+        // }
+        Task.findByIdAndUpdate(taskId, update)
             .then((updatedTask) => {
                 res.status(200).json(updatedTask)
             })
@@ -46,14 +46,14 @@ router
                 res.status(500).json({ message: err.message })
             })
     })
-    .delete('/:task_id', (req, res) => {
-        const { taskId } = req.params
-        if (!req.user.tasks.includes(taskId)) {
-            return res.status(401).json({ message: 'You dont own that task' })
-        }
-        Task.findByIdAndRemove(taskId)
+    .delete('/', (req, res) => {
+        const { id } = req.params
+        // if (!req.user.tasks.includes(taskId)) {
+        //     return res.status(401).json({ message: 'You dont own that task' })
+        // }
+        Task.findByIdAndRemove(id)
             .then((deletedTask) => {
-                res.status(200).json({ taskId })
+                res.status(200).json({ id })
             })
             .catch((err) => {
                 res.status(401).json({ message: err.message })

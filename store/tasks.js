@@ -19,6 +19,9 @@ export const mutations = {
     ADD_TASK(state, task) {
         // api stuff
     },
+    DELETE_TASK(state, task) {
+        // api stuff
+    },
     SET_TITLE(state, title) {
         state.title = title
     }
@@ -36,12 +39,26 @@ export const actions = {
         })
     },
     fetchTask({ commit }, id) {
-        return axios.get('/tasks/:id', id).then((response) => {
+        return axios.get('api/tasks/:id', id).then((response) => {
             commit('SET_TASK', response.data)
         })
     },
-    async addTask({ commit }) {
-        commit('taskAdded', await this.ADD_TASK)
+    addTask({ commit }, task) {
+        return axios.post('api/tasks', task).then((response) => {
+            commit('ADD_TASK', response.task)
+        })
+    },
+    updateTask({ commit }, payload) {
+        return axios.put('api/tasks', payload).then((response) => {
+            commit('UPDATE_TASK', response.task)
+        })
+    },
+    deleteTask({ commit }, id) {
+        return axios
+            .delete('api/tasks', { params: { id } })
+            .then((response) => {
+                commit('DELETE_TASK', response.taskId)
+            })
     }
 }
 export const getters = {
