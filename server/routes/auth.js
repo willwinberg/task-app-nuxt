@@ -41,7 +41,7 @@ router
         delete req.session.authUser
         res.json({
             status: 'OK',
-            user: req.user
+            message: 'You have been logged out'
         })
     })
 
