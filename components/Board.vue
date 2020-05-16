@@ -3,15 +3,35 @@
         <v-col v-for="key in Object.keys(columns)" :key="key">
             <Column :column="columns[key]" />
         </v-col>
+        <v-col key="add-new-column">
+            <v-card max-width="400" class="mx-auto">
+                <v-app-bar color="blue-grey">
+                    <v-btn icon>
+                        <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                    <v-text-field
+                        v-model="columnName"
+                        :error-messages="columnNameErrors"
+                        @blur="$v.columnName.$touch()"
+                        class="mt-4 color-white"
+                        placeholder="Add New Column"
+                        required
+                    />
+                </v-app-bar>
+            </v-card>
+        </v-col>
     </v-row>
 </template>
 
 <script>
+import formValidatorMixin from '@@/mixins/formValidatorMixin'
 import Column from './Column'
+
 export default {
     components: {
         Column
     },
+    mixins: [formValidatorMixin],
     data: () => ({
         columns: {
             Backlog: {
@@ -34,7 +54,8 @@ export default {
                 title: 'To Do',
                 tasks: []
             }
-        }
+        },
+        columnName: ''
     }),
     async created() {
         await this.$store.dispatch('tasks/fetchTasks')

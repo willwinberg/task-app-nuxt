@@ -79,6 +79,10 @@ export default {
         },
         select: {
             required
+        },
+        columnName: {
+            required,
+            maxLength: maxLength(55)
         }
         // loginForm: ['name', 'email'],
         // registerForm: ['users', 'tags']
@@ -194,6 +198,14 @@ export default {
             const errors = []
             if (!this.$v.reporter.$dirty) return errors
             !this.$v.reporter.required && errors.push('Reporter is required.')
+            return errors
+        },
+        columnNameErrors() {
+            const errors = []
+            if (!this.$v.title.$dirty) return errors
+            !this.$v.title.maxLength &&
+                errors.push('Title must be at most 55 characters long')
+            !this.$v.title.required && errors.push('Title is required.')
             return errors
         }
     },
