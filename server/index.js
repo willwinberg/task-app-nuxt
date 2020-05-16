@@ -6,8 +6,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const connection =
-    process.env.MONGO_DB || 'mongodb://127.0.0.1:27017/gogrellodb'
+const connection = process.env.MONGO_DB
 
 // connect to mongodb
 mongoose.connect(connection, {
@@ -23,7 +22,7 @@ app.use(bodyParser.json())
 
 app.use(
     session({
-        secret: process.env.SECRET || 'aprettydumbsecret',
+        secret: process.env.SECRET,
         resave: false,
         saveUninitialized: false,
         cookie: { maxAge: 60000 }

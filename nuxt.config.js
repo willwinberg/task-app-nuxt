@@ -1,6 +1,7 @@
 // const colors = require('vuetify/es5/util/colors').default
 // import path from 'path'
 // import fs from 'fs'
+require('dotenv').config()
 
 // const serveStatic = require('serve-static')
 
@@ -114,7 +115,7 @@ module.exports = {
     //     sessionSecret: process.env.SECRET || 'prettydumbsecret'
     // },
     axios: {
-        baseURL: process.env.API_URL || 'http://localhost:3000/',
+        baseURL: process.env.API_URL,
         // prefix: '/api',
         credentials: true,
         // redirectError: {
