@@ -35,7 +35,7 @@ export default {
                     this.user.lastName[0].toUpperCase()
                 )
             }
-            return 'WW'
+            return 'N/A'
         }
     },
     methods: {

@@ -8,7 +8,11 @@ router
 
     .post('/login', (req, res, next) => {
         const { email, password } = req.body
-        const user = User.where({ email, password })
+        const user = User.find({ email })
+
+        if (!user) {
+            return res.status(401).json({ message: 'That user does not exist' })
+        }
 
         user.findOne(function(err, user) {
             if (err) {
@@ -26,6 +30,7 @@ router
                 }
             }
         })
+        return res
     })
 
     .get('/user', (req, res, next) => {
@@ -34,7 +39,10 @@ router
 
     .post('/logout', (req, res, next) => {
         delete req.session.authUser
-        res.json({ status: 'OK' })
+        res.json({
+            status: 'OK',
+            user: req.user
+        })
     })
 
     .use((err, req, res, next) => {

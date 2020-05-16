@@ -1,6 +1,5 @@
 <template>
     <v-col cols="12" sm="8">
-        <v-alert v-if="error" type="error">{{ error }}</v-alert>
         <v-card class="elevation-12">
             <v-toolbar color="primary" dark flat>
                 <v-toolbar-title>Register</v-toolbar-title>
@@ -116,58 +115,39 @@ export default {
     components: {},
     mixins: [formValidatorMixin],
     data: () => ({
-        firstName: '',
-        lastName: '',
-        email: '',
-        emailConfirm: '',
-        password: '',
-        passwordConfirm: '',
-        error: null,
-        submitStatus: null
+        firstName: 'Bill',
+        lastName: 'kill',
+        email: 'wtpwinberg@gmail.com',
+        emailConfirm: 'wtpwinberg@gmail.com',
+        password: 'ambros1a',
+        passwordConfirm: 'ambros1a'
     }),
-    // asyncData: async (context) => {
-    //     try {
-    //         return await context.$axios.get('http://localhost:8000/foo').data
-    //     } catch {
-    //         context.error({
-    //             message: 'ajax problem...'
-    //         })
-    //     }
-    // },
     methods: {
         async register() {
-            this.error = null
-            // formValidatorMixin.validate()
             this.$v.$touch()
+            // if (this.$v.$error) return
 
-            if (this.$v.invalid) {
-                this.submitStatus = 'ERROR'
-            } else {
-                this.submitStatus = 'PENDING'
-                const data = {
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    email: this.email,
-                    password: this.password
-                }
-                await this.$store
-                    .dispatch('user/register', data)
-                    .then((response) => {
-                        if (!this.error) {
-                            this.$auth.loginWith('local', {
-                                data: {
-                                    email: response.email,
-                                    password: response.password
-                                }
-                            })
-                        } else {
-                            return response.error || 'Need to fix this flow'
+            if (!this.$v.invalid) {
+                try {
+                    const payload = {
+                        firstName: this.firstName,
+                        lastName: this.lastName,
+                        email: this.email,
+                        password: this.password
+                    }
+                    await this.$store.dispatch('user/register', payload)
+                    const user = this.$store.state.user.user
+                    await this.$auth.loginWith('local', {
+                        data: {
+                            email: user.email,
+                            password: user.password
                         }
                     })
-                    .catch((e) => {
-                        this.error = e.response.data.message + ''
-                    })
-                // .then(() => this.$toast.success('User set!'))
+                    this.showRegisterSuccess()
+                    await this.$router.push('/')
+                } catch (e) {
+                    this.showRegisterError({ message: e.message || e })
+                }
             }
         },
         clear() {
@@ -176,6 +156,18 @@ export default {
             this.emailConfirm = ''
             this.password = ''
             this.passwordConfirm = ''
+        }
+    },
+    notifications: {
+        showRegisterError: {
+            title: 'Register Failed',
+            message: 'Registration failed',
+            type: 'error'
+        },
+        showRegisterSuccess: {
+            title: 'Register Success',
+            message: 'Welcome to Gogrello!',
+            type: 'success'
         }
     }
 }

@@ -89,10 +89,10 @@ module.exports = {
                         method: 'get',
                         propertyName: false // || 'user'
                     }
-                },
+                }
                 // These are the defaults
-                tokenType: false, // 'bearer'
-                tokenRequired: false
+                // tokenType: false, // 'bearer'
+                // tokenRequired: false
                 // tokenName: 'authorization'
             }
         },
