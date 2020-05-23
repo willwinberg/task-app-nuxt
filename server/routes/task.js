@@ -4,7 +4,7 @@ const Task = require('../models/Task')
 router
     .use('/tasks', router)
     .get('/', (req, res) => {
-        const _id = '5dcf4dc027d8f55672c2fa2c'
+        const { _id } = req.session.user
         Task.find({ assignee: _id })
             .then((tasks) => {
                 res.status(200).json(tasks)
@@ -14,7 +14,7 @@ router
             })
     })
     .get('/unassigned', (req, res) => {
-        Task.find({ assignee: '5e82e09aebe921535502e437' })
+        Task.find({ assignee: null })
             .then((tasks) => {
                 res.status(202).json(tasks)
             })
@@ -40,7 +40,7 @@ router
         // }
         Task.findByIdAndUpdate(taskId, update)
             .then((updatedTask) => {
-                res.status(200).json(updatedTask)
+                res.status(200).json({ updatedTask })
             })
             .catch((err) => {
                 res.status(500).json({ message: err.message })

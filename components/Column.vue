@@ -21,7 +21,7 @@
                         v-bind="dragOptions"
                         @start="drag = true"
                         @end="drag = false"
-                        @change="log"
+                        @change="(evt) => log(evt, column.title)"
                         class="list-group pl-0"
                         group="tasks"
                         tag="ul"
@@ -45,7 +45,7 @@
                     </draggable>
                 </v-col>
             </v-row>
-            <TaskForm />
+            <TaskForm :status="column.title" />
         </v-container>
     </v-card>
 </template>
@@ -84,8 +84,21 @@ export default {
         sort() {
             this.list = this.list.sort((a, b) => a.order - b.order)
         },
-        log(evt) {
-            window.console.log(evt)
+        log(evt, columnTitle) {
+            if (evt.added) {
+                window.console.log(evt, columnTitle)
+                const task = evt.added.element
+
+                const payload = {
+                    update: {
+                        status: columnTitle,
+                        index: evt.added.newIndex
+                    },
+                    taskId: task._id
+                }
+
+                this.$store.dispatch('tasks/updateTask', payload)
+            }
         }
     }
 }

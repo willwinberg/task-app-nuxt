@@ -19,6 +19,9 @@ export const mutations = {
     ADD_TASK(state, task) {
         // api stuff
     },
+    UPDATE_TASK(state, task) {
+        // api stuff
+    },
     DELETE_TASK(state, task) {
         // api stuff
     },

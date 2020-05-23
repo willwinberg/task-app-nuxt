@@ -134,6 +134,10 @@ export default {
         taskToEdit: {
             type: Object,
             default: null
+        },
+        columnId: {
+            type: Number,
+            default: 1
         }
     },
     data: () => ({
@@ -179,6 +183,7 @@ export default {
     }),
     computed: {
         nameKey() {
+            // switches name for id
             return this.$store.getters['user/getUsersNameAndIdKey']
         }
     },
@@ -186,14 +191,13 @@ export default {
         if (this.taskToEdit) {
             Object.keys(this.taskToEdit).forEach((key) => {
                 if (key in this) {
-                    if (key === 'assignee') {
-                        this[key] = this.users[this.taskToEdit[key]]
-                    } else {
-                        this[key] = this.taskToEdit[key]
-                    }
+                    this[key] = this.taskToEdit[key]
                 }
             })
         }
+        // if (this.columnId) {
+        //     this.status = this.statusTypes[this.columnId]
+        // }
     },
     methods: {
         handleSubmit() {
@@ -216,10 +220,10 @@ export default {
                 priority: this.priority,
                 type: this.type,
                 status: this.status,
+                index: null,
                 site: this.site,
                 points: this.points,
-                // switches name for id
-                assignee: this.nameKey[this.assignee]
+                assignee: this.nameKey[this.assignee] || null
             }
 
             if (route === 'index') {

@@ -1,5 +1,8 @@
 <template>
-    <v-chip>Reported by {{ reporter }}</v-chip>
+    <v-chip
+        >Reported by
+        {{ $store.getters['user/getUsersNameAndIdKey'][reporter] }}</v-chip
+    >
 </template>
 
 <script>

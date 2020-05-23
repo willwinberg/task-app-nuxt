@@ -30,6 +30,10 @@ const TaskSchema = mongoose.Schema(
             required: true,
             enum: ['To Do', 'In Progress', 'Done', 'Backlog']
         },
+        index: {
+            type: Number,
+            required: true
+        },
         site: {
             type: String,
             required: true,

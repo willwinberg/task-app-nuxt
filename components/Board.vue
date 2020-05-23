@@ -35,22 +35,22 @@ export default {
     data: () => ({
         columns: {
             'To Do': {
-                key: 1,
+                key: 0,
                 title: 'To Do',
                 tasks: []
             },
             'In Progress': {
-                key: 2,
+                key: 1,
                 title: 'In Progress',
                 tasks: []
             },
             Done: {
-                key: 3,
+                key: 2,
                 title: 'Done',
                 tasks: []
             },
             Backlog: {
-                key: 4,
+                key: 3,
                 title: 'Backlog',
                 tasks: []
             }
