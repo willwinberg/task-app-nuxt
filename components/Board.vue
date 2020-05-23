@@ -34,24 +34,24 @@ export default {
     mixins: [formValidatorMixin],
     data: () => ({
         columns: {
-            Backlog: {
-                key: 'todo',
-                title: 'Todo',
+            'To Do': {
+                key: 1,
+                title: 'To Do',
                 tasks: []
             },
             'In Progress': {
-                key: 'doing',
-                title: 'Doing',
+                key: 2,
+                title: 'In Progress',
                 tasks: []
             },
             Done: {
-                key: 'done',
+                key: 3,
                 title: 'Done',
                 tasks: []
             },
-            'To Do': {
-                key: 'todo2',
-                title: 'To Do',
+            Backlog: {
+                key: 4,
+                title: 'Backlog',
                 tasks: []
             }
         },

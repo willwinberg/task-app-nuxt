@@ -111,7 +111,7 @@ export default {
             await this.$store.dispatch('tasks/takeTask', task)
         },
         getReporterName(id) {
-            return this.$store.state.user.usersNameKey[id]
+            return this.$store.state.user.usersNameAndIdKey[id]
         }
     }
 }

@@ -59,12 +59,12 @@
                         </v-col>
                         <v-col cols="12" sm="6">
                             <v-select
-                                v-model="status"
-                                :items="statusTypes"
-                                :error-messages="statusErrors"
-                                @change="$v.status.$touch()"
-                                @blur="$v.status.$touch()"
-                                label="Status*"
+                                v-model="site"
+                                :items="sites"
+                                :error-messages="siteErrors"
+                                @change="$v.site.$touch()"
+                                @blur="$v.site.$touch()"
+                                label="Site*"
                                 required
                             />
                         </v-col>
@@ -95,17 +95,17 @@
                                 label="Assignee"
                             />
                         </v-col>
-                        <!--                        <v-col cols="12" sm="6">-->
-                        <!--                            <v-select-->
-                        <!--                                :value="task.reporter"-->
-                        <!--                                :items="users"-->
-                        <!--                                :error-messages="reporterErrors"-->
-                        <!--                                @change="$v.reporter.$touch()"-->
-                        <!--                                @blur="$v.reporter.$touch()"-->
-                        <!--                                label="Reporter"-->
-                        <!--                                required-->
-                        <!--                            />-->
-                        <!--                        </v-col>-->
+                        <v-col cols="12" sm="6">
+                            <v-select
+                                v-model="status"
+                                :items="statusTypes"
+                                :error-messages="statusErrors"
+                                @change="$v.status.$touch()"
+                                @blur="$v.status.$touch()"
+                                label="Status*"
+                                required
+                            />
+                        </v-col>
                     </v-row>
                 </v-container>
                 <small>*indicates required field</small>
@@ -133,17 +133,42 @@ export default {
         }
     },
     data: () => ({
-        title: '',
-        description: '',
-        priority: '',
-        type: '',
-        status: '',
+        title: 'dfdfdf',
+        description: 'dfdfdf',
+        priority: 'Lowest',
+        type: 'Task',
+        status: 'To Do',
+        site: 'PlumbersStock',
         points: 10,
         assignee: '',
-        // reporter: '',
         priorityLevels: ['Lowest', 'Low', 'Medium', 'High', 'Highest'],
         types: ['Task', 'Bug', 'Story', 'Epic', 'Theme'],
-        statusTypes: ['Task', 'Bug', 'Story', 'Epic', 'Theme'],
+        statusTypes: ['To Do', 'In Progress', 'Done', 'Backlog'],
+        sites: [
+            'Adams&Co',
+            'CaseInPoint',
+            'Confluence',
+            'Connectship',
+            'CowboyLiving',
+            'CraftDirect',
+            'MonkeyWrench',
+            'PlumbersStock',
+            'Rayie',
+            'SWPlumbing',
+            'SupplyExchange',
+            'Third Party',
+            'Uncategorized',
+            'General',
+            'IT Task',
+            'Marketplace',
+            'Wiser',
+            'Strikeaprice',
+            'TCGM',
+            'WIT',
+            'Google Express',
+            'MowRo',
+            'Alarm dot com'
+        ],
         dialog: false,
         users: {},
         error: null,
@@ -152,7 +177,8 @@ export default {
     async created() {
         await this.$store.dispatch('user/fetchUsers')
         // await this.makeUserNamesArray()
-        this.users = this.$store.state.user.usersNameKey
+        this.users = this.$store.state.user.usersNameAndIdKey
+        console.log('here', this.$store.state.user.allUsers)
 
         // this loads the task to edit data in to form
         if (this.taskToEdit) {
@@ -170,8 +196,8 @@ export default {
     methods: {
         handleSubmit() {
             this.$v.$touch()
-            if (this.$v.$error) return
-
+            // if (this.$v.$error) return
+            console.log('errors', this.$v.$error)
             if (this.taskToEdit) {
                 this.handleEditTask()
             } else {
@@ -182,15 +208,28 @@ export default {
         },
         handleAddTask() {
             const route = this.$router.currentRoute.name
-            const task = this.task
+            const task = {
+                title: this.title,
+                description: this.description,
+                priority: this.priority,
+                type: this.type,
+                status: this.status,
+                site: this.site,
+                points: this.points,
+                // switches name for id
+                assignee: this.users[this.assignee]
+            }
+            console.log('user', this.$auth.user)
 
             if (route === 'index') {
-                task.assignee = this.$auth.user._id
+                task.reporter = this.$auth.user._id
             } else if (route === 'browse') {
-                task.assignee = null
+                task.reporter = null
             }
+            console.log('reporter', this.reporter)
 
             this.$store.dispatch('tasks/addTask', task)
+            this.dialog = false
         },
         handleEditTask() {
             const payload = {
@@ -199,10 +238,6 @@ export default {
             }
 
             this.$store.dispatch('tasks/updateTask', payload)
-        },
-        makeUserNamesArray() {
-            const key = this.$store.state.user.usersNameKey
-            this.users = Object.values(key)
         },
         clear() {
             this.$v.$reset()

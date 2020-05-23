@@ -65,6 +65,9 @@ export default {
         status: {
             required
         },
+        site: {
+            required
+        },
         points: {
             required
         },
@@ -88,19 +91,6 @@ export default {
         // registerForm: ['users', 'tags']
     },
     computed: {
-        checkboxErrors() {
-            // const errors = []
-            // if (!this.$v.checkbox.$dirty) return errors
-            // !this.$v.checkbox.checked &&
-            //     errors.push('You must agree to continue!')
-            // return errors
-        },
-        selectErrors() {
-            // const errors = []
-            // if (!this.$v.select.$dirty) return errors
-            // !this.$v.select.required && errors.push('Item is required')
-            // return errors
-        },
         firstNameErrors() {
             const errors = []
             if (!this.$v.firstName.$dirty) return errors
@@ -180,6 +170,12 @@ export default {
             const errors = []
             if (!this.$v.status.$dirty) return errors
             !this.$v.status.required && errors.push('Status is required.')
+            return errors
+        },
+        siteErrors() {
+            const errors = []
+            if (!this.$v.site.$dirty) return errors
+            !this.$v.site.required && errors.push('Site is required.')
             return errors
         },
         pointsErrors() {

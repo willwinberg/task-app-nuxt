@@ -3,14 +3,6 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 const TaskSchema = mongoose.Schema(
     {
-        _id: {
-            type: ObjectId,
-            required: true
-        },
-        site: {
-            type: String,
-            required: true
-        },
         title: {
             type: String,
             required: true
@@ -35,7 +27,37 @@ const TaskSchema = mongoose.Schema(
         },
         status: {
             type: String,
-            required: true
+            required: true,
+            enum: ['To Do', 'In Progress', 'Done', 'Backlog']
+        },
+        site: {
+            type: String,
+            required: true,
+            enum: [
+                'Adams&Co',
+                'CaseInPoint',
+                'Confluence',
+                'Connectship',
+                'CowboyLiving',
+                'CraftDirect',
+                'MonkeyWrench',
+                'PlumbersStock',
+                'Rayie',
+                'SWPlumbing',
+                'SupplyExchange',
+                'Third Party',
+                'Uncategorized',
+                'General',
+                'IT Task',
+                'Marketplace',
+                'Wiser',
+                'Strikeaprice',
+                'TCGM',
+                'WIT',
+                'Google Express',
+                'MowRo',
+                'Alarm dot com'
+            ]
         },
         assignee: {
             type: ObjectId,
@@ -43,19 +65,22 @@ const TaskSchema = mongoose.Schema(
         },
         reporter: {
             type: ObjectId,
-            ref: 'User'
-        },
-        comment: {
-            type: String
+            ref: 'User',
+            required: true
         },
         dateAdded: {
             type: mongoose.Schema.Types.Date,
             default: Date.now
         },
-        dateCompleted: { type: mongoose.Schema.Types.Date, default: null },
-        // user: [{ type: ObjectId, ref: 'User' }],
+        dateCompleted: {
+            type: mongoose.Schema.Types.Date,
+            default: null
+        },
         // board: [{ type: ObjectId, ref: 'Board' }],
-        column: [{ type: ObjectId, ref: 'Column' }]
+        column: {
+            type: ObjectId,
+            ref: 'Column'
+        }
     },
     {
         timestamps: true
@@ -63,4 +88,4 @@ const TaskSchema = mongoose.Schema(
 )
 
 module.exports =
-    mongoose.models.Task || mongoose.model('task', TaskSchema, 'tasks')
+    mongoose.models.Task || mongoose.model('Task', TaskSchema, 'taskss')
