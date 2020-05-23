@@ -72,7 +72,7 @@ export default {
             required
         },
         assignee: {
-            required
+            // required
         },
         reporter: {
             required

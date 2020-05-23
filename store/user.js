@@ -61,5 +61,8 @@ export const actions = {
 export const getters = {
     usersNotFetched(state) {
         return state.allUsers.length === 0
+    },
+    getUsersNameAndIdKey(state) {
+        return state.usersNameAndIdKey
     }
 }

@@ -88,7 +88,6 @@ export default {
     },
     async created() {
         await this.$store.dispatch('tasks/fetchUnassignedTasks')
-        await this.$store.dispatch('user/fetchUsers')
         this.loadListWithTasks()
         this.loading = false
     },
@@ -111,7 +110,7 @@ export default {
             await this.$store.dispatch('tasks/takeTask', task)
         },
         getReporterName(id) {
-            return this.$store.state.user.usersNameAndIdKey[id]
+            return this.$store.getters['user/getUsersNameAndIdKey'][id]
         }
     }
 }

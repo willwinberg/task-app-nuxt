@@ -88,7 +88,11 @@
                         <v-col cols="12" sm="6">
                             <v-select
                                 v-model="assignee"
-                                :items="Object.values(users)"
+                                :items="
+                                    Object.values(this.nameKey).filter(
+                                        (ele) => ele[0] !== '5'
+                                    )
+                                "
                                 :error-messages="assigneeErrors"
                                 @change="$v.assignee.$touch()"
                                 @blur="$v.assignee.$touch()"
@@ -170,17 +174,15 @@ export default {
             'Alarm dot com'
         ],
         dialog: false,
-        users: {},
         error: null,
         submitStatus: null
     }),
-    async created() {
-        await this.$store.dispatch('user/fetchUsers')
-        // await this.makeUserNamesArray()
-        this.users = this.$store.state.user.usersNameAndIdKey
-        console.log('here', this.$store.state.user.allUsers)
-
-        // this loads the task to edit data in to form
+    computed: {
+        nameKey() {
+            return this.$store.getters['user/getUsersNameAndIdKey']
+        }
+    },
+    created() {
         if (this.taskToEdit) {
             Object.keys(this.taskToEdit).forEach((key) => {
                 if (key in this) {
@@ -197,7 +199,7 @@ export default {
         handleSubmit() {
             this.$v.$touch()
             // if (this.$v.$error) return
-            console.log('errors', this.$v.$error)
+            // console.log('errors', this.$v)
             if (this.taskToEdit) {
                 this.handleEditTask()
             } else {
@@ -217,16 +219,14 @@ export default {
                 site: this.site,
                 points: this.points,
                 // switches name for id
-                assignee: this.users[this.assignee]
+                assignee: this.nameKey[this.assignee]
             }
-            console.log('user', this.$auth.user)
 
             if (route === 'index') {
                 task.reporter = this.$auth.user._id
             } else if (route === 'browse') {
                 task.reporter = null
             }
-            console.log('reporter', this.reporter)
 
             this.$store.dispatch('tasks/addTask', task)
             this.dialog = false
