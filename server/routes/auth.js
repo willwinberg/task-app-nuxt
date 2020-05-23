@@ -25,8 +25,8 @@ router
                 ) {
                     res.status(406).json({ message: 'Bad credentials' })
                 } else {
-                    req.session.authUser = user
-                    return res.json(user)
+                    req.session.user = user
+                    return res.json({ user })
                 }
             }
         })
@@ -34,11 +34,11 @@ router
     })
 
     .get('/user', (req, res, next) => {
-        res.json({ user: req.user })
+        res.json({ user: req.session.user, yo: 'bar' })
     })
 
     .post('/logout', (req, res, next) => {
-        delete req.session.authUser
+        delete req.session.user
         res.json({
             status: 'OK',
             message: 'You have been logged out'

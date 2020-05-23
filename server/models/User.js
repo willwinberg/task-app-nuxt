@@ -5,11 +5,6 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 const UserSchema = mongoose.Schema(
     {
-        // id: {
-        //     type: Number,
-        //     required: true,
-        //     unique: true
-        // },
         email: {
             type: String,
             required: true,
@@ -89,4 +84,4 @@ UserSchema.methods.validify = function(passwordTry, next) {
 }
 
 module.exports =
-    mongoose.models.User || mongoose.model('User', UserSchema, 'users')
+    mongoose.models.User || mongoose.model('User', UserSchema, 'userss')
