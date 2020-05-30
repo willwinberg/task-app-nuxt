@@ -34,7 +34,7 @@ router
     })
 
     .get('/user', (req, res, next) => {
-        res.json({ user: req.session.user, yo: 'bar' })
+        res.json({ user: req.session.user })
     })
 
     .post('/logout', (req, res, next) => {
