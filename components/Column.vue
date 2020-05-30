@@ -45,7 +45,12 @@
                     </draggable>
                 </v-col>
             </v-row>
-            <TaskForm :status="column.title" />
+            <TaskForm
+                :status="column.title"
+                :assignee="
+                    `${this.$auth.user.firstName} ${this.$auth.user.lastName}`
+                "
+            />
         </v-container>
     </v-card>
 </template>

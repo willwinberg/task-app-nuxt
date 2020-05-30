@@ -135,9 +135,13 @@ export default {
             type: Object,
             default: null
         },
-        columnId: {
-            type: Number,
-            default: 1
+        status: {
+            type: String,
+            default: 'To Do'
+        },
+        assignee: {
+            type: String,
+            default: ''
         }
     },
     data: () => ({
@@ -145,10 +149,8 @@ export default {
         description: 'dfdfdf',
         priority: 'Lowest',
         type: 'Task',
-        status: 'To Do',
         site: 'PlumbersStock',
         points: 10,
-        assignee: '',
         priorityLevels: ['Lowest', 'Low', 'Medium', 'High', 'Highest'],
         types: ['Task', 'Bug', 'Story', 'Epic', 'Theme'],
         statusTypes: ['To Do', 'In Progress', 'Done', 'Backlog'],
@@ -195,9 +197,9 @@ export default {
                 }
             })
         }
-        // if (this.columnId) {
-        //     this.status = this.statusTypes[this.columnId]
-        // }
+        if (this.columnId) {
+            this.status = this.statusTypes[this.columnId]
+        }
     },
     methods: {
         handleSubmit() {
