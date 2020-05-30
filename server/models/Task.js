@@ -31,8 +31,7 @@ const TaskSchema = mongoose.Schema(
             enum: ['To Do', 'In Progress', 'Done', 'Backlog']
         },
         index: {
-            type: Number,
-            required: true
+            type: Number
         },
         site: {
             type: String,
@@ -69,8 +68,7 @@ const TaskSchema = mongoose.Schema(
         },
         reporter: {
             type: ObjectId,
-            ref: 'User',
-            required: true
+            ref: 'User'
         },
         dateAdded: {
             type: mongoose.Schema.Types.Date,

@@ -223,7 +223,9 @@ export default {
                 index: null,
                 site: this.site,
                 points: this.points,
-                assignee: this.nameKey[this.assignee] || null
+                assignee:
+                    this.nameKey[this.assignee] ||
+                    this.nameKey['Unassigned Tasks']
             }
 
             if (route === 'index') {
@@ -237,7 +239,19 @@ export default {
         },
         handleEditTask() {
             const payload = {
-                update: this.task,
+                update: {
+                    title: this.title,
+                    description: this.description,
+                    priority: this.priority,
+                    type: this.type,
+                    status: this.status,
+                    index: null,
+                    site: this.site,
+                    points: this.points,
+                    assignee:
+                        this.nameKey[this.assignee] ||
+                        this.nameKey['Unassigned Task']
+                },
                 taskId: this.taskToEdit._id
             }
 

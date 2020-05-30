@@ -187,7 +187,7 @@ export default {
         assigneeErrors() {
             const errors = []
             if (!this.$v.assignee.$dirty) return errors
-            !this.$v.assignee.required && errors.push('Assignee is required.')
+            // !this.$v.assignee.required && errors.push('Assignee is required.')
             return errors
         },
         reporterErrors() {
