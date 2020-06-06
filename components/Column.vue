@@ -21,7 +21,7 @@
                         v-bind="dragOptions"
                         @start="drag = true"
                         @end="drag = false"
-                        @change="(evt) => log(evt, column.title)"
+                        @change="(evt) => updateIndexes(evt, column.title)"
                         class="list-group pl-0"
                         group="tasks"
                         tag="ul"
@@ -89,7 +89,7 @@ export default {
         sort() {
             this.list = this.list.sort((a, b) => a.order - b.order)
         },
-        log(evt, columnTitle) {
+        updateIndexes(evt, columnTitle) {
             if (evt.added) {
                 window.console.log(evt, columnTitle)
                 const task = evt.added.element

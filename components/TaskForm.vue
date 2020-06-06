@@ -196,6 +196,7 @@ export default {
                     this[key] = this.taskToEdit[key]
                 }
             })
+            this.assignee = this.nameKey[this.assignee]
         }
         if (this.columnId) {
             this.status = this.statusTypes[this.columnId]

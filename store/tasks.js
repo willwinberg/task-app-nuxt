@@ -17,10 +17,30 @@ export const mutations = {
         state.task = task
     },
     ADD_TASK(state, task) {
-        // api stuff
+        if (task.assignee === this.$auth.user._id) {
+            state.myTasks.push(task)
+        } else {
+            state.unassignedTasks.push(task)
+        }
     },
-    UPDATE_TASK(state, task) {
-        // api stuff
+    UPDATE_TASK(state, taskToEdit) {
+        if (taskToEdit.assignee === this.$auth.user._id) {
+            state.myTasks = state.myTasks.map((task) => {
+                if (task._id === taskToEdit._id) {
+                    return taskToEdit
+                } else {
+                    return task
+                }
+            })
+        } else {
+            state.unassignedTasks = state.unassignedTasks.map((task) => {
+                if (task._id === taskToEdit._id) {
+                    return taskToEdit
+                } else {
+                    return task
+                }
+            })
+        }
     },
     DELETE_TASK(state, task) {
         // api stuff
@@ -53,7 +73,8 @@ export const actions = {
     },
     updateTask({ commit }, payload) {
         return axios.put('api/tasks', payload).then((response) => {
-            commit('UPDATE_TASK', response.task)
+            console.log('fsdcjksdnbjkdsbcfjk,', response)
+            commit('UPDATE_TASK', response.data.updatedTask)
         })
     },
     deleteTask({ commit }, id) {
@@ -65,6 +86,9 @@ export const actions = {
     }
 }
 export const getters = {
+    getMyTasks(state) {
+        return state.myTasks
+    },
     getTitle(state) {
         return state.title
     }

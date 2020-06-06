@@ -38,7 +38,7 @@ router
         // if (!req.user.tasks.includes(taskId)) {
         //     return res.status(401).json({ message: 'You dont own that task' })
         // }
-        Task.findByIdAndUpdate(taskId, update)
+        Task.findByIdAndUpdate(taskId, update, { new: true })
             .then((updatedTask) => {
                 res.status(200).json({ updatedTask })
             })
