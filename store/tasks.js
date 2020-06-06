@@ -1,14 +1,39 @@
 import axios from 'axios'
 
 export const state = () => ({
-    myTasks: [],
+    // myTasks: [],
+    columns: {},
     unassignedTasks: [],
     title: ''
 })
 
+// 'In Progress': {
+//     key: 1,
+//         title: 'In Progress',
+//         tasks: []
+// },
+
 export const mutations = {
     SET_TASKS(state, tasks) {
-        state.myTasks = tasks
+        const columnsObj = {}
+        let columnKey = 0
+
+        tasks.forEach((task) => {
+            const columnName = task.status
+
+            if (columnsObj.hasOwnProperty(task.status)) {
+                columnsObj[columnName].tasks.push(task)
+            } else {
+                columnsObj[columnName] = {
+                    key: columnKey,
+                    title: columnName,
+                    tasks: []
+                }
+                columnKey++
+            }
+        })
+        console.log('columnsObj', columnsObj)
+        state.columns = columnsObj
     },
     SET_UNASSIGNED_TASKS(state, tasks) {
         state.unassignedTasks = tasks
@@ -73,6 +98,11 @@ export const actions = {
     },
     updateTask({ commit }, payload) {
         return axios.put('api/tasks', payload).then((response) => {
+            commit('UPDATE_TASK', response.data.updatedTask)
+        })
+    },
+    moveTask({ commit }, payload) {
+        return axios.put('api/tasks', payload).then((response) => {
             console.log('fsdcjksdnbjkdsbcfjk,', response)
             commit('UPDATE_TASK', response.data.updatedTask)
         })
@@ -86,8 +116,8 @@ export const actions = {
     }
 }
 export const getters = {
-    getMyTasks(state) {
-        return state.myTasks
+    getColumns(state) {
+        return state.columns
     },
     getTitle(state) {
         return state.title

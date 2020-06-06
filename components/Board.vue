@@ -24,65 +24,24 @@
 </template>
 
 <script>
-import formValidatorMixin from '@@/mixins/formValidatorMixin'
+// import formValidatorMixin from '@@/mixins/formValidatorMixin'
 import Column from './Column'
 
 export default {
     components: {
         Column
     },
-    mixins: [formValidatorMixin],
+    // mixins: [formValidatorMixin],
     data: () => ({
-        columns: {
-            'To Do': {
-                key: 0,
-                title: 'To Do',
-                tasks: []
-            },
-            'In Progress': {
-                key: 1,
-                title: 'In Progress',
-                tasks: []
-            },
-            Done: {
-                key: 2,
-                title: 'Done',
-                tasks: []
-            },
-            Backlog: {
-                key: 3,
-                title: 'Backlog',
-                tasks: []
-            }
-        }
+        columns: {}
         // columnName: ''
     }),
-    computed: {
-        allMyTask() {
-            return this.$store.getters['tasks/getMyTasks']
-        }
-    },
-    // updated() {
-    //     this.loadColumnsWithTasks()
-    // },
-    // watch: {
-    //     /* eslint-disable */
-    //     allMyTasks: function(tasks) {
-    //         this.loadColumnsWithTasks()
-    //         alert('yo')
-    //     }
-    // },
-    async created() {
+    async beforeCreate() {
         await this.$store.dispatch('tasks/fetchTasks')
         await this.$store.dispatch('user/fetchUsers')
-        this.loadColumnsWithTasks()
     },
-    methods: {
-        loadColumnsWithTasks() {
-            this.allMyTask.forEach((task) => {
-                this.columns[task.status].tasks.push(task)
-            })
-        }
+    created() {
+        this.columns = this.$store.getters['tasks/getColumns']
     }
 }
 </script>

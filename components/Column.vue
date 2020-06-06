@@ -102,7 +102,7 @@ export default {
                     taskId: task._id
                 }
 
-                this.$store.dispatch('tasks/updateTask', payload)
+                this.$store.dispatch('tasks/moveTask', payload)
             }
         }
     }
