@@ -46,6 +46,19 @@ router
                 res.status(500).json({ message: err.message })
             })
     })
+    .put('/move', (req, res) => {
+        const { taskId, update } = req.body
+        // if (!req.user.tasks.includes(taskId)) {
+        //     return res.status(401).json({ message: 'You dont own that task' })
+        // }
+        Task.findByIdAndUpdate(taskId, update, { new: true })
+            .then((updatedTask) => {
+                res.status(200).json({ updatedTask })
+            })
+            .catch((err) => {
+                res.status(500).json({ message: err.message })
+            })
+    })
     .delete('/', (req, res) => {
         const { id } = req.params
         // if (!req.user.tasks.includes(taskId)) {
