@@ -21,7 +21,7 @@
                         v-bind="dragOptions"
                         @start="drag = true"
                         @end="drag = false"
-                        @change="(evt) => updateIndexes(evt, column.title)"
+                        @change="(evt) => handleMoveTask(evt, column.title)"
                         class="list-group pl-0"
                         group="tasks"
                         tag="ul"
@@ -89,16 +89,17 @@ export default {
         sort() {
             this.list = this.list.sort((a, b) => a.order - b.order)
         },
-        updateIndexes(evt, columnTitle) {
+        handleMoveTask(evt, toColumnTitle) {
             if (evt.added) {
-                window.console.log(evt, columnTitle)
+                window.console.log(evt, toColumnTitle)
                 const task = evt.added.element
 
                 const payload = {
                     update: {
-                        status: columnTitle,
+                        status: toColumnTitle,
                         index: evt.added.newIndex
                     },
+                    fromColumn: evt.added.element,
                     taskId: task._id
                 }
 

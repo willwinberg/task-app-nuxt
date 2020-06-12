@@ -67,6 +67,18 @@ export const mutations = {
             })
         }
     },
+    MOVE_TASK(state, payload) {
+        state.columns[payload.updatedTask.status].tasks.splice(
+            payload.updatedTask.index,
+            0,
+            payload.updatedTask
+        )
+
+        state.columns[payload.fromColumn.status].tasks.splice(
+            payload.fromColumn.index,
+            1
+        )
+    },
     DELETE_TASK(state, task) {
         // api stuff
     },
@@ -103,8 +115,10 @@ export const actions = {
     },
     moveTask({ commit }, payload) {
         return axios.put('api/tasks', payload).then((response) => {
-            console.log('fsdcjksdnbjkdsbcfjk,', response)
-            commit('UPDATE_TASK', response.data.updatedTask)
+            commit('MOVE_TASK', {
+                updatedTask: response.data.updatedTask,
+                fromColumn: payload.fromColumn
+            })
         })
     },
     deleteTask({ commit }, id) {
