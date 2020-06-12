@@ -31,7 +31,9 @@
 
         <v-app-bar app clipped-left>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-            <v-toolbar-title>{{ title }}</v-toolbar-title>
+            <v-toolbar-title class="font-weight-bold">{{
+                title
+            }}</v-toolbar-title>
             <v-spacer />
             <AvatarMenu v-if="$auth.loggedIn" />
         </v-app-bar>
@@ -41,7 +43,7 @@
             </v-container>
         </v-content>
         <v-footer app>
-            <span>&copy; 2019</span>
+            <span>&copy; 2020</span>
         </v-footer>
     </v-app>
 </template>
