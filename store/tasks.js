@@ -32,7 +32,11 @@ export const mutations = {
                 columnKey++
             }
         })
-        console.log('columnsObj', columnsObj)
+        // puts the tasks in order by their 'index' value
+        Object.keys(columnsObj).forEach((columnTitle) => {
+            columnsObj[columnTitle].tasks.sort((a, b) => a.index > b.index)
+        })
+
         state.columns = columnsObj
     },
     SET_UNASSIGNED_TASKS(state, tasks) {
@@ -68,16 +72,10 @@ export const mutations = {
         }
     },
     MOVE_TASK(state, payload) {
-        state.columns[payload.updatedTask.status].tasks.splice(
-            payload.updatedTask.index,
-            0,
-            payload.updatedTask
-        )
+        const { fromColumnTasks, fromColumnTitle, toColumnTasks } = payload
 
-        state.columns[payload.fromColumn.status].tasks.splice(
-            payload.fromColumn.index,
-            1
-        )
+        state.columns[fromColumnTitle].tasks = fromColumnTasks
+        state.columns[toColumnTasks[0].status].tasks = toColumnTasks
     },
     DELETE_TASK(state, task) {
         // api stuff
@@ -114,10 +112,17 @@ export const actions = {
         })
     },
     moveTask({ commit }, payload) {
-        return axios.put('api/tasks', payload).then((response) => {
+        return axios.put('api/tasks/move', payload).then((response) => {
+            const {
+                fromColumnTasks,
+                fromColumnTitle,
+                toColumnTasks
+            } = response.data
+
             commit('MOVE_TASK', {
-                updatedTask: response.data.updatedTask,
-                fromColumn: payload.fromColumn
+                fromColumnTasks,
+                fromColumnTitle,
+                toColumnTasks
             })
         })
     },
