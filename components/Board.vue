@@ -36,11 +36,9 @@ export default {
         columns: {}
         // columnName: ''
     }),
-    async beforeCreate() {
+    async created() {
         await this.$store.dispatch('tasks/fetchTasks')
         await this.$store.dispatch('user/fetchUsers')
-    },
-    created() {
         this.columns = this.$store.getters['tasks/getColumns']
     }
 }
