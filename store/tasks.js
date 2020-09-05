@@ -7,14 +7,6 @@ export const state = () => ({
     title: ''
 })
 
-// Sample columns structure
-// 'In Progress': {
-//     key: 1,
-//         title: 'In Progress',
-//         tasks: []
-// },
-// ...
-
 export const mutations = {
     SET_TASKS(state, tasks) {
         const columnsObj = {}
@@ -86,8 +78,6 @@ export const mutations = {
         state.columns[toColumnTasks[0].status].tasks = toColumnTasks
     },
     DELETE_TASK(state, taskId) {
-        console.log('DELETE_TASK', taskId)
-
         Object.values(state.columns).forEach((column) => {
             column.tasks.forEach((task, i) => {
                 if (task._id === taskId) {
@@ -109,7 +99,6 @@ export const actions = {
     },
     fetchUnassignedTasks({ commit }) {
         return axios.get('api/tasks/unassigned').then((response) => {
-            console.log('unassigned', response.data)
             commit('SET_UNASSIGNED_TASKS', response.data)
         })
     },
@@ -144,8 +133,6 @@ export const actions = {
         })
     },
     deleteTask({ commit }, taskId) {
-        console.log('deleteTask', taskId)
-
         return axios.post('api/tasks/delete', { taskId }).then((response) => {
             commit('DELETE_TASK', response.data.taskId)
         })
