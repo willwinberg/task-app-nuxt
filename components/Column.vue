@@ -31,26 +31,12 @@
                             :key="task.id"
                             class="list-group-item"
                         >
-                            <i
-                                :class="
-                                    task.fixed
-                                        ? 'fa fa-anchor'
-                                        : 'glyphicon glyphicon-pushpin'
-                                "
-                                @click="task.fixed = !task.fixed"
-                                aria-hidden="true"
-                            />
                             <TaskCard :task="task" />
                         </li>
                     </draggable>
                 </v-col>
             </v-row>
-            <TaskForm
-                :status="column.title"
-                :assignee="
-                    `${this.$auth.user.firstName} ${this.$auth.user.lastName}`
-                "
-            />
+            <TaskForm />
         </v-container>
     </v-card>
 </template>
