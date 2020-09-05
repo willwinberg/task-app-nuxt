@@ -86,6 +86,12 @@ export const mutations = {
                 }
             })
         })
+
+        state.unassignedTasks.forEach((task, i) => {
+            if (task._id === taskId) {
+                state.unassignedTasks.splice(i, 1)
+            }
+        })
     },
     SET_TITLE(state, title) {
         state.title = title
@@ -144,5 +150,8 @@ export const getters = {
     },
     getTitle(state) {
         return state.title
+    },
+    getUnassignedTasks(state) {
+        return state.unassignedTasks
     }
 }

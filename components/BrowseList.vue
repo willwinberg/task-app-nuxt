@@ -37,7 +37,12 @@
                 <td :colspan="headers.length" class="pb-3 wrap-hack">
                     <p class="description">{{ item.description }}</p>
                     <TaskForm :task-to-edit="item" />
-                    <DeleteTaskModal :task-id="item._id" />
+                    <DeleteTaskModal
+                        :task-id="item._id"
+                        @deleted="
+                            tasks = $store.getters['tasks/getUnassignedTasks']
+                        "
+                    />
                 </td>
             </template>
             <template v-slot:item.reporter="{ item }">
@@ -82,19 +87,15 @@ export default {
                 { text: 'Take', value: 'action', sortable: false }
                 // add points
             ],
-            tasks: [],
-            users: []
+            tasks: []
         }
     },
     async created() {
         await this.$store.dispatch('tasks/fetchUnassignedTasks')
-        this.loadListWithTasks()
+        this.tasks = this.$store.getters['tasks/getUnassignedTasks']
         this.loading = false
     },
     methods: {
-        loadListWithTasks() {
-            this.tasks = this.$store.state.tasks.unassignedTasks
-        },
         // TODO: clean data to enforce date objects
         formattedDate(date) {
             if (date === null) return 'N/A'
