@@ -45,6 +45,7 @@ export default {
         handleDeleteTask() {
             this.$store.dispatch('tasks/deleteTask', this.taskId)
             this.dialog = false
+            this.$emit('deleted')
         }
     }
 }
