@@ -1,17 +1,19 @@
 import axios from 'axios'
+import Vue from 'vue'
 
 export const state = () => ({
-    // myTasks: [],
     columns: {},
     unassignedTasks: [],
     title: ''
 })
 
+// Sample columns structure
 // 'In Progress': {
 //     key: 1,
 //         title: 'In Progress',
 //         tasks: []
 // },
+// ...
 
 export const mutations = {
     SET_TASKS(state, tasks) {
@@ -47,20 +49,26 @@ export const mutations = {
     },
     ADD_TASK(state, task) {
         if (task.assignee === this.$auth.user._id) {
-            state.myTasks.push(task)
+            const column = state.columns[task.status]
+            column.tasks.push(task)
+
+            Vue.set(state.columns, task.status, column)
         } else {
             state.unassignedTasks.push(task)
         }
     },
     UPDATE_TASK(state, taskToEdit) {
         if (taskToEdit.assignee === this.$auth.user._id) {
-            state.myTasks = state.myTasks.map((task) => {
+            const column = state.columns[taskToEdit.status]
+            column.tasks = column.tasks.map((task) => {
                 if (task._id === taskToEdit._id) {
                     return taskToEdit
                 } else {
                     return task
                 }
             })
+
+            Vue.set(state.columns, taskToEdit.status, column)
         } else {
             state.unassignedTasks = state.unassignedTasks.map((task) => {
                 if (task._id === taskToEdit._id) {
@@ -77,8 +85,17 @@ export const mutations = {
         state.columns[fromColumnTitle].tasks = fromColumnTasks
         state.columns[toColumnTasks[0].status].tasks = toColumnTasks
     },
-    DELETE_TASK(state, task) {
-        // api stuff
+    DELETE_TASK(state, taskId) {
+        console.log('DELETE_TASK', taskId)
+
+        Object.values(state.columns).forEach((column) => {
+            column.tasks.forEach((task, i) => {
+                if (task._id === taskId) {
+                    column.tasks.splice(i, 1)
+                    Vue.set(state.columns, task.status, column)
+                }
+            })
+        })
     },
     SET_TITLE(state, title) {
         state.title = title
@@ -96,14 +113,14 @@ export const actions = {
             commit('SET_UNASSIGNED_TASKS', response.data)
         })
     },
-    fetchTask({ commit }, id) {
-        return axios.get('api/tasks/:id', id).then((response) => {
-            commit('SET_TASK', response.data)
-        })
-    },
+    // fetchTask({ commit }, id) {
+    //     return axios.get('api/tasks/:id', id).then((response) => {
+    //         commit('SET_TASK', response.data)
+    //     })
+    // },
     addTask({ commit }, task) {
         return axios.post('api/tasks', task).then((response) => {
-            commit('ADD_TASK', response.task)
+            commit('ADD_TASK', response.data.newTask)
         })
     },
     updateTask({ commit }, payload) {
@@ -126,12 +143,12 @@ export const actions = {
             })
         })
     },
-    deleteTask({ commit }, id) {
-        return axios
-            .delete('api/tasks', { params: { id } })
-            .then((response) => {
-                commit('DELETE_TASK', response.taskId)
-            })
+    deleteTask({ commit }, taskId) {
+        console.log('deleteTask', taskId)
+
+        return axios.post('api/tasks/delete', { taskId }).then((response) => {
+            commit('DELETE_TASK', response.data.taskId)
+        })
     }
 }
 export const getters = {

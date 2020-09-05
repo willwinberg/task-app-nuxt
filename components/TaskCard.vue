@@ -44,7 +44,7 @@
 
                 <v-card-actions>
                     <TaskForm :task-to-edit="task" />
-                    <DeleteTaskModal v-bind="task" />
+                    <DeleteTaskModal :taskId="task._id" />
                 </v-card-actions>
             </v-card>
         </v-dialog>

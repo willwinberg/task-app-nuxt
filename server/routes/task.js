@@ -27,7 +27,7 @@ router
         const task = new Task(data)
         task.save()
             .then((newTask) => {
-                res.status(200).json(newTask)
+                res.status(200).json({ newTask })
             })
             .catch((err) => {
                 res.status(500).json({ message: err.message })
@@ -104,14 +104,15 @@ router
             res.status(500).json({ message: err.message })
         }
     })
-    .delete('/', (req, res) => {
-        const { id } = req.params
+    .post('/delete', (req, res) => {
+        const { taskId } = req.body
+        // res.status(201).json({ taskId })
         // if (!req.user.tasks.includes(taskId)) {
         //     return res.status(401).json({ message: 'You dont own that task' })
         // }
-        Task.findByIdAndRemove(id)
+        Task.findByIdAndDelete(taskId)
             .then((deletedTask) => {
-                res.status(200).json({ id })
+                res.status(200).json({ taskId })
             })
             .catch((err) => {
                 res.status(401).json({ message: err.message })
