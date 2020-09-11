@@ -1,5 +1,5 @@
 <template>
-    <v-card width="360" class="mx-1">
+    <v-card max-width="400" class="mx-auto">
         <v-app-bar color="blue-grey">
             <v-btn icon>
                 <v-icon>mdi-settings</v-icon>
