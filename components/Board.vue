@@ -1,8 +1,8 @@
 <template>
-    <v-row>
-        <v-col v-for="key in Object.keys(columns)" :key="key">
+    <div class="d-flex flex-row">
+        <div v-for="key in Object.keys(columns)" :key="key">
             <Column :column="columns[key]" />
-        </v-col>
+        </div>
         <!--        <v-col key="add-new-column">-->
         <!--            <v-card max-width="400" class="mx-auto">-->
         <!--                <v-app-bar color="blue-grey">-->
@@ -20,7 +20,7 @@
         <!--                </v-app-bar>-->
         <!--            </v-card>-->
         <!--        </v-col>-->
-    </v-row>
+    </div>
 </template>
 
 <script>

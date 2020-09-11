@@ -1,8 +1,8 @@
-# gogrello
+# Gogrello
 
 > A task management app for the Go Green development team. Contact <williamw@plumbersstock.com> for issues or make a pull request.
 
-## Vue/Nuxt, Node, Express, and MongoDB
+## MongoDB, Express, Vue/Nuxt, and Node
 
 ### Build Setup
 
@@ -74,7 +74,4 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 * Multiple boards
 * Vuetify styling theme 
 * integrate JS date objects in all data, also fix sort by date
-* find out why browse table gets messed up on expand
 * separate button templates from forms/modals to be more dynamic
-* hash passwords
-* implement vue-notification package

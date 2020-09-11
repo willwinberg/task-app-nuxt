@@ -1,5 +1,7 @@
 <template>
-    <Board />
+    <div class="overflow-x-auto">
+        <Board />
+    </div>
 </template>
 
 <script>
