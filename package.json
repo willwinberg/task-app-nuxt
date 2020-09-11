@@ -2,7 +2,7 @@
   "name": "task-mgmt",
   "version": "1.0.0",
   "description": "A task management app for teams",
-  "author": "William",
+  "author": "wtpwinberg@gmail.com",
   "private": true,
   "scripts": {
     "dev": "nuxt",

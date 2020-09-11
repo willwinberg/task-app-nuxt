@@ -7,12 +7,13 @@ import formValidatorMixin from '@@/mixins/formValidatorMixin'
 import BrowseList from '@@/components/BrowseList'
 
 export default {
+    name: 'BrowsePage',
     components: {
         BrowseList
     },
     mixins: [formValidatorMixin],
-    data: () => ({}),
-    computed: {},
-    methods: {}
+    head: () => ({
+        title: 'Browse'
+    })
 }
 </script>
