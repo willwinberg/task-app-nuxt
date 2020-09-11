@@ -47,6 +47,7 @@ import { required, maxLength, email } from 'vuelidate/lib/validators'
 import ThemeSwitcher from '../components/ThemeSwitcher'
 
 export default {
+    name: 'SettingsPage',
     components: {
         ThemeSwitcher
     },
@@ -68,7 +69,9 @@ export default {
         items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
         checkbox: false
     }),
-
+    head: () => ({
+        title: 'Settings'
+    }),
     computed: {
         checkboxErrors() {
             const errors = []
@@ -99,7 +102,6 @@ export default {
             return errors
         }
     },
-
     methods: {
         submit() {
             this.$v.$touch()
