@@ -13,9 +13,6 @@ import FormBuilder from '@@/builders/FormBuilder'
 import FormDirector from '@@/builders/FormDirector'
 export default {
     name: 'EditProfilePage',
-    head: () => ({
-        title: 'Profile'
-    }),
     components: {
         UserForm: new FormDirector(new FormBuilder()).makeUserForm()
     }

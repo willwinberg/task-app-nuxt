@@ -9,13 +9,15 @@ import formValidatorMixin from '@@/mixins/formValidatorMixin'
 import Board from '@@/components/Board'
 
 export default {
-    name: 'TasksPage',
     components: {
         Board
     },
     mixins: [formValidatorMixin],
-    head: () => ({
-        title: 'My Tasks'
-    })
+    data: () => ({}),
+    computed: {},
+    // fetch(context) {
+    //     return context.store.dispatch('auth/fetchData')
+    // },
+    methods: {}
 }
 </script>

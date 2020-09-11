@@ -64,16 +64,13 @@
 import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
-    name: 'LoginPage',
     layout: 'unauthenticated',
+    components: {},
     mixins: [formValidatorMixin],
     data: () => ({
         drawer: null,
         email: 'wtpwinberg@gmail.com',
         password: 'ambros1a'
-    }),
-    head: () => ({
-        title: 'Login'
     }),
     validations: formValidatorMixin.validations,
     computed: {

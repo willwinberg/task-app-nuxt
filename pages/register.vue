@@ -110,9 +110,9 @@
 import formValidatorMixin from '@@/mixins/formValidatorMixin'
 
 export default {
-    name: 'RegisterPage',
     layout: 'unauthenticated',
     auth: false,
+    components: {},
     mixins: [formValidatorMixin],
     data: () => ({
         firstName: 'Bill',
@@ -121,9 +121,6 @@ export default {
         emailConfirm: 'wtpwinberg@gmail.com',
         password: 'ambros1a',
         passwordConfirm: 'ambros1a'
-    }),
-    head: () => ({
-        title: 'Register'
     }),
     methods: {
         async register() {

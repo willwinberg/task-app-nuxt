@@ -22,7 +22,7 @@ module.exports = {
      ** Headers of the page
      */
     head: {
-        titleTemplate: '%s - ' + process.env.APP_NAME,
+        titleTemplate: '%s - ' + process.env.npm_package_name,
         title: 'Gogrello',
         meta: [
             { charset: 'utf-8' },
