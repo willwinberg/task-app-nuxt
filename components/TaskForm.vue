@@ -89,7 +89,7 @@
                             <v-select
                                 v-model="assignee"
                                 :items="
-                                    Object.values(this.nameKey).filter(
+                                    Object.values(nameKey).filter(
                                         (ele) => ele[0] !== '5'
                                     )
                                 "
