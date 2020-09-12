@@ -17,17 +17,17 @@
             <v-row>
                 <v-col>
                     <draggable
-                        v-model="columnCopy.tasks"
+                        v-model="column.tasks"
                         v-bind="dragOptions"
                         @start="drag = true"
                         @end="drag = false"
-                        @change="(evt) => handleMoveTask(evt, columnCopy.title)"
+                        @change="(evt) => handleMoveTask(evt, column.title)"
                         class="list-group pl-0"
                         group="tasks"
                         tag="ul"
                     >
                         <li
-                            v-for="task in columnCopy.tasks"
+                            v-for="task in column.tasks"
                             :key="task.id"
                             class="list-group-item"
                         >
@@ -55,19 +55,12 @@ export default {
     props: {
         column: {
             type: Object,
-            default: () => {}
+            default: Object
         }
     },
     data: () => ({
-        drag: false,
-        columnCopy: {
-            title: 'Unassigned',
-            tasks: []
-        }
+        drag: false
     }),
-    mounted() {
-        this.columnCopy = { ...this.column }
-    },
     computed: {
         dragOptions() {
             return {
@@ -88,11 +81,12 @@ export default {
                 const task = evt.added.element
 
                 const payload = {
-                    originalTask: task,
                     update: {
                         status: toColumnTitle,
                         index: evt.added.newIndex
-                    }
+                    },
+                    fromColumn: evt.added.element,
+                    taskId: task._id
                 }
 
                 this.$store.dispatch('tasks/moveTask', payload)

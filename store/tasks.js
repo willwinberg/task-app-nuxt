@@ -72,10 +72,10 @@ export const mutations = {
         }
     },
     MOVE_TASK(state, payload) {
-        const { fromColumnTasks, toColumnTasks } = payload
+        const { fromColumnTasks, fromColumnTitle, toColumnTasks } = payload
 
-        Vue.set(state.columns, fromColumnTasks.title, fromColumnTasks)
-        Vue.set(state.columns, toColumnTasks.title, toColumnTasks)
+        state.columns[fromColumnTitle].tasks = fromColumnTasks
+        state.columns[toColumnTasks[0].status].tasks = toColumnTasks
     },
     DELETE_TASK(state, taskId) {
         Object.values(state.columns).forEach((column) => {
@@ -125,10 +125,15 @@ export const actions = {
     },
     moveTask({ commit }, payload) {
         return axios.put('api/tasks/move', payload).then((response) => {
-            const { fromColumnTasks, toColumnTasks } = response.data
+            const {
+                fromColumnTasks,
+                fromColumnTitle,
+                toColumnTasks
+            } = response.data
 
             commit('MOVE_TASK', {
                 fromColumnTasks,
+                fromColumnTitle,
                 toColumnTasks
             })
         })

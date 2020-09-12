@@ -46,25 +46,32 @@ router
                 res.status(500).json({ message: err.message })
             })
     })
-    .put('/move', async (req, res) => {
-        const { originalTask, update } = req.body
-        let fromColumnTasks
-        let toColumnTasks
-        let updatedTask
+    .put('/move', (req, res) => {
+        const { taskId, update, fromColumn } = req.body
+        let fromColumnTasks, toColumnTasks
 
         try {
-            // updated the moved task
-            await Task.findByIdAndUpdate(originalTask._id, update, {
-                new: true
-            })
-                .then((task) => {
-                    updatedTask = task
-                })
-                .catch((err) => {
-                    res.status(500).json({ message: err.message })
-                })
+            // change all fromColumn tasks
+            Task.find(
+                {
+                    assignee: req.session.user._id,
+                    status: fromColumn.title
+                },
+                (err, tasks) => {
+                    if (err) {
+                        res.status(500).json({ message: err.message })
+                    }
+                    tasks.sort((a, b) => a.index > b.index)
+
+                    tasks.forEach((task, i) => {
+                        task.index = i
+                    })
+                    fromColumnTasks = tasks
+                }
+            )
+
             // change all toColumn tasks
-            await Task.find(
+            Task.find(
                 {
                     assignee: req.session.user._id,
                     status: update.status
@@ -73,50 +80,28 @@ router
                     if (err) {
                         res.status(500).json({ message: err.message })
                     }
-
                     tasks.sort((a, b) => a.index > b.index)
-                    tasks.splice(updatedTask.index, 0, updatedTask)
+
+                    const movedTask = Task.findByIdAndUpdate(taskId, update, {
+                        new: true
+                    })
+
+                    tasks.splice(update.index, 0, movedTask)
+
                     tasks.forEach((task, i) => {
                         task.index = i
-                        Task.update({ _id: task._id }, { index: i })
                     })
 
                     toColumnTasks = tasks
                 }
             )
-            // change all fromColumn tasks
-            await Task.find(
-                {
-                    assignee: req.session.user._id,
-                    status: originalTask.status
-                },
-                (err, tasks) => {
-                    if (err) {
-                        res.status(500).json({ message: err.message })
-                    }
-
-                    tasks.sort((a, b) => a.index > b.index)
-                    tasks.forEach((task, i) => {
-                        task.index = 1
-                        Task.update({ _id: task._id }, { index: i })
-                    })
-
-                    fromColumnTasks = tasks
-                }
-            )
+            res.status(200).json({
+                fromColumnTasks,
+                fromColumnTitle: fromColumn.title,
+                toColumnTasks
+            })
         } catch (err) {
             res.status(500).json({ message: err.message })
-        } finally {
-            if (fromColumnTasks && toColumnTasks) {
-                res.status(200).json({
-                    fromColumnTasks,
-                    toColumnTasks
-                })
-            } else {
-                res.status(500).json({
-                    message: 'fromColumnTasks or toColumnTasks undefined'
-                })
-            }
         }
     })
     .post('/delete', (req, res) => {
