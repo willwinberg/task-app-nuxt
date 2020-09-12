@@ -17,7 +17,6 @@ module.exports = {
     // We can create custom instances too
     // { path: '/static2', handler: serveStatic(__dirname + '/static2') }
     // ],
-    mode: 'universal',
     /*
      ** Headers of the page
      */
