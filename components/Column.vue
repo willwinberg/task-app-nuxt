@@ -5,14 +5,11 @@
                 <v-icon>mdi-settings</v-icon>
             </v-btn>
             <v-toolbar-title :column="column" v-text="column.title" />
-
             <div class="flex-grow-1"></div>
-
             <v-btn icon>
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
         </v-app-bar>
-
         <v-container class="pa-2" fluid>
             <v-row>
                 <v-col>
@@ -65,9 +62,6 @@ export default {
             tasks: []
         }
     }),
-    mounted() {
-        this.columnCopy = { ...this.column }
-    },
     computed: {
         dragOptions() {
             return {
@@ -77,6 +71,9 @@ export default {
                 ghostClass: 'ghost'
             }
         }
+    },
+    mounted() {
+        this.columnCopy = { ...this.column }
     },
     methods: {
         sort() {
