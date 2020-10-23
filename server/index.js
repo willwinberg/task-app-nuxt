@@ -12,7 +12,8 @@ const connection = process.env.MONGO_DB
 mongoose.connect(connection, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 })
 // .then(() => console.log(`connection successful: ${connection}`))
 // .catch((err) => console.error(connection, err.message))
