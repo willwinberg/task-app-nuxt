@@ -110,7 +110,9 @@ router
             if (fromColumnTasks && toColumnTasks) {
                 res.status(200).json({
                     fromColumnTasks,
-                    toColumnTasks
+                    toColumnTasks,
+                    fromColName: originalTask.status,
+                    toColName: update.status
                 })
             } else {
                 res.status(500).json({
