@@ -29,7 +29,7 @@
                         </div>
                         <v-list-item-title
                             v-text="task.title"
-                            class="headline mb-1 mt-3"
+                            class="headline mb-1 mt-3 no-wrap"
                         />
                         <v-list-item-subtitle
                             v-text="task.description"
@@ -88,5 +88,8 @@ export default {
 <style scoped>
 .v-card--link {
     cursor: move;
+}
+.no-wrap {
+    white-space: normal;
 }
 </style>
