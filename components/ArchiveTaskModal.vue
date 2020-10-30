@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent max-width="290">
         <template v-slot:activator="{ on }">
-            <v-btn v-on="on" outlined text>Delete</v-btn>
+            <v-btn v-on="on" outlined text>Archive</v-btn>
         </template>
         <v-card>
             <v-card-title class="headline">
@@ -9,7 +9,7 @@
             </v-card-title>
 
             <v-card-text>
-                Are you sure you want to delete this task? This action is
+                Are you sure you want to archive this task? This action is
                 irreversible.
             </v-card-text>
 
@@ -20,8 +20,8 @@
                     Cancel
                 </v-btn>
 
-                <v-btn @click="handleDeleteTask" color="red" text>
-                    Delete
+                <v-btn @click="handleArchiveTask" color="red" text>
+                    Archive
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -42,10 +42,10 @@ export default {
         }
     },
     methods: {
-        handleDeleteTask() {
-            this.$store.dispatch('tasks/deleteTask', this.taskId)
+        handleArchiveTask() {
+            this.$store.dispatch('tasks/archiveTask', this.taskId)
             this.dialog = false
-            this.$emit('deleted')
+            this.$emit('archived')
         }
     }
 }

@@ -82,10 +82,10 @@ export const mutations = {
         Vue.set(state.columns[fromColName], 'tasks', fromColumnTasks)
         Vue.set(state.columns[toColName], 'tasks', toColumnTasks)
     },
-    DELETE_TASK(state, taskId) {
+    ARCHIVE_TASK(state, archivedTask) {
         Object.values(state.columns).forEach((column) => {
             column.tasks.forEach((task, i) => {
-                if (task._id === taskId) {
+                if (task._id === archivedTask._id) {
                     column.tasks.splice(i, 1)
                     Vue.set(state.columns, task.status, column)
                 }
@@ -93,7 +93,7 @@ export const mutations = {
         })
 
         state.unassignedTasks.forEach((task, i) => {
-            if (task._id === taskId) {
+            if (task._id === archivedTask._id) {
                 state.unassignedTasks.splice(i, 1)
             }
         })
@@ -133,9 +133,9 @@ export const actions = {
             commit('MOVE_TASK', response.data)
         })
     },
-    deleteTask({ commit }, taskId) {
-        return axios.post('api/tasks/delete', { taskId }).then((response) => {
-            commit('DELETE_TASK', response.data.taskId)
+    archiveTask({ commit }, taskId) {
+        return axios.post('api/tasks/archive', { taskId }).then((response) => {
+            commit('ARCHIVE_TASK', response.data.taskId)
         })
     }
 }

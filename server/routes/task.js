@@ -5,7 +5,7 @@ router
     .use('/tasks', router)
     .get('/', (req, res) => {
         const { _id } = req.session.user
-        Task.find({ assignee: _id })
+        Task.find({ assignee: _id, archived: null })
             .then((tasks) => {
                 res.status(200).json(tasks)
             })
@@ -14,7 +14,7 @@ router
             })
     })
     .get('/unassigned', (req, res) => {
-        Task.find({ assignee: null })
+        Task.find({ assignee: null, archived: null })
             .then((tasks) => {
                 res.status(202).json(tasks)
             })
@@ -121,18 +121,18 @@ router
             }
         }
     })
-    .post('/delete', (req, res) => {
+    .post('/archive', (req, res) => {
         const { taskId } = req.body
         // res.status(201).json({ taskId })
         // if (!req.user.tasks.includes(taskId)) {
         //     return res.status(401).json({ message: 'You dont own that task' })
         // }
-        Task.findByIdAndDelete(taskId)
-            .then((deletedTask) => {
-                res.status(200).json({ taskId })
+        Task.findByIdAndUpdate(taskId, { archived: true }, { new: true })
+            .then((archivedTask) => {
+                res.status(200).json({ archivedTask })
             })
             .catch((err) => {
-                res.status(401).json({ message: err.message })
+                res.status(500).json({ message: err.message })
             })
     })
 

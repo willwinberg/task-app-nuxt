@@ -63,7 +63,7 @@
 <script>
 import formValidatorMixin from '@@/mixins/formValidatorMixin'
 import TaskForm from './TaskForm'
-import DeleteTaskModal from './DeleteTaskModal'
+import DeleteTaskModal from './ArchiveTaskModal'
 
 export default {
     components: {

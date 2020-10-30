@@ -44,9 +44,9 @@
 
                 <v-card-actions>
                     <TaskForm :task-to-edit="task" />
-                    <DeleteTaskModal
+                    <ArchiveTaskModal
                         :taskId="task._id"
-                        @deleted="taskview = false"
+                        @archived="taskview = false"
                     />
                 </v-card-actions>
             </v-card>
@@ -56,7 +56,7 @@
 
 <script>
 import TaskForm from './TaskForm'
-import DeleteTaskModal from './DeleteTaskModal'
+import ArchiveTaskModal from './ArchiveTaskModal'
 import SiteChip from './chips/SiteChip'
 import TypeChip from './chips/TypeChip'
 import PriorityChip from './chips/PriorityChip'
@@ -66,7 +66,7 @@ import ReporterChip from './chips/ReporterChip'
 export default {
     components: {
         TaskForm,
-        DeleteTaskModal,
+        ArchiveTaskModal,
         SiteChip,
         TypeChip,
         PriorityChip,
