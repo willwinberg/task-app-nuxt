@@ -1,12 +1,14 @@
 <template>
     <v-col cols="12" sm="6" md="4">
-        <v-alert v-if="$auth.$state.redirect" type="error"
-            >You have to login before accessing to
-            {{ $auth.$state.redirect }}</v-alert
-        >
-        <v-alert v-if="$auth.loggedIn" type="success"
-            >You already logged in yo</v-alert
-        >
+        <!--        <no-ssr>-->
+        <!--            <v-alert v-if="$auth.$state.redirect" type="error"-->
+        <!--                >You have to login before accessing to-->
+        <!--                {{ $auth.$state.redirect }}</v-alert-->
+        <!--            >-->
+        <!--            <v-alert v-if="$auth.loggedIn" type="success"-->
+        <!--                >You already logged in yo</v-alert-->
+        <!--            >-->
+        <!--        </no-ssr>-->
         <v-card class="elevation-12">
             <v-toolbar color="primary" dark flat>
                 <v-toolbar-title>Login</v-toolbar-title>
