@@ -115,12 +115,12 @@ export default {
     auth: false,
     mixins: [formValidatorMixin],
     data: () => ({
-        firstName: 'Bill',
-        lastName: 'kill',
-        email: 'wtpwinberg@gmail.com',
-        emailConfirm: 'wtpwinberg@gmail.com',
-        password: 'ambros1a',
-        passwordConfirm: 'ambros1a'
+        firstName: '',
+        lastName: '',
+        email: '',
+        emailConfirm: '',
+        password: '',
+        passwordConfirm: ''
     }),
     head: () => ({
         title: 'Register'

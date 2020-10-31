@@ -27,7 +27,6 @@
                         name="email"
                         prepend-icon="mdi-login"
                         autocomplete="off"
-                        value="will@bill.org"
                     />
 
                     <v-text-field
@@ -41,7 +40,6 @@
                         prepend-icon="mdi-lock"
                         type="password"
                         autocomplete="off"
-                        value="tester"
                     />
                 </v-form>
             </v-card-text>
@@ -69,8 +67,8 @@ export default {
     mixins: [formValidatorMixin],
     data: () => ({
         drawer: null,
-        email: 'wtpwinberg@gmail.com',
-        password: 'ambros1a'
+        email: '',
+        password: ''
     }),
     head: () => ({
         title: 'Login'
@@ -108,10 +106,8 @@ export default {
         clear() {
             // const response = this.$store.dispatch('user/fetchUsers')
             this.$v.$reset()
-            this.name = ''
             this.email = ''
-            this.select = null
-            this.checkbox = false
+            this.password = ''
         }
     },
     notifications: {
