@@ -135,7 +135,7 @@ export const actions = {
     },
     archiveTask({ commit }, taskId) {
         return axios.post('api/tasks/archive', { taskId }).then((response) => {
-            commit('ARCHIVE_TASK', response.data.taskId)
+            commit('ARCHIVE_TASK', response.data.archivedTask)
         })
     }
 }

@@ -81,6 +81,10 @@ const TaskSchema = mongoose.Schema(
         column: {
             type: ObjectId,
             ref: 'Column'
+        },
+        archived: {
+            type: Boolean,
+            default: null
         }
     },
     {
