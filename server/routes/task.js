@@ -27,6 +27,7 @@ router
         const task = new Task(data)
         task.save()
             .then((newTask) => {
+                // Todo: notify 'site manager'
                 res.status(200).json({ newTask })
             })
             .catch((err) => {
@@ -41,6 +42,22 @@ router
         Task.findByIdAndUpdate(taskId, update, { new: true })
             .then((updatedTask) => {
                 res.status(200).json({ updatedTask })
+            })
+            .catch((err) => {
+                res.status(500).json({ message: err.message })
+            })
+    })
+    .put('/take', (req, res) => {
+        const { task } = req.body
+        const { _id } = req.session.user
+        Task.findByIdAndUpdate(
+            task._id,
+            { assignee: _id, status: 'To Do' },
+            { new: true }
+        )
+            .then((takenTask) => {
+                // Todo: Notify site manager
+                res.status(200).json(takenTask)
             })
             .catch((err) => {
                 res.status(500).json({ message: err.message })

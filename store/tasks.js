@@ -82,6 +82,17 @@ export const mutations = {
         Vue.set(state.columns[fromColName], 'tasks', fromColumnTasks)
         Vue.set(state.columns[toColName], 'tasks', toColumnTasks)
     },
+    TAKE_TASK(state, takenTask) {
+        const toColName = takenTask.status
+        const tasks = state.columns[toColName].tasks
+        tasks.push(takenTask)
+
+        Vue.set(state.columns[toColName], 'tasks', tasks)
+
+        state.unassignedTasks = state.unassignedTasks.filter(
+            (task) => task._id !== takenTask._id
+        )
+    },
     ARCHIVE_TASK(state, archivedTask) {
         Object.values(state.columns).forEach((column) => {
             column.tasks.forEach((task, i) => {
@@ -131,6 +142,11 @@ export const actions = {
     moveTask({ commit }, payload) {
         return axios.put('api/tasks/move', payload).then((response) => {
             commit('MOVE_TASK', response.data)
+        })
+    },
+    takeTask({ commit }, task) {
+        return axios.put('api/tasks/take', { task }).then((response) => {
+            commit('TAKE_TASK', response.data)
         })
     },
     archiveTask({ commit }, taskId) {
