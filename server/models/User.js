@@ -84,4 +84,4 @@ UserSchema.methods.validify = function(passwordTry, next) {
 }
 
 module.exports =
-    mongoose.models.User || mongoose.model('User', UserSchema, 'userss')
+    mongoose.models.User || mongoose.model('User', UserSchema, 'users')
