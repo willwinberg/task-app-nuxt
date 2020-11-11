@@ -1,5 +1,29 @@
 const router = require('express').Router()
+const nodemailer = require('nodemailer')
+const sparkPostTransport = require('nodemailer-sparkpost-transport')
 const Task = require('../models/Task')
+
+const transporter = nodemailer.createTransport(
+    sparkPostTransport({
+        sparkPostApiKey: process.env.SPARKPOST_API_KEY
+    })
+)
+
+transporter.sendMail(
+    {
+        from: process.env.MAIL_FROM_ADDRESS,
+        to: 'wtpwinberg@gmail.com',
+        subject: 'Hello from nodemailer-sparkpost-transport',
+        html: '<p>Hello world of dog</p>'
+    },
+    (err, info) => {
+        if (err) {
+            // console.error(err)
+        } else {
+            // console.log(info)
+        }
+    }
+)
 
 router
     .use('/tasks', router)
