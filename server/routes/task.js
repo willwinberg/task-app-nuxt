@@ -2,6 +2,7 @@ const router = require('express').Router()
 const nodemailer = require('nodemailer')
 const sparkPostTransport = require('nodemailer-sparkpost-transport')
 const Task = require('../models/Task')
+const User = require('../models/User')
 
 const transporter = nodemailer.createTransport(
     sparkPostTransport({
@@ -9,21 +10,32 @@ const transporter = nodemailer.createTransport(
     })
 )
 
-transporter.sendMail(
-    {
-        from: process.env.MAIL_FROM_ADDRESS,
-        to: 'wtpwinberg@gmail.com',
-        subject: 'Hello from nodemailer-sparkpost-transport',
-        html: '<p>Hello world of dog</p>'
-    },
-    (err, info) => {
-        if (err) {
-            // console.error(err)
-        } else {
-            // console.log(info)
+const sendMail = (to, message) => {
+    transporter.sendMail(
+        {
+            from: `"${process.env.MAIL_FROM_NAME}" <${process.env.MAIL_FROM_ADDRESS}>`,
+            to,
+            subject: 'Gogrello Notification',
+            html: message
+        },
+        (err, info) => {
+            if (err) {
+                // eslint-disable-next-line no-console
+                console.error(err)
+            } else {
+                // eslint-disable-next-line no-console
+                console.log(info)
+            }
         }
-    }
-)
+    )
+}
+
+const SITE_MANAGERS = {
+    PlumbersStock: process.env.PSTOCK_MANAGER,
+    'Adams&Co': process.env.PSTOCK_MANAGER,
+    SWPlumbing: process.env.PSTOCK_MANAGER,
+    MowRo: process.env.PSTOCK_MANAGER
+}
 
 router
     .use('/tasks', router)
@@ -51,7 +63,10 @@ router
         const task = new Task(data)
         task.save()
             .then((newTask) => {
-                // Todo: notify 'site manager'
+                sendMail(
+                    SITE_MANAGERS[newTask.site],
+                    `A new ${newTask.site} task, "${newTask.title}", was posted on Gogrello and you are the ${newTask.site} site manager.`
+                )
                 res.status(200).json({ newTask })
             })
             .catch((err) => {
@@ -65,6 +80,22 @@ router
         // }
         Task.findByIdAndUpdate(taskId, update, { new: true })
             .then((updatedTask) => {
+                const loggedInUser = req.session.user._id
+                const assignee = User.findById(updatedTask.assignee)
+                const reporter = User.findById(updatedTask.reporter)
+
+                if (loggedInUser === assignee) {
+                    sendMail(
+                        reporter.email,
+                        `${assignee.firstName} updated the task ${updatedTask.title}`
+                    )
+                } else if (loggedInUser === reporter) {
+                    sendMail(
+                        assignee.email,
+                        `${reporter.firstName} updated the task ${updatedTask.title}`
+                    )
+                }
+
                 res.status(200).json({ updatedTask })
             })
             .catch((err) => {
@@ -80,7 +111,17 @@ router
             { new: true }
         )
             .then((takenTask) => {
-                // Todo: Notify site manager
+                const assignee = User.findById(takenTask.assignee)
+                const reporter = User.findById(takenTask.reporter)
+
+                sendMail(
+                    SITE_MANAGERS[takenTask.site],
+                    `${assignee.firstName} has taken the ${takenTask.site} task "${takenTask.title}" and you are the site manager for this task.`
+                )
+                sendMail(
+                    reporter.email,
+                    `${assignee.firstName} has taken the task "${takenTask.title}" that you posted.`
+                )
                 res.status(200).json(takenTask)
             })
             .catch((err) => {
@@ -100,6 +141,14 @@ router
             })
                 .then((task) => {
                     updatedTask = task
+
+                    const assignee = User.findById(updatedTask.assignee)
+                    const reporter = User.findById(updatedTask.reporter)
+
+                    sendMail(
+                        reporter.email,
+                        `${assignee.firstName} has moved the task "${updatedTask.title}" from ${originalTask.status} to ${updatedTask.status}.`
+                    )
                 })
                 .catch((err) => {
                     res.status(500).json({ message: err.message })
@@ -170,6 +219,13 @@ router
         // }
         Task.findByIdAndUpdate(taskId, { archived: true }, { new: true })
             .then((archivedTask) => {
+                const assignee = User.findById(archivedTask.assignee)
+                const reporter = User.findById(archivedTask.reporter)
+
+                sendMail(
+                    `${reporter.email}, ${assignee.email}`,
+                    `The task "${archivedTask.title}" has been archived. This may be because it has been finised or it is no longer relevant. If you have any questions, contact ${req.session.user.firstName} at ${req.session.user.email} as he or she is the one who archived it.`
+                )
                 res.status(200).json({ archivedTask })
             })
             .catch((err) => {
