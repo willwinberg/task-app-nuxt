@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import formValidatorMixin from '@@/mixins/formValidatorMixin'
 import BrowseList from '@@/components/BrowseList'
 
 export default {
@@ -11,7 +10,6 @@ export default {
     components: {
         BrowseList
     },
-    mixins: [formValidatorMixin],
     head: () => ({
         title: 'Browse'
     })
