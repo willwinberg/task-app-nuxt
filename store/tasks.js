@@ -4,6 +4,7 @@ import Vue from 'vue'
 export const state = () => ({
     columns: {},
     unassignedTasks: [],
+    othersTasks: [],
     title: ''
 })
 
@@ -35,6 +36,9 @@ export const mutations = {
     },
     SET_UNASSIGNED_TASKS(state, tasks) {
         state.unassignedTasks = tasks
+    },
+    SET_OTHERS_TASKS(state, tasks) {
+        state.othersTasks = tasks
     },
     SET_TASK(state, task) {
         state.task = task
@@ -124,6 +128,11 @@ export const actions = {
             commit('SET_UNASSIGNED_TASKS', response.data)
         })
     },
+    fetchOthersTasks({ commit }) {
+        return axios.get('api/tasks/others').then((response) => {
+            commit('SET_OTHERS_TASKS', response.data)
+        })
+    },
     // fetchTask({ commit }, id) {
     //     return axios.get('api/tasks/:id', id).then((response) => {
     //         commit('SET_TASK', response.data)
@@ -164,5 +173,8 @@ export const getters = {
     },
     getUnassignedTasks(state) {
         return state.unassignedTasks
+    },
+    getOthersTasks(state) {
+        return state.othersTasks
     }
 }

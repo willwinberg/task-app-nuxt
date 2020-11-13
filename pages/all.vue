@@ -1,5 +1,5 @@
 <template>
-    <TasksList :tasks="othersTasks" :title="'All Tasks'" />
+    <TasksList :tasks="othersTasks" :title="'Others\' Tasks'" />
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
         TasksList
     },
     head: () => ({
-        title: 'All'
+        title: "Others'"
     }),
     data() {
         return {

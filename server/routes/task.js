@@ -58,6 +58,21 @@ router
                 res.status(500).json({ message: err.message })
             })
     })
+    .get('/others', (req, res) => {
+        Task.find({
+            assignee: {
+                $nin: [null, req.session.user._id],
+                $exists: true
+            },
+            archived: null
+        })
+            .then((tasks) => {
+                res.status(202).json(tasks)
+            })
+            .catch((err) => {
+                res.status(500).json({ message: err.message })
+            })
+    })
     .post('/', (req, res) => {
         const data = req.body
         const task = new Task(data)
