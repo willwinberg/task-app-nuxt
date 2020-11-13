@@ -2,7 +2,7 @@
     <v-card>
         <v-toolbar color="blue-grey">
             <v-toolbar-title>
-                Unassigned Tasks
+                {{ title }}
             </v-toolbar-title>
             <v-spacer />
             <v-text-field
@@ -71,6 +71,16 @@ export default {
         DeleteTaskModal
     },
     mixins: [formValidatorMixin],
+    props: {
+        tasks: {
+            type: Array,
+            required: true
+        },
+        title: {
+            type: String,
+            default: 'Tasks'
+        }
+    },
     data() {
         return {
             search: '',
@@ -85,14 +95,11 @@ export default {
                 { text: 'Reporter', value: 'reporter' },
                 { text: 'Date', value: 'dateAdded', width: '120px' },
                 { text: 'Take', value: 'action', sortable: false }
-                // add points
-            ],
-            tasks: []
+                // Todo: add points
+            ]
         }
     },
-    async created() {
-        await this.$store.dispatch('tasks/fetchUnassignedTasks')
-        this.tasks = this.$store.getters['tasks/getUnassignedTasks']
+    created() {
         this.loading = false
     },
     methods: {

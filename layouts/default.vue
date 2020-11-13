@@ -7,15 +7,23 @@
                         <v-icon>mdi-view-dashboard</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>Dashboard</v-list-item-title>
+                        <v-list-item-title>My Tasks</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
-                <v-list-item @click="goBrowse">
+                <v-list-item @click="goUnassigned">
                     <v-list-item-action>
                         <v-icon>mdi-magnify-plus</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>Browse Tasks</v-list-item-title>
+                        <v-list-item-title>Unassigned Tasks</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="goAll">
+                    <v-list-item-action>
+                        <v-icon>mdi-magnify-plus</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>All Tasks</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item @click="goSettings">
@@ -69,9 +77,14 @@ export default {
                 path: '/settings'
             })
         },
-        goBrowse() {
+        goUnassigned() {
             this.$router.push({
-                path: '/browse'
+                path: '/unassigned'
+            })
+        },
+        goAll() {
+            this.$router.push({
+                path: '/all'
             })
         }
     }
