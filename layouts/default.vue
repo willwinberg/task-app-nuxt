@@ -5,7 +5,7 @@
                 <v-subheader inset>Tasks</v-subheader>
                 <v-list-item
                     v-for="(item, i) in items"
-                    :index="i"
+                    :key="i"
                     @click="$router.push(item.route)"
                 >
                     <v-list-item-action>
