@@ -2,36 +2,16 @@
     <v-app>
         <v-navigation-drawer v-model="drawer" app clipped>
             <v-list>
-                <v-list-item @click="goHome">
+                <v-list-item
+                    v-for="(item, i) in items"
+                    :index="i"
+                    @click="$router.push(item.route)"
+                >
                     <v-list-item-action>
-                        <v-icon>mdi-view-dashboard</v-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                        <v-list-item-title>My Tasks</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item @click="goUnassigned">
-                    <v-list-item-action>
-                        <v-icon>mdi-magnify-plus</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Unassigned Tasks</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item @click="goAll">
-                    <v-list-item-action>
-                        <v-icon>mdi-magnify-plus</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Others' Tasks</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item @click="goSettings">
-                    <v-list-item-action>
-                        <v-icon>mdi-settings</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Settings</v-list-item-title>
+                        <v-list-item-title>{{ item.text }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
@@ -64,30 +44,30 @@ export default {
     },
     data: () => ({
         drawer: null,
-        title: 'Gogrello'
-    }),
-    methods: {
-        goHome() {
-            this.$router.push({
-                path: '/'
-            })
-        },
-        goSettings() {
-            this.$router.push({
-                path: '/settings'
-            })
-        },
-        goUnassigned() {
-            this.$router.push({
-                path: '/unassigned'
-            })
-        },
-        goAll() {
-            this.$router.push({
-                path: '/all'
-            })
-        }
-    }
+        title: 'Gogrello',
+        items: [
+            {
+                text: 'My Tasks',
+                icon: 'mdi-view-dashboard',
+                route: '/'
+            },
+            {
+                text: 'Unassigned Tasks',
+                icon: 'mdi-magnify-plus',
+                route: '/unassigned'
+            },
+            {
+                text: "Others' Tasks",
+                icon: 'mdi-magnify-plus',
+                route: '/others'
+            },
+            {
+                text: 'Settings',
+                icon: 'mdi-settings',
+                route: '/settings'
+            }
+        ]
+    })
 }
 </script>
 
