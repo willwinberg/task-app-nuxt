@@ -37,7 +37,7 @@
                 <td :colspan="headers.length" class="pb-3 wrap-hack">
                     <p class="description">{{ item.description }}</p>
                     <TaskForm :task-to-edit="item" />
-                    <DeleteTaskModal
+                    <ArchiveTaskModal
                         :task-id="item._id"
                         @deleted="
                             tasks = $store.getters['tasks/getUnassignedTasks']
@@ -52,9 +52,21 @@
                 <div>{{ formattedDate(item.dateAdded) || 'N/A' }}</div>
             </template>
             <template v-slot:item.action="{ item }">
-                <v-icon @click="takeTask(item)" right>
-                    mdi-plus
-                </v-icon>
+                <slot>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon
+                                @click="takeTask(item)"
+                                v-bind="attrs"
+                                v-on="on"
+                                right
+                            >
+                                mdi-plus
+                            </v-icon>
+                        </template>
+                        <span>Add this task to your board</span>
+                    </v-tooltip>
+                </slot>
             </template>
         </v-data-table>
     </v-card>
@@ -63,12 +75,12 @@
 <script>
 import formValidatorMixin from '@@/mixins/formValidatorMixin'
 import TaskForm from './TaskForm'
-import DeleteTaskModal from './ArchiveTaskModal'
+import ArchiveTaskModal from './ArchiveTaskModal'
 
 export default {
     components: {
         TaskForm,
-        DeleteTaskModal
+        ArchiveTaskModal
     },
     mixins: [formValidatorMixin],
     props: {
