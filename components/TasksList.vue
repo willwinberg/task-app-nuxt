@@ -52,21 +52,7 @@
                 <div>{{ formattedDate(item.dateAdded) || 'N/A' }}</div>
             </template>
             <template v-slot:item.action="{ item }">
-                <slot>
-                    <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                                @click="takeTask(item)"
-                                v-bind="attrs"
-                                v-on="on"
-                                right
-                            >
-                                mdi-plus
-                            </v-icon>
-                        </template>
-                        <span>Add this task to your board</span>
-                    </v-tooltip>
-                </slot>
+                <slot :task="item" name="action" />
             </template>
         </v-data-table>
     </v-card>
@@ -125,9 +111,6 @@ export default {
             } else {
                 return 'N/A'
             }
-        },
-        async takeTask(task) {
-            await this.$store.dispatch('tasks/takeTask', task)
         },
         getReporterName(id) {
             return this.$store.getters['user/getUsersNameAndIdKey'][id]

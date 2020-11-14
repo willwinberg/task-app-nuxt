@@ -1,5 +1,24 @@
 <template>
-    <TasksList :tasks="archivedTasks" :title="'Archived Tasks'" />
+    <TasksList
+        :tasks="$store.getters['tasks/getArchivedTasks']"
+        :title="'Archived Tasks'"
+    >
+        <template slot="action" slot-scope="{ task }">
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                        @click="unarchiveTask(task)"
+                        v-bind="attrs"
+                        v-on="on"
+                        right
+                    >
+                        mdi-undo-variant
+                    </v-icon>
+                </template>
+                <span>Unarchive this task</span>
+            </v-tooltip>
+        </template>
+    </TasksList>
 </template>
 
 <script>
@@ -13,14 +32,21 @@ export default {
     head: () => ({
         title: 'Archived'
     }),
-    data() {
-        return {
-            archivedTasks: []
-        }
-    },
     async created() {
         await this.$store.dispatch('tasks/fetchArchivedTasks')
-        this.archivedTasks = this.$store.getters['tasks/getArchivedTasks']
+    },
+    methods: {
+        async unarchiveTask(task) {
+            await this.$store.dispatch('tasks/unarchiveTask', task._id)
+            this.showUnarchiveSuccess()
+        }
+    },
+    notifications: {
+        showUnarchiveSuccess: {
+            title: 'Unarchived!',
+            message: 'Task has been unarchived',
+            type: 'success'
+        }
     }
 }
 </script>

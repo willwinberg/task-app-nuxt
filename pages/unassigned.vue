@@ -1,5 +1,24 @@
 <template>
-    <TasksList :tasks="unassignedTasks" :title="'Unassigned Tasks'" />
+    <TasksList
+        :tasks="$store.getters['tasks/getUnassignedTasks']"
+        :title="'Unassigned Tasks'"
+    >
+        <template slot="action" slot-scope="{ task }">
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                        @click="takeTask(task)"
+                        v-bind="attrs"
+                        v-on="on"
+                        right
+                    >
+                        mdi-undo-variant
+                    </v-icon>
+                </template>
+                <span>Add task to your board</span>
+            </v-tooltip>
+        </template>
+    </TasksList>
 </template>
 
 <script>
@@ -13,14 +32,21 @@ export default {
     head: () => ({
         title: 'Browse'
     }),
-    data() {
-        return {
-            unassignedTasks: []
-        }
-    },
     async created() {
         await this.$store.dispatch('tasks/fetchUnassignedTasks')
-        this.unassignedTasks = this.$store.getters['tasks/getUnassignedTasks']
+    },
+    methods: {
+        async takeTask(task) {
+            await this.$store.dispatch('tasks/takeTask', task)
+            this.showTakeSuccess()
+        }
+    },
+    notifications: {
+        showTakeSuccess: {
+            title: 'Task Taken!',
+            message: 'Task has been added to your ToDo board',
+            type: 'success'
+        }
     }
 }
 </script>
