@@ -5,6 +5,7 @@ export const state = () => ({
     columns: {},
     unassignedTasks: [],
     othersTasks: [],
+    archivedTasks: [],
     title: ''
 })
 
@@ -39,6 +40,9 @@ export const mutations = {
     },
     SET_OTHERS_TASKS(state, tasks) {
         state.othersTasks = tasks
+    },
+    SET_ARCHIVED_TASKS(state, tasks) {
+        state.archivedTasks = tasks
     },
     SET_TASK(state, task) {
         state.task = task
@@ -133,6 +137,11 @@ export const actions = {
             commit('SET_OTHERS_TASKS', response.data)
         })
     },
+    fetchArchivedTasks({ commit }) {
+        return axios.get('api/tasks/archived').then((response) => {
+            commit('SET_ARCHIVED_TASKS', response.data)
+        })
+    },
     // fetchTask({ commit }, id) {
     //     return axios.get('api/tasks/:id', id).then((response) => {
     //         commit('SET_TASK', response.data)
@@ -176,5 +185,8 @@ export const getters = {
     },
     getOthersTasks(state) {
         return state.othersTasks
+    },
+    getArchivedTasks(state) {
+        return state.archivedTasks
     }
 }

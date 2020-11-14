@@ -73,6 +73,15 @@ router
                 res.status(500).json({ message: err.message })
             })
     })
+    .get('/archived', (req, res) => {
+        Task.find({ archived: true })
+            .then((tasks) => {
+                res.status(202).json(tasks)
+            })
+            .catch((err) => {
+                res.status(500).json({ message: err.message })
+            })
+    })
     .post('/', (req, res) => {
         const data = req.body
         const task = new Task(data)
