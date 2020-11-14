@@ -71,6 +71,7 @@ $ service nginx start
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
 ## Todo
+* Task Comments as array of comments and styled chronological and pretty
 * Multiple boards
 * Vuetify styling theme 
 * integrate JS date objects in all data, also fix sort by date
