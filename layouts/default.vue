@@ -1,7 +1,8 @@
 <template>
     <v-app>
         <v-navigation-drawer v-model="drawer" app clipped>
-            <v-list>
+            <v-list subheader>
+                <v-subheader inset>Tasks</v-subheader>
                 <v-list-item
                     v-for="(item, i) in items"
                     :index="i"
@@ -47,17 +48,17 @@ export default {
         title: 'Gogrello',
         items: [
             {
-                text: 'My Tasks',
+                text: 'Mine',
                 icon: 'mdi-view-dashboard',
                 route: '/'
             },
             {
-                text: 'Unassigned Tasks',
+                text: 'Unassigned',
                 icon: 'mdi-magnify-plus',
                 route: '/unassigned'
             },
             {
-                text: "Others' Tasks",
+                text: "Others'",
                 icon: 'mdi-magnify-plus',
                 route: '/others'
             },
