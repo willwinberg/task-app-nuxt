@@ -237,10 +237,7 @@ router
     })
     .post('/archive', (req, res) => {
         const { taskId } = req.body
-        // res.status(201).json({ taskId })
-        // if (!req.user.tasks.includes(taskId)) {
-        //     return res.status(401).json({ message: 'You dont own that task' })
-        // }
+
         Task.findByIdAndUpdate(taskId, { archived: true }, { new: true })
             .then((archivedTask) => {
                 const assignee = User.findById(archivedTask.assignee)
@@ -251,6 +248,24 @@ router
                     `The task "${archivedTask.title}" has been archived. This may be because it has been finised or it is no longer relevant. If you have any questions, contact ${req.session.user.firstName} at ${req.session.user.email} as he or she is the one who archived it.`
                 )
                 res.status(200).json({ archivedTask })
+            })
+            .catch((err) => {
+                res.status(500).json({ message: err.message })
+            })
+    })
+    .post('/unarchive', (req, res) => {
+        const { taskId } = req.body
+
+        Task.findByIdAndUpdate(taskId, { archived: null }, { new: true })
+            .then((unarchivedTask) => {
+                // const assignee = User.findById(unarchivedTask.assignee)
+                // const reporter = User.findById(unarchivedTask.reporter)
+                //
+                // sendMail(
+                //     `${reporter.email}, ${assignee.email}`,
+                //     `The task "${unarchivedTask.title}" has been archived. This may be because it has been finised or it is no longer relevant. If you have any questions, contact ${req.session.user.firstName} at ${req.session.user.email} as he or she is the one who archived it.`
+                // )
+                res.status(200).json({ unarchivedTask })
             })
             .catch((err) => {
                 res.status(500).json({ message: err.message })

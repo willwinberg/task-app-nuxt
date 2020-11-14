@@ -117,6 +117,26 @@ export const mutations = {
             }
         })
     },
+    UNARCHIVE_TASK(state, unarchivedTask) {
+        state.archivedTasks = state.archivedTasks.filter(
+            (task) => task._id !== unarchivedTask._id
+        )
+        if (unarchivedTask.assignee === null) {
+            state.unassignedTasks.push(unarchivedTask)
+        }
+        switch (unarchivedTask.assignee) {
+            case null:
+                state.unassignedTasks.push(unarchivedTask)
+                break
+            case this.$auth.user._id:
+                const updatedColumn = state.columns[unarchivedTask.status]
+                updatedColumn.tasks.push(unarchivedTask)
+                Vue.set(state.columns, unarchivedTask.status, updatedColumn)
+                break
+            default:
+                state.othersTasks.push(unarchivedTask)
+        }
+    },
     SET_TITLE(state, title) {
         state.title = title
     }
@@ -171,6 +191,13 @@ export const actions = {
         return axios.post('api/tasks/archive', { taskId }).then((response) => {
             commit('ARCHIVE_TASK', response.data.archivedTask)
         })
+    },
+    unarchiveTask({ commit }, taskId) {
+        return axios
+            .post('api/tasks/unarchive', { taskId })
+            .then((response) => {
+                commit('UNARCHIVE_TASK', response.data.unarchivedTask)
+            })
     }
 }
 export const getters = {
