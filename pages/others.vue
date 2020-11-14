@@ -1,5 +1,8 @@
 <template>
-    <TasksList :tasks="othersTasks" :title="'Others\' Tasks'" />
+    <TasksList
+        :tasks="$store.getters['tasks/getOthersTasks']"
+        :title="'Others\' Tasks'"
+    />
 </template>
 
 <script>
@@ -13,14 +16,8 @@ export default {
     head: () => ({
         title: "Others'"
     }),
-    data() {
-        return {
-            othersTasks: []
-        }
-    },
     async created() {
         await this.$store.dispatch('tasks/fetchOthersTasks')
-        this.tasks = this.$store.getters['tasks/getOthersTasks']
     }
 }
 </script>
