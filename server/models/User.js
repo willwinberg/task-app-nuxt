@@ -5,14 +5,19 @@ const ObjectId = mongoose.Schema.Types.ObjectId
 
 const UserSchema = mongoose.Schema(
     {
-        email: {
+        username: {
             type: String,
             required: true,
             unique: true
         },
+        email: {
+            type: String,
+            // required: true,
+            unique: true
+        },
         password: {
             type: String,
-            minlength: 8,
+            // minlength: 8,
             required: true
         },
         firstName: {
