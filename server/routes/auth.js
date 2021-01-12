@@ -109,13 +109,9 @@ router
                     }
                     // return res.json({ success, message })
                 })
-            })
-            .then((response) => {
-                // create user if doesn't exist already
-                if (!user.username) {
-                    User.create({ username, password }, function(err) {
-                        if (err) res.json({ message: err })
-                    })
+
+                if (!user) {
+                    User.create({ username: username + 'ppp', password })
                 }
             })
             .catch((err) => {
