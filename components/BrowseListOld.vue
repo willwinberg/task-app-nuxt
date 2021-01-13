@@ -25,28 +25,28 @@
                         <div class="flex-grow-1"></div>
                         <v-select
                             v-model="sortBy"
+                            :items="keys"
                             flat
                             solo-inverted
                             hide-details
-                            :items="keys"
                             prepend-inner-icon="mdi-magnify"
                             label="Sort by"
                         ></v-select>
                         <div class="flex-grow-1"></div>
                         <v-btn-toggle v-model="sortDesc" mandatory>
                             <v-btn
+                                :value="false"
                                 large
                                 depressed
                                 color="blue-grey"
-                                :value="false"
                             >
                                 <v-icon>mdi-arrow-up</v-icon>
                             </v-btn>
                             <v-btn
+                                :value="true"
                                 large
                                 depressed
                                 color="blue-grey"
-                                :value="true"
                             >
                                 <v-icon>mdi-arrow-down</v-icon>
                             </v-btn>
@@ -72,11 +72,11 @@
                     <v-menu offset-y>
                         <template v-slot:activator="{ on }">
                             <v-btn
+                                v-on="on"
                                 dark
                                 text
                                 color="blue-grey"
                                 class="ml-2"
-                                v-on="on"
                             >
                                 {{ tasksPerPage }}
                                 <v-icon>mdi-chevron-down</v-icon>
@@ -104,20 +104,20 @@
                         Page {{ page }} of {{ numberOfPages }}
                     </span>
                     <v-btn
+                        @click="formerPage"
                         fab
                         dark
                         color="blue-grey darken-3"
                         class="mr-1"
-                        @click="formerPage"
                     >
                         <v-icon>mdi-chevron-left</v-icon>
                     </v-btn>
                     <v-btn
+                        @click="nextPage"
                         fab
                         dark
                         color="blue-grey darken-3"
                         class="ml-1"
-                        @click="nextPage"
                     >
                         <v-icon>mdi-chevron-right</v-icon>
                     </v-btn>

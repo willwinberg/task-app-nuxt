@@ -1,7 +1,7 @@
 <template>
     <v-toolbar-items>
-        <v-btn text @click="goLogin">Login</v-btn>
-        <v-btn text @click="goRegister">Register</v-btn>
+        <v-btn @click="goLogin" text>Login</v-btn>
+        <v-btn @click="goRegister" text>Register</v-btn>
     </v-toolbar-items>
 </template>
 

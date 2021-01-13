@@ -1,7 +1,7 @@
 <template>
     <div class="justify-content-between row">
-        <nested-test class="col-8" v-model="elements" />
-        <raw-displayer class="col-4" :title="'Vuex Store'" :value="elements" />
+        <nested-test v-model="elements" class="col-8" />
+        <raw-displayer :title="'Vuex Store'" :value="elements" class="col-4" />
     </div>
 </template>
 
@@ -9,7 +9,7 @@
 import NestedTest from './nested/nested-test.vue'
 import rawDisplayer from './infra/raw-displayer.vue'
 export default {
-    name: 'nested-with-vmodel',
+    name: 'NestedWithVmodel',
     display: 'Nested (v-model & vuex)',
     order: 16,
     components: {

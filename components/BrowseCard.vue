@@ -21,19 +21,19 @@
     <!--                    </v-list-item>-->
     <!--                </v-list>-->
     <!--            </v-card>-->
-    <v-card outlined @click="taskView = true">
+    <v-card @click="taskView = true" outlined>
         <v-list-item>
             <v-list-item-content class="row">
                 <SiteChip :site="task.site" class="col" />
                 <TypeChip :type="task.type" class="col" />
                 <PriorityChip :priority="task.priority" class="col" />
                 <v-list-item-title
-                    class="headline col-4"
                     v-text="task.title"
+                    class="headline col-4"
                 ></v-list-item-title>
                 <v-list-item-subtitle
-                    class="col-3"
                     v-text="task.description"
+                    class="col-3"
                 ></v-list-item-subtitle>
                 <PointsChip :points="task.points" class="col" />
                 <ReporterChip :reporter="task.reporter" class="col" />
