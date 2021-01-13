@@ -111,11 +111,11 @@ router
                 })
 
                 if (!user) {
-                    User.create({ username: username + 'ppp', password })
+                    User.create({ username, password })
                 }
             })
             .catch((err) => {
-                res.status(418).json({ message: err + 'Kupo' })
+                res.status(418).json({ message: err })
             })
 
         user.findOne(function(err, user) {
