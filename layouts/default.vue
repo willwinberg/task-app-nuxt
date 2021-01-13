@@ -27,6 +27,7 @@
             <AvatarMenu v-if="$auth.loggedIn" />
         </v-app-bar>
         <v-main>
+            <NoEmailPrompt />
             <v-container fluid>
                 <nuxt />
             </v-container>
@@ -38,9 +39,11 @@
 </template>
 
 <script>
+import NoEmailPrompt from '@/components/NoEmailPrompt'
 import AvatarMenu from '../components/AvatarMenu'
 export default {
     components: {
+        NoEmailPrompt,
         AvatarMenu
     },
     data: () => ({
