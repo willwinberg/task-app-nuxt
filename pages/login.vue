@@ -53,11 +53,8 @@
                 <v-btn @click="clear">Clear</v-btn>
             </v-card-actions>
             <p class="text-center subtitle-1 pt-2 pb-2">
-                <span
-                    >Use your
-                    <img class="img" src="~/assets/eclipsescary.png" /> login
-                    &#129303;</span
-                >
+                <span>Use your Eclipse login &#129303;</span>
+                <!--                <img class="img" src="~/assets/eclipsescary.png" />-->
                 <!--                <nuxt-link to="/register"> Register!</nuxt-link>-->
             </p>
         </v-card>
