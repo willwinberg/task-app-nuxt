@@ -38,8 +38,8 @@ export default {
             sameAsEmail: sameAs('email')
         },
         password: {
-            required,
-            minLength: minLength(8)
+            required
+            // minLength: minLength(8)
         },
         passwordConfirm: {
             required,
@@ -135,8 +135,8 @@ export default {
         passwordErrors() {
             const errors = []
             if (!this.$v.password.$error) return errors
-            !this.$v.password.minLength &&
-                errors.push('Must be at least 8 characters')
+            // !this.$v.password.minLength &&
+            //     errors.push('Must be beat least 8 characters')
             !this.$v.password.required && errors.push('Password is required')
             return errors
         },
