@@ -70,8 +70,8 @@ export default {
     mixins: [formValidatorMixin],
     data: () => ({
         drawer: null,
-        username: 'williamw',
-        password: 'ambros1a'
+        username: '',
+        password: ''
     }),
     head: () => ({
         title: 'Login'
