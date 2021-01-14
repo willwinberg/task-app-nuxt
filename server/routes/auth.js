@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const bcrypt = require('bcrypt')
 const axios = require('axios')
 const User = require('../models/User')
 // const validateToken = require('../middleware/validate-token')
@@ -60,6 +59,7 @@ router
     .post('/login', (req, res, next) => {
         const { username, password } = req.body
         const user = User.find({ username })
+
         // checks if login matches Eclipse :o
         axios({
             url: 'http://192.168.2.205/eserv/eclipse.ecl',
@@ -91,7 +91,7 @@ router
                 const xml = response.data
                 parseString(xml, function(err, result) {
                     if (err)
-                        res.status(401).json({
+                        return res.status(401).json({
                             error: err
                         })
                     const eclipse =
@@ -103,50 +103,37 @@ router
                         message =
                             eclipse.ErrorMessageList[0].ErrorMessage[0]
                                 .Description[0]
-                        res.status(401).json({
+                        return res.status(401).json({
                             error: `EclipseError: ${message}`
                         })
                     }
-                    // return res.json({ success, message })
+                    if (!user.username) {
+                        User.create(
+                            {
+                                username
+                            },
+                            function(err, user) {
+                                if (err) return next(err)
+                                req.session.user = user
+                                return res.json({ user })
+                            }
+                        )
+                    } else {
+                        user.findOne(function(err, user) {
+                            if (err) {
+                                return res.status(400).json({ message: err })
+                            }
+                            if (user) {
+                                req.session.user = user
+                                return res.json({ user })
+                            }
+                        })
+                    }
                 })
-
-                if (!user.username) {
-                    User.create(
-                        {
-                            firstName: 'New',
-                            lastName: 'User',
-                            username,
-                            password
-                        },
-                        function(err, user) {
-                            if (err) return next(err)
-                            req.session.user = user
-                            return res.json({ user })
-                        }
-                    )
-                }
             })
             .catch((err) => {
-                res.status(418).json({ message: err })
+                return res.status(418).json({ message: err })
             })
-
-        user.findOne(function(err, user) {
-            if (err) {
-                res.status(400).json({ message: err })
-            }
-            if (user) {
-                if (
-                    !bcrypt.compare(password, user.password) ||
-                    user.username !== username
-                ) {
-                    res.status(406).json({ message: 'Bad credentials' })
-                } else {
-                    req.session.user = user
-                    return res.json({ user })
-                }
-            }
-        })
-        return res
     })
 
     .get('/user', (req, res, next) => {
