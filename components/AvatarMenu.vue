@@ -31,12 +31,11 @@ export default {
         userInitials() {
             if (this.user.firstName && this.user.lastName) {
                 return (
-                    this.user.firstName[0].toUpperCase() +
-                    this.user.lastName[0].toUpperCase()
-                )
+                    this.user.firstName[0] + this.user.lastName[0]
+                ).toUpperCase()
             } else if (this.user.username) {
                 const username = this.user.username
-                return username.slice(-1) + username[0]
+                return (username.slice(-1) + username[0]).toUpperCase()
             }
 
             return 'N/A'
