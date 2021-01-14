@@ -34,7 +34,11 @@ export default {
                     this.user.firstName[0].toUpperCase() +
                     this.user.lastName[0].toUpperCase()
                 )
+            } else if (this.user.username) {
+                const username = this.user.username
+                return username.slice(-1) + username[0]
             }
+
             return 'N/A'
         }
     },
