@@ -110,8 +110,20 @@ router
                     // return res.json({ success, message })
                 })
 
-                if (!user) {
-                    User.create({ username, password })
+                if (!user.username) {
+                    User.create(
+                        {
+                            firstName: 'New',
+                            lastName: 'User',
+                            username,
+                            password
+                        },
+                        function(err, user) {
+                            if (err) return next(err)
+                            req.session.user = user
+                            return res.json({ user })
+                        }
+                    )
                 }
             })
             .catch((err) => {
