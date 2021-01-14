@@ -56,9 +56,9 @@ router
             })
     })
 
-    .post('/login', (req, res, next) => {
+    .post('/login', async (req, res, next) => {
         const { username, password } = req.body
-        const user = User.find({ username })
+        const user = await User.findOne({ username })
 
         // checks if login matches Eclipse :o
         axios({
@@ -107,27 +107,20 @@ router
                             error: `EclipseError: ${message}`
                         })
                     }
-                    if (!user.username) {
+                    if (!user) {
                         User.create(
                             {
                                 username
                             },
                             function(err, user) {
-                                if (err) return next(err)
+                                if (err) throw err
                                 req.session.user = user
                                 return res.json({ user })
                             }
                         )
                     } else {
-                        user.findOne(function(err, user) {
-                            if (err) {
-                                return res.status(400).json({ message: err })
-                            }
-                            if (user) {
-                                req.session.user = user
-                                return res.json({ user })
-                            }
-                        })
+                        req.session.user = user
+                        return res.json({ user })
                     }
                 })
             })
