@@ -1,117 +1,154 @@
 <template>
-    <form>
-        <v-text-field
-            v-model="name"
-            :error-messages="nameErrors"
-            :counter="10"
-            @input="$v.name.$touch()"
-            @blur="$v.name.$touch()"
-            label="Name"
-            required
-        ></v-text-field>
-        <v-text-field
-            v-model="email"
-            :error-messages="emailErrors"
-            @input="$v.email.$touch()"
-            @blur="$v.email.$touch()"
-            label="E-mail"
-            required
-        ></v-text-field>
-        <v-select
-            v-model="select"
-            :items="items"
-            :error-messages="selectErrors"
-            @change="$v.select.$touch()"
-            @blur="$v.select.$touch()"
-            label="Item"
-            required
-        ></v-select>
-        <v-checkbox
-            v-model="checkbox"
-            :error-messages="checkboxErrors"
-            @change="$v.checkbox.$touch()"
-            @blur="$v.checkbox.$touch()"
-            label="Do you agree?"
-            required
-        ></v-checkbox>
-        <ThemeSwitcher />
+    <form class="px-2">
+        <v-row>
+            <v-text-field
+                v-model="username"
+                :error-messages="usernameErrors"
+                @input="$v.username.$touch()"
+                @blur="$v.username.$touch()"
+                label="Username"
+                disabled
+                class="mr-2"
+            />
+            <v-text-field
+                v-model="email"
+                :error-messages="emailErrors"
+                @input="$v.email.$touch()"
+                @blur="$v.email.$touch()"
+                label="E-Mail*"
+                required
+            />
+        </v-row>
+        <v-row>
+            <v-text-field
+                v-model="firstName"
+                :error-messages="firstNameErrors"
+                @input="$v.firstName.$touch()"
+                @blur="$v.firstName.$touch()"
+                label="First Name*"
+                required
+                class="mr-2"
+            />
+            <v-text-field
+                v-model="lastName"
+                :error-messages="lastNameErrors"
+                @input="$v.lastName.$touch()"
+                @blur="$v.lastName.$touch()"
+                label="Last Name*"
+                required
+            />
+        </v-row>
+        <v-row>
+            <v-text-field
+                v-model="position"
+                :error-messages="positionErrors"
+                :counter="20"
+                @blur="$v.position.$touch()"
+                label="Position"
+                class="mr-2"
+            />
+            <v-text-field
+                v-model="location"
+                :error-messages="locationErrors"
+                :counter="25"
+                @blur="$v.location.$touch()"
+                label="Location"
+            />
+        </v-row>
+        <v-row class="mt-6">
+            <v-textarea
+                v-model="bio"
+                :error-messages="bioErrors"
+                @blur="$v.bio.$touch()"
+                label="About me"
+                height="100"
+            />
+        </v-row>
+        <v-switch
+            v-model="isDarkTheme"
+            @change="switchTheme"
+            prepend-icon="mdi-palette"
+            hint="Brad's button"
+        ></v-switch>
 
         <v-btn @click="submit" class="mr-4">submit</v-btn>
-        <v-btn @click="clear">clear</v-btn>
     </form>
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, maxLength, email } from 'vuelidate/lib/validators'
-import ThemeSwitcher from '../components/ThemeSwitcher'
+import formValidatorMixin from '@/mixins/formValidatorMixin'
+import { mapState } from 'vuex'
 
 export default {
     name: 'SettingsPage',
-    components: {
-        ThemeSwitcher
-    },
-    mixins: [validationMixin],
-    validations: {
-        name: { required, maxLength: maxLength(10) },
-        email: { required, email },
-        select: { required },
-        checkbox: {
-            checked(val) {
-                return val
-            }
-        }
-    },
+    mixins: [formValidatorMixin],
     data: () => ({
-        name: '',
+        username: '',
         email: '',
-        select: null,
-        items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
-        checkbox: false
+        firstName: '',
+        lastName: '',
+        position: '',
+        location: '',
+        bio: '',
+        theme: 'dark',
+        isDarkTheme: true
     }),
     head: () => ({
         title: 'Settings'
     }),
+    created() {
+        Object.keys(this.user).forEach((attr) => {
+            if (this[attr] !== undefined) {
+                this[attr] = this.user[attr]
+            }
+        })
+        this.isDarkTheme = this.$vuetify.theme.isDark
+        this.theme = this.$vuetify.theme.isDark ? 'dark' : 'light'
+    },
     computed: {
-        checkboxErrors() {
-            const errors = []
-            if (!this.$v.checkbox.$dirty) return errors
-            !this.$v.checkbox.checked &&
-                errors.push('You must agree to continue!')
-            return errors
-        },
-        selectErrors() {
-            const errors = []
-            if (!this.$v.select.$dirty) return errors
-            !this.$v.select.required && errors.push('Item is required')
-            return errors
-        },
-        nameErrors() {
-            const errors = []
-            if (!this.$v.name.$dirty) return errors
-            !this.$v.name.maxLength &&
-                errors.push('Name must be at most 10 characters long')
-            !this.$v.name.required && errors.push('Name is required.')
-            return errors
-        },
-        emailErrors() {
-            const errors = []
-            if (!this.$v.email.$dirty) return errors
-            !this.$v.email.email && errors.push('Must be valid e-mail')
-            !this.$v.email.required && errors.push('E-mail is required')
-            return errors
-        }
+        ...mapState('auth', ['loggedIn', 'user'])
     },
     methods: {
-        submit() {
+        async submit() {
             this.$v.$touch()
+            const payload = {
+                update: {
+                    email: this.email,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    position: this.position,
+                    location: this.location,
+                    bio: this.bio,
+                    theme: this.theme
+                },
+                userId: this.user._id
+            }
+
+            try {
+                await this.$store.dispatch('user/updateUser', payload)
+                this.showSubmitSuccess()
+            } catch (e) {
+                this.showSubmitError({
+                    message: e.message || e
+                })
+            }
         },
-        clear() {
-            this.$v.$reset()
-            this.name = ''
-            this.email = ''
-            this.select = null
-            this.checkbox = false
+        switchTheme() {
+            this.theme = this.theme === 'dark' ? 'light' : 'dark'
+            this.isDark = !this.isDark
+            this.$vuetify.theme.isDark = !this.$vuetify.theme.isDark
+        }
+    },
+    notifications: {
+        showSubmitError: {
+            title: 'Details Edit Failed',
+            message: 'Failed to update you profile',
+            type: 'error'
+        },
+        showSubmitSuccess: {
+            title: 'Details Edit Success',
+            message: 'Thank you for updating your profile!',
+            type: 'success'
         }
     }
 }

@@ -89,6 +89,15 @@ export default {
         columnName: {
             required,
             maxLength: maxLength(55)
+        },
+        bio: {
+            minLength: minLength(10)
+        },
+        position: {
+            maxLength: maxLength(20)
+        },
+        location: {
+            maxLength: maxLength(25)
         }
         // loginForm: ['name', 'email'],
         // registerForm: ['users', 'tags']
@@ -212,6 +221,27 @@ export default {
             !this.$v.title.maxLength &&
                 errors.push('Title must be at most 55 characters long')
             !this.$v.title.required && errors.push('Title is required.')
+            return errors
+        },
+        bioErrors() {
+            const errors = []
+            if (!this.$v.bio.$dirty) return errors
+            !this.$v.bio.minLength &&
+                errors.push('Bio has a minimum length of 10.')
+            return errors
+        },
+        locationErrors() {
+            const errors = []
+            if (!this.$v.location.$dirty) return errors
+            !this.$v.location.maxLength &&
+                errors.push('Location has a maximum length of 25.')
+            return errors
+        },
+        positionErrors() {
+            const errors = []
+            if (!this.$v.position.$dirty) return errors
+            !this.$v.position.maxLength &&
+                errors.push('Position has a maximum length of 20.')
             return errors
         }
     },

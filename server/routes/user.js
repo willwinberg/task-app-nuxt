@@ -23,9 +23,12 @@ router
         })
     })
     .put('/:id', function(req, res, next) {
-        User.findByIdAndUpdate(req.params.id, req.body, function(err, user) {
+        User.findByIdAndUpdate(req.params.id, req.body, { new: true }, function(
+            err,
+            user
+        ) {
             if (err) return next(err)
-            res.json(user)
+            res.json({ user })
         })
     })
     .delete('/:id', function(req, res, next) {

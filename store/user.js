@@ -1,5 +1,7 @@
 // import EventService from '@/services/EventService.js'
 // state must return an anonymous function. Otherwise the same state would be shared across ALL requests
+import axios from 'axios'
+
 export const state = () => ({
     user: null,
     allUsers: [],
@@ -59,6 +61,13 @@ export const actions = {
         return this.$axios.get('/api/users/:id', id).then((response) => {
             commit('SET_USER', response.data)
         })
+    },
+    updateUser({ commit }, payload) {
+        return axios
+            .put(`api/users/${payload.userId}`, payload.update)
+            .then((response) => {
+                commit('SET_USER', response.data.user)
+            })
     }
 }
 
