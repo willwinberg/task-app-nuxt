@@ -61,7 +61,7 @@ export default {
                 route: '/unassigned'
             },
             {
-                text: "Others'",
+                text: 'All',
                 icon: 'mdi-magnify-plus',
                 route: '/others'
             },
