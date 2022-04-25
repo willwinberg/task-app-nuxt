@@ -21,9 +21,6 @@ export default {
             alpha,
             minLength: minLength(2)
         },
-        username: {
-            required
-        },
         email: {
             required,
             email
@@ -132,13 +129,6 @@ export default {
             if (!this.$v.emailConfirm.$error) return errors
             !this.$v.emailConfirm.sameAsEmail && errors.push('Must match email')
             !this.$v.emailConfirm.required && errors.push('Must confirm email')
-            return errors
-        },
-        usernameErrors() {
-            const errors = []
-            if (!this.$v.email.$error) return errors
-            // !this.$v.username.email && errors.push('Must be valid e-mail')
-            !this.$v.username.required && errors.push('Username is required')
             return errors
         },
         passwordErrors() {

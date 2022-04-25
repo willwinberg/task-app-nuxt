@@ -20,13 +20,13 @@
                     method="post"
                 >
                     <v-text-field
-                        v-model.trim="username"
-                        :error-messages="usernameErrors"
-                        @input="$v.username.$touch()"
-                        @blur="$v.username.$touch()"
-                        label="Username"
+                        v-model.trim="email"
+                        :error-messages="emailErrors"
+                        @input="$v.email.$touch()"
+                        @blur="$v.email.$touch()"
+                        label="Email"
                         required
-                        name="username"
+                        name="email"
                         prepend-icon="mdi-login"
                         autocomplete="off"
                     />
@@ -53,9 +53,8 @@
                 <v-btn @click="clear">Clear</v-btn>
             </v-card-actions>
             <p class="text-center subtitle-1 pt-2 pb-2">
-                <span>Use your Eclipse login &#129303;</span>
-                <!--                <img class="img" src="~/assets/eclipsescary.png" />-->
-                <!--                <nuxt-link to="/register"> Register!</nuxt-link>-->
+                Don't have an account yet?
+                <nuxt-link to="/register"> Register!</nuxt-link>
             </p>
         </v-card>
     </v-col>
@@ -70,7 +69,7 @@ export default {
     mixins: [formValidatorMixin],
     data: () => ({
         drawer: null,
-        username: '',
+        email: '',
         password: ''
     }),
     head: () => ({
@@ -95,24 +94,21 @@ export default {
                 try {
                     await this.$auth.loginWith('local', {
                         data: {
-                            username: this.username,
+                            email: this.email,
                             password: this.password
                         }
                     })
-
                     this.showLoginSuccess()
                     await this.$router.push('/')
                 } catch (e) {
-                    this.showLoginError({
-                        message: e.response.data.error || e.message
-                    })
+                    this.showLoginError({ message: e.message })
                 }
             }
         },
         clear() {
             // const response = this.$store.dispatch('user/fetchUsers')
             this.$v.$reset()
-            this.username = ''
+            this.email = ''
             this.password = ''
         }
     },
@@ -130,9 +126,3 @@ export default {
     }
 }
 </script>
-<style>
-.img {
-    margin-bottom: -10px;
-    width: 100px;
-}
-</style>
