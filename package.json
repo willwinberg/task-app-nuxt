@@ -42,7 +42,7 @@
     "vue-notifications": "^1.0.2",
     "vuedraggable": "^2.24.3",
     "vuelidate": "^0.7.6",
-    "vuetify": "^2.3.15"
+    "vuetify": "^2.6.10"
   },
   "devDependencies": {
     "@mdi/font": "^4.9.95",
